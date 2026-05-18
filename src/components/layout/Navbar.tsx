@@ -72,7 +72,7 @@ export default function Navbar() {
                 href={link.href}
                 className={cn(
                   "text-sm font-medium uppercase tracking-widest transition-colors duration-300 hover:text-gold",
-                  isScrolled ? "text-matte-black" : "text-matte-black"
+                  isScrolled ? "text-matte-black" : "text-gold"
                 )}
               >
                 {link.name}

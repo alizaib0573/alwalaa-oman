@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Camera, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -19,11 +20,11 @@ export default function Footer() {
             Helping you find the most prestigious properties in Oman.
           </p>
           <div className="flex gap-4">
-            <Link href="#" className="p-2 bg-white/5 rounded-full hover:bg-gold transition-colors text-ivory">
-              <span className="text-xs">IG</span>
+            <Link href="#" className="p-2 bg-white/5 rounded-full hover:bg-gold transition-all duration-300 text-ivory hover:text-matte-black group">
+              <Camera size={18} className="transition-transform duration-300 group-hover:scale-110" />
             </Link>
-            <Link href="#" className="p-2 bg-white/5 rounded-full hover:bg-gold transition-colors text-ivory">
-              <span className="text-xs">LI</span>
+            <Link href="#" className="p-2 bg-white/5 rounded-full hover:bg-gold transition-all duration-300 text-ivory hover:text-matte-black group">
+              <Mail size={18} className="transition-transform duration-300 group-hover:scale-110" />
             </Link>
           </div>
         </div>
@@ -45,7 +46,7 @@ export default function Footer() {
               <li><Link href="#" className="hover:text-ivory transition-colors">Sultan Haitham City</Link></li>
               <li><Link href="#" className="hover:text-ivory transition-colors">Al Mouj</Link></li>
               <li><Link href="#" className="hover:text-ivory transition-colors">Muscat Bay</Link></li>
-              <li><Link href="#" className="hover:text-ivory transition-colors">Jebel Sifah</Link></li>
+              <li><Link href="#" className="hover:text-ivory transition-colors">Jebel Sifah</Link></li >
             </ul>
           </div>
         </div>

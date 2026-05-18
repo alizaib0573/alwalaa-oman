@@ -4,16 +4,17 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
-  { step: "01", title: "Consultation", description: "Personalized strategy session to align with your investment goals." },
-  { step: "02", title: "Project Selection", description: "Curated list of high-yield properties matching your profile." },
-  { step: "03", title: "Legal Process", description: "Seamless handling of all Omani property laws and documentation." },
-  { step: "04", title: "Purchase", description: "Secure and transparent transaction process with full support." },
-  { step: "05", title: "Ownership", description: "Handover of your prestigious asset and residency qualification." },
-  { step: "06", title: "After-Sales", description: "Comprehensive portfolio management and rental assistance." },
+  { step: "01", title: "Consultation", description: "Personalized strategy session to align with your investment goals.", image: "/consultation.jpg" },
+  { step: "02", title: "Project Selection", description: "Curated list of high-yield properties matching your profile.", image: "/p1.jpg" },
+  { step: "03", title: "Legal Process", description: "Seamless handling of all Omani property laws and documentation.", image: "/legal.jpg" },
+  { step: "04", title: "Purchase", description: "Secure and transparent transaction process with full support.", image: "/purchase.jpg" },
+  { step: "05", title: "Ownership", description: "Handover of your prestigious asset and residency qualification.", image: "/ownership.jpg" },
+  { step: "06", title: "After-Sales", description: "Comprehensive portfolio management and rental assistance.", image: "/after-sale.jpg" },
 ];
 
 export default function InvestorJourney() {
@@ -62,15 +63,27 @@ export default function InvestorJourney() {
 
         {steps.map((step, i) => (
           <div key={i} className="flex-shrink-0 w-[400px] group">
-            <div className="relative h-[500px] w-full">
-              <div className="absolute -top-10 left-0 text-8xl font-serif text-gold/10 select-none">
+            <div className="relative h-[500px] w-full rounded-3xl overflow-hidden shadow-xl ">
+              {/* Background Image */}
+              <Image
+                src={step.image}
+                alt={step.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+
+              {/* Gradient Overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/20 to-transparent" />
+
+              <div className="absolute top-0 left-0 p-8 text-8xl font-serif text-warm-white select-none">
                 {step.step}
               </div>
-              <div className="relative z-10 h-full flex flex-col justify-end p-8 bg-warm-white border-l-4 border-gold transition-all duration-500 group-hover:bg-champagne">
-                <h3 className="text-2xl font-serif text-matte-black mb-4 uppercase tracking-wide">
+
+              <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col justify-end transition-all duration-500 ">
+                <h3 className="text-2xl font-serif text-ivory mb-4 uppercase tracking-wide">
                   {step.title}
                 </h3>
-                <p className="text-matte-black/60 text-sm leading-relaxed font-light">
+                <p className="text-ivory/70 text-sm leading-relaxed font-light">
                   {step.description}
                 </p>
               </div>

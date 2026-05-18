@@ -3,18 +3,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function FinalCTA() {
   return (
     <section className="relative h-[80vh] w-full overflow-hidden flex items-center justify-center">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-matte-black/70 z-10" />
-        <video
-          autoPlay
-          loop
-          muted
-          className="h-full w-full object-cover"
-          src="https://alwalaaoman.com/wp-content/uploads/2025/02/1.webp" // using image as fallback for video feel
+        {/* Cinematic Overlay */}
+        <div className="absolute inset-0 bg-matte-black/60 z-10" />
+
+        <Image
+          src="/p4.jpg"
+          alt="Luxury Oman Property Background"
+          fill
+          className="object-cover "
+          priority
         />
       </div>
 
