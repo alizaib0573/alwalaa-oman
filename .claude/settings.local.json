@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:alwalaaoman.com)"
+      "WebFetch(domain:alwalaaoman.com)",
+      "Bash(curl *)"
     ]
   }
 }

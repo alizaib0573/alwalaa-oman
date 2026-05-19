@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { name: "Home", href: "/" },
   {
-    name: "Developments",
+    name: "Properties",
     href: "/projects",
     children: [
       { name: "Sultan Haitham City", href: "/projects/sultan-haitham" },
@@ -18,11 +18,12 @@ const navLinks = [
       { name: "Jebel Sifah", href: "/projects/jebel-sifah" },
     ]
   },
+  { name: "Blogs", href: "/blog" },
   { name: "About", href: "/about" },
   { name: "Careers", href: "/careers" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ forceBlack = false }: { forceBlack?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -35,94 +36,107 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
-    <nav
-      className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-500 px-6 py-4",
-        isScrolled
-          ? "bg-ivory/80 backdrop-blur-md py-3 shadow-sm"
-          : "bg-transparent py-6"
-      )}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="relative z-50 group">
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            className="flex items-center"
-          >
-            <img
-              src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
-              alt="Alwalaa Logo"
-              className="h-10 w-auto object-contain"
-            />
-          </motion.div>
-        </Link>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <div
-              key={link.name}
-              className="relative group"
-              onMouseEnter={() => setActiveMenu(link.name)}
-              onMouseLeave={() => setActiveMenu(null)}
+    <>
+      <nav
+        className={cn(
+          "fixed top-0 w-full z-50 transition-all duration-500 px-6 py-4",
+          isScrolled
+            ? "bg-ivory/80 backdrop-blur-md py-3 shadow-sm"
+            : "bg-transparent py-6"
+        )}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="relative z-50 group">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="flex items-center"
             >
-              <Link
-                href={link.href}
-                className={cn(
-                  "text-sm font-medium uppercase tracking-widest transition-colors duration-300 hover:text-gold",
-                  isScrolled ? "text-matte-black" : "text-gold"
-                )}
-              >
-                {link.name}
-                {link.children && <ChevronDown className="inline-block ml-1 w-4 h-4" />}
-              </Link>
-
-              {/* Mega Menu */}
-              <AnimatePresence>
-                {link.children && activeMenu === link.name && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    className="absolute top-full left-0 mt-4 w-64 bg-ivory border border-champagne p-6 shadow-xl"
-                  >
-                    <div className="grid gap-4">
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.name}
-                          href={child.href}
-                          className="text-xs uppercase tracking-wider text-matte-black hover:text-gold transition-colors"
-                        >
-                          {child.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-
-          <Link
-            href="#contact"
-            className="bg-matte-black text-ivory px-6 py-2 text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-300"
-          >
-            Inquire Now
+              <img
+                src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
+                alt="Alwalaa Logo"
+                className="h-10 w-auto object-contain"
+              />
+            </motion.div>
           </Link>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <div
+                key={link.name}
+                className="relative group"
+                onMouseEnter={() => setActiveMenu(link.name)}
+                onMouseLeave={() => setActiveMenu(null)}
+              >
+                <Link
+                  href={link.href}
+                  className={cn(
+                    "text-sm font-medium uppercase tracking-widest transition-colors duration-300 hover:text-gold",
+                    forceBlack ? "text-matte-black" : (isScrolled ? "text-matte-black" : "text-gold")
+                  )}
+                >
+                  {link.name}
+                  {link.children && <ChevronDown className="inline-block ml-1 w-4 h-4" />}
+                </Link>
+
+                {/* Mega Menu */}
+                <AnimatePresence>
+                  {link.children && activeMenu === link.name && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute top-full left-0 mt-4 w-64 bg-ivory border border-champagne p-6 shadow-xl"
+                    >
+                      <div className="grid gap-4">
+                        {link.children.map((child) => (
+                          <Link
+                            key={child.name}
+                            href={child.href}
+                            className="text-xs uppercase tracking-wider text-matte-black hover:text-gold transition-colors"
+                          >
+                            {child.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+
+            <Link
+              href="#contact"
+              className="bg-matte-black text-ivory px-6 py-2 text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-300"
+            >
+              Inquire Now
+            </Link>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden z-[70] relative"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X /> : <Menu />}
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden z-50"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Nav Overlay - Moved outside <nav> to prevent clipping/scrolling issues */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -130,7 +144,7 @@ export default function Navbar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 20, stiffness: 100 }}
-            className="fixed inset-0 bg-ivory z-40 flex flex-col items-center justify-center gap-8"
+            className="fixed inset-0 bg-ivory z-[55] flex flex-col items-center justify-center gap-8 overflow-hidden"
           >
             {navLinks.map((link) => (
               <Link
@@ -152,6 +166,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 }
