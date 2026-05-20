@@ -19,7 +19,13 @@ interface BlogContentProps {
     featuredImage: string;
     content: string;
   };
-  relatedArticles: typeof blogData; // This needs a better type
+ relatedArticles: {
+  slug: string;
+  title: string;
+  image: string;
+  date: string;
+  category: string;
+}[];
 }
 
 // Note: I'll just pass a generic array for related articles
