@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,12 +11,12 @@ const navLinks = [
   { name: "Home", href: "/" },
   {
     name: "Properties",
-    href: "/projects",
+    href: "/properties",
     children: [
-      { name: "Sultan Haitham City", href: "/projects/sultan-haitham" },
-      { name: "Al Mouj", href: "/projects/al-mouj" },
-      { name: "Muscat Bay", href: "/projects/muscat-bay" },
-      { name: "Jebel Sifah", href: "/projects/jebel-sifah" },
+      { name: "Sultan Haitham City", href: "/properties/sultan-haitham" },
+      { name: "Al Mouj", href: "/properties/al-mouj" },
+      { name: "Muscat Bay", href: "/properties/muscat-bay" },
+      { name: "Jebel Sifah", href: "/properties/jebel-sifah" },
     ]
   },
   { name: "Blogs", href: "/blog" },
@@ -51,7 +52,7 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
     <>
       <nav
         className={cn(
-          "fixed top-0 w-full z-50 transition-all duration-500 px-6 py-4",
+          "fixed top-0 w-full z-[60] transition-all duration-500 px-6 py-4",
           isScrolled
             ? "bg-ivory/80 backdrop-blur-md py-3 shadow-sm"
             : "bg-transparent py-6"
@@ -64,10 +65,12 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
               whileHover={{ scale: 1.02 }}
               className="flex items-center"
             >
-              <img
+              <Image
                 src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
                 alt="Alwalaa Logo"
-                className="h-10 w-auto object-contain"
+                width={180}
+                height={50}
+                className="h-15 w-auto object-contain"
               />
             </motion.div>
           </Link>

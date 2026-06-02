@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const destinations = [
@@ -50,10 +51,11 @@ export default function SignatureDestinations() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 1.5, ease: "easeOut" }}
               >
-                <img
+                <Image
                   src={dest.img}
                   alt={dest.name}
-                  className="h-full w-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700"
+                  fill
+                  className="object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-matte-black/80 via-transparent to-transparent" />
               </motion.div>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const stats = [
   { label: "Expected ROI", value: "8-12%", description: "Strong yields in prime coastal and urban areas." },
@@ -56,10 +57,11 @@ export default function WhyInvestOman() {
               viewport={{ once: true }}
               className="absolute inset-0 z-0"
             >
-              <img
+              <Image
                 src="/p5.jpg"
                 alt="Oman Architecture"
-                className="h-full w-full object-cover grayscale-[0.2] contrast-125"
+                fill
+                className="object-cover grayscale-[0.2] contrast-125"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-matte-black via-transparent to-transparent" />
             </motion.div>

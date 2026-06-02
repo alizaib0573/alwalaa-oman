@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Camera, Mail } from "lucide-react";
 
@@ -10,9 +11,11 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
         {/* Brand Section */}
         <div className="space-y-8">
-          <img
+          <Image
             src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
             alt="Alwalaa Logo"
+            width={180}
+            height={45}
             className="h-12 w-auto invert brightness-0 invert"
           />
           <p className="text-champagne text-sm leading-relaxed max-w-xs">

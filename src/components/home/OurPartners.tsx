@@ -51,14 +51,14 @@ export default function OurPartners() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group relative w-full max-w-[280px] aspect-[4/3] flex flex-col items-center justify-center p-6 rounded-3xl bg-white border border-champagne/30 shadow-sm hover:shadow-xl hover:shadow-gold/5 transition-all duration-700 cursor-pointer"
+              className="group relative w-full max-w-[450px] aspect-[4/5] flex flex-col items-center justify-center p-8 rounded-3xl bg-white border border-champagne/30 shadow-sm hover:shadow-xl hover:shadow-gold/5 transition-all duration-700 cursor-pointer"
             >
               {/* Soft Blur Background Effect */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-gold/5 via-transparent to-champagne/10 rounded-3xl" />
 
               {/* Logo / Name */}
-              <div className="relative z-10 flex flex-col items-center justify-center h-full w-full gap-4">
-                <div className="relative w-full h-32 transition-all duration-500 group-hover:scale-110">
+              <div className="relative z-10 flex flex-col items-center justify-center h-full w-full gap-8">
+                <div className="relative w-full h-72 transition-all duration-500 group-hover:scale-110">
                   <Image
                     src={partner.logo}
                     alt={partner.name}
@@ -67,10 +67,10 @@ export default function OurPartners() {
                   />
                 </div>
                 <div className="text-center">
-                  <div className="text-matte-black/40 group-hover:text-gold transition-colors duration-500 font-serif text-base md:text-lg font-medium tracking-tight">
+                  <div className="text-matte-black/40 group-hover:text-gold transition-colors duration-500 font-serif text-xl md:text-2xl font-medium tracking-tight">
                     {partner.name}
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-matte-black/30 group-hover:text-matte-black/60 transition-colors duration-500 mt-1 font-medium">
+                  <div className="text-xs uppercase tracking-widest text-matte-black/30 group-hover:text-matte-black/60 transition-colors duration-500 mt-2 font-medium">
                     {partner.role}
                   </div>
                 </div>

@@ -16,7 +16,7 @@ import BuySellSection from "@/components/home/BuySellSection";
 export default function Home() {
   return (
     <main className="relative min-h-screen">
-      <Navbar />
+      <Navbar  />
 
       <Hero />
       <OurPartners />

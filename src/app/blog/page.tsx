@@ -32,7 +32,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-ivory text-matte-black">
-      <Navbar forceBlack />
+      <Navbar />
       <BlogHero />
 
       <BlogFilter

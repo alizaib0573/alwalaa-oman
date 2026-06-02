@@ -3,6 +3,7 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
@@ -70,10 +71,11 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="relative h-[600px]"
           >
-            <img
+            <Image
               src="/about.jpg"
               alt="Oman Luxury"
-              className="h-full w-full object-cover rounded-sm"
+              fill
+              className="object-cover rounded-sm"
             />
           </motion.div>
         </div>
@@ -98,11 +100,12 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="group relative p-12 bg-ivory text-center shadow-sm"
           >
-            <div className="w-48 h-48 mx-auto mb-8 overflow-hidden rounded-full">
-              <img
-                src="/ceo.webp" // Fallback to last asset
+            <div className="w-48 h-48 mx-auto mb-8 overflow-hidden rounded-full relative">
+              <Image
+                src="/ceo.webp"
                 alt="Eng. Humood Al-Adhari"
-                className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-700"
+                fill
+                className="object-cover group-hover:scale-110 transition-transform duration-700"
               />
             </div>
             <h3 className="text-3xl font-serif text-matte-black uppercase tracking-wide">

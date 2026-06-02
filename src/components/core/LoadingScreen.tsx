@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,9 +27,11 @@ export default function LoadingScreen() {
             transition={{ duration: 1 }}
             className="relative"
           >
-            <img
+            <Image
               src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
               alt="Alwalaa Logo"
+              width={200}
+              height={80}
               className="h-20 w-auto invert brightness-0 invert"
             />
             <motion.div

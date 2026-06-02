@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function CareersPage() {
   return (
@@ -71,8 +72,20 @@ export default function CareersPage() {
             viewport={{ once: true }}
             className="grid grid-cols-2 gap-4"
           >
-            <img src="https://alwalaaoman.com/wp-content/uploads/2025/02/2.webp" className="h-64 w-full object-cover rounded-sm" alt="Office" />
-            <img src="https://alwalaaoman.com/wp-content/uploads/2025/02/3.webp" className="h-64 w-full object-cover rounded-sm mt-12" alt="Team" />
+            <Image
+              src="https://alwalaaoman.com/wp-content/uploads/2025/02/2.webp"
+              width={500}
+              height={500}
+              className="h-64 w-full object-cover rounded-sm"
+              alt="Office"
+            />
+            <Image
+              src="https://alwalaaoman.com/wp-content/uploads/2025/02/3.webp"
+              width={500}
+              height={500}
+              className="h-64 w-full object-cover rounded-sm mt-12"
+              alt="Team"
+            />
           </motion.div>
         </div>
       </section>

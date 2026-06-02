@@ -1,36 +1,48 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const images = ["/p1.jpg", "/p2.jpg", "/p3.jpg", "/p4.jpg"];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Cinematic Background */}
+      {/* Cinematic Background Carousel */}
       <div className="absolute inset-0 z-0">
-        <motion.div
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 2.5, ease: "easeOut" }}
-          className="absolute inset-0 h-full w-full"
-        ><div className="absolute inset-0 z-0 overflow-hidden">
-  <iframe
-    className="absolute top-1/2 left-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 scale-125"
-    src="https://www.youtube.com/embed/mPdMWJdCbMQ?autoplay=1&mute=1&controls=0&loop=1&playlist=mPdMWJdCbMQ&playsinline=1"
-    title="Hero Background Video"
-    allow="autoplay; fullscreen"
-  />
-  <div className="absolute inset-0 bg-black/45" />
-</div>
-          {/* <img
-            src="/hero.jpg"
-            alt="Luxury Oman Real Estate"
-            className="h-full w-full object-cover"
-          /> */}
-          <div className="absolute inset-0 bg-gradient-to-b from-matte-black/40 via-transparent to-matte-black/60" />
-        </motion.div>
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              opacity: { duration: 2, ease: "linear" },
+              scale: { duration: 7, ease: "linear" }
+            }}
+            className="absolute inset-0 h-full w-full"
+          >
+            <Image
+              src={images[currentIndex]}
+              alt="Luxury Oman Real Estate"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-gradient-to-b from-matte-black/40 via-transparent to-matte-black/60" />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Content */}

@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Geist } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/core/SmoothScroll";
 import LoadingScreen from "@/components/core/LoadingScreen";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const playfair = Playfair_Display({
   variable: "--font-serif",
@@ -27,10 +25,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", playfair.variable, "font-sans", geist.variable)}
     >
       <body className="min-h-full flex flex-col">
-        <LoadingScreen />
         <SmoothScroll>
           {children}
         </SmoothScroll>

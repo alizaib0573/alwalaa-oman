@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const properties = [
   { name: "The Waterfront Villa", location: "Al Mouj", price: "From $1.2M", img: "/p1.jpg" },
@@ -43,10 +44,11 @@ export default function FeaturedProperties() {
               className="group relative h-[600px] overflow-hidden"
             >
               <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-110">
-                <img
+                <Image
                   src={prop.img}
                   alt={prop.name}
-                  className="h-full w-full object-cover"
+                  fill
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-transparent to-transparent opacity-80" />
               </div>

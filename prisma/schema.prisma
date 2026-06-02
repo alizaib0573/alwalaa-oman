@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PropertyType {
+  APARTMENT
+  VILLA
+  TOWNHOUSE
+  LAND
+}
+
+enum PropertyStatus {
+  FOR_SALE
+  FOR_RENT
+  SOLD
+  RENTED
+}
+
+enum AgentRole {
+  AGENT
+  ADMIN
+}
+
+enum InvestmentGrade {
+  A
+  B
+  C
+}
+
+model Community {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug        String     @unique
+  name        String
+  description String?    @db.Text
+  location    String
+  imageUrl    String?
+  featured    Boolean    @default(false)
+  metadata    Json?
+  properties  Property[]
+  createdAt   DateTime   @default(now())
+
+  @@map("communities")
+}
+
+model Agent {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String     @unique @db.Uuid
+  fullName   String
+  email      String     @unique
+  phone      String
+  bio        String?    @db.Text
+  avatarUrl  String?
+  role       AgentRole  @default(AGENT)
+  isActive   Boolean    @default(true)
+  properties Property[]
+  createdAt  DateTime   @default(now())
+
+  @@map("agents")
+}
+
+model Property {
+  id          String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug        String            @unique
+  title       String
+  description String            @db.Text
+  type        PropertyType
+  status      PropertyStatus
+  community   Community         @relation(fields: [communityId], references: [id])
+  communityId String            @db.Uuid
+  agent       Agent             @relation(fields: [agentId], references: [id])
+  agentId     String            @db.Uuid
+  price       Decimal           @db.Decimal(12, 2)
+  currency    String            @default("OMR")
+  bedrooms    Int?
+  bathrooms   Int?
+  areaSqm     Decimal?          @db.Decimal(10, 2)
+  gallery     String[]
+  amenities   String[]
+  coordinates Json?
+  featured    Boolean           @default(false)
+  metrics     InvestmentMetric?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt @default(now())
+
+  @@map("properties")
+}
+
+model InvestmentMetric {
+  id                   String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  property            Property        @relation(fields: [propertyId], references: [id])
+  propertyId          String          @unique @db.Uuid
+  expectedRentalYield  Decimal?        @db.Decimal(5, 2)
+  roiProjection        Decimal?        @db.Decimal(5, 2)
+  paymentPlanDetails   String?         @db.Text
+  investmentGrade      InvestmentGrade?
+  lastUpdated          DateTime        @default(now())
+
+  @@map("investment_metrics")
+}
