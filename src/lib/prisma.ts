@@ -1,20 +1,20 @@
-import { PrismaClient } from '@prisma/client';
-import dotenv from 'dotenv';
+import { PrismaClient } from "@prisma/client";
 
-dotenv.config({ path: '.env.local' });
-
-console.log('DEBUG: DATABASE_URL is', process.env.DATABASE_URL ? 'SET' : 'UNSET');
-
-const prismaClientSingleton = () => {
-  return new PrismaClient({});
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
 };
 
-declare global {
-  var prisma: ReturnType<typeof prismaClientSingleton>;
+export const prisma =
+  globalForPrisma.prisma ??
+  new PrismaClient({
+    log:
+      process.env.NODE_ENV === "development"
+        ? ["query", "error", "warn"]
+        : ["error"],
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
 }
 
-const prisma = globalThis.prisma ?? prismaClientSingleton();
-
 export default prisma;
-
-if (process.env.NODE_ENV !== 'production') globalThis.prisma = prisma;
