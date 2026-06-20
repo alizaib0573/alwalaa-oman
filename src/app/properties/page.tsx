@@ -1,20 +1,25 @@
-"use client";
+'use client';
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PropertyHero from "@/components/properties/PropertyHero";
 import PropertyFilters from "@/components/properties/PropertyFilters";
 import PropertyCard from "@/components/properties/PropertyCard";
-import { MOCK_PROPERTIES } from "@/lib/properties-data";
 import { PropertyFilters as FiltersType } from "@/types/property";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function PropertiesPage() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const [properties, setProperties] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FiltersType>({
     status: [],
     communities: [],
-    cities: [],
     type: [],
     minBeds: 1,
     maxBeds: 6,
@@ -27,18 +32,93 @@ export default function PropertiesPage() {
     sortBy: "Newest First",
   });
 
+  useEffect(() => {
+    const params = Object.fromEntries(searchParams.entries());
+
+    const newStatus = params.status ? params.status.split(",") : [];
+    const newCommunities = params.communities ? params.communities.split(",") : [];
+    const newType = params.type ? params.type.split(",") : [];
+    const newMinPrice = params.minPrice ? Number(params.minPrice) : null;
+    const newMaxPrice = params.maxPrice ? Number(params.maxPrice) : null;
+    const newSortBy = params.sortBy || "Newest First";
+
+    if (
+      JSON.stringify(newStatus) !== JSON.stringify(filters.status) ||
+      JSON.stringify(newCommunities) !== JSON.stringify(filters.communities) ||
+      JSON.stringify(newType) !== JSON.stringify(filters.type) ||
+      newMinPrice !== filters.minPrice ||
+      newMaxPrice !== filters.maxPrice ||
+      newSortBy !== filters.sortBy
+    ) {
+      setFilters(prev => ({
+        ...prev,
+        status: newStatus,
+        communities: newCommunities,
+        type: newType,
+        minPrice: newMinPrice,
+        maxPrice: newMaxPrice,
+        sortBy: newSortBy,
+      }));
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (filters.status.length > 0) params.set("status", filters.status.join(","));
+    if (filters.communities.length > 0) params.set("communities", filters.communities.join(","));
+    if (filters.type.length > 0) params.set("type", filters.type.join(","));
+    if (filters.minPrice) params.set("minPrice", filters.minPrice.toString());
+    if (filters.maxPrice) params.set("maxPrice", filters.maxPrice.toString());
+    if (filters.sortBy !== "Newest First") params.set("sortBy", filters.sortBy);
+
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
+  }, [filters, pathname, replace]);
+
+  useEffect(() => {
+    async function fetchProperties() {
+      setIsLoading(true);
+      try {
+        const params = new URLSearchParams();
+        if (filters.status.length > 0) params.set('status', filters.status[0]); // Simplified for API
+        if (filters.type.length > 0) params.set('type', filters.type[0]);
+        if (filters.minPrice) params.set('minPrice', filters.minPrice.toString());
+        if (filters.maxPrice) params.set('maxPrice', filters.maxPrice.toString());
+        if (filters.communities.length > 0) params.set('communityId', filters.communities[0]);
+
+        const res = await fetch(`/api/properties?${params.toString()}`);
+        const data = await res.json();
+
+        // Transform Prisma data to PropertyUI
+        const mapped = data.map((p: any) => ({
+          ...p,
+          location: p.community?.location || p.location,
+          community: p.community?.name || '',
+          images: p.gallery || [],
+          area: Number(p.areaSqm),
+        }));
+
+        setProperties(mapped);
+      } catch (e) {
+        console.error('Failed to fetch properties', e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchProperties();
+  }, [filters]);
+
   const filteredProperties = useMemo(() => {
-    return MOCK_PROPERTIES.filter(prop => {
+    return properties.filter(prop => {
       if (filters.status.length > 0 && !filters.status.includes(prop.status as any)) return false;
       if (filters.type.length > 0 && !filters.type.includes(prop.type as any)) return false;
-      if (filters.cities.length > 0 && !filters.cities.includes(prop.city)) return false;
+      if (filters.communities.length > 0 && !filters.communities.includes(prop.community)) return false;
       if (filters.minPrice && prop.price < filters.minPrice) return false;
       if (filters.maxPrice && prop.price > filters.maxPrice) return false;
       if (filters.minBeds && prop.bedrooms < filters.minBeds) return false;
       if (filters.maxBeds && prop.bedrooms > filters.maxBeds) return false;
       return true;
     });
-  }, [filters]);
+  }, [filters, properties]);
 
   return (
     <main className="min-h-screen bg-ivory">
@@ -47,10 +127,10 @@ export default function PropertiesPage() {
       <PropertyHero />
 
       <div className="max-w-7xl mx-auto px-6 py-24">
-        <div className="flex flex-col lg:flex-row gap-16">
+        <div className="space-y-12">
           <PropertyFilters filters={filters} setFilters={setFilters} />
 
-          <div className="flex-1 space-y-12">
+          <div className="space-y-12">
             <div className="flex justify-between items-center">
               <p className="text-sm text-matte-black/60 font-light">
                 Showing <span className="text-matte-black font-medium">{filteredProperties.length}</span> exceptional properties
@@ -71,19 +151,25 @@ export default function PropertiesPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
-              {filteredProperties.map((prop, index) => (
-                <PropertyCard key={prop.id} property={prop} index={index} />
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+              {isLoading ? (
+                <div className="col-span-full py-20 text-center text-matte-black/40 animate-pulse">
+                  Loading the collection...
+                </div>
+              ) : (
+                filteredProperties.map((prop, index) => (
+                  <PropertyCard key={prop.id} property={prop} index={index} />
+                ))
+              )}
             </div>
 
-            {filteredProperties.length === 0 && (
+            {!isLoading && filteredProperties.length === 0 && (
               <div className="py-32 text-center space-y-4">
                 <h3 className="text-3xl font-serif text-matte-black">No Properties Found</h3>
                 <p className="text-matte-black/60 font-light">We couldn't find any properties matching your current filters.</p>
                 <button
                   onClick={() => setFilters({
-                    status: [], communities: [], cities: [], type: [],
+                    status: [], communities: [], type: [],
                     minBeds: 1, maxBeds: 6, minBaths: 1, maxBaths: 6,
                     minPrice: null, maxPrice: null, minArea: null, maxArea: null,
                     sortBy: "Newest First"

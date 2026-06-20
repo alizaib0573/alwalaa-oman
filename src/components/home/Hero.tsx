@@ -56,7 +56,7 @@ export default function Hero() {
           <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block">
             Welcome to Excellence
           </span>
-          <h1 className="text-5xl md:text-8xl font-serif text-ivory leading-tight mb-8">
+          <h1 className="text-5xl md:text-8xl 2xl:text-9xl font-serif text-ivory leading-tight mb-8">
             Invest in Oman&apos;s <br />
             <span className="italic">Most Prestigious</span> Properties
           </h1>

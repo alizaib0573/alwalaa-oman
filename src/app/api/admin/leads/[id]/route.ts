@@ -1,0 +1,40 @@
+import { NextResponse } from 'next/server';
+import { leadService } from '@/services/lead.service';
+import { z } from 'zod';
+
+const leadUpdateSchema = z.object({
+  status: z.enum(['NEW', 'CONTACTED', 'QUALIFIED', 'ARCHIVED']),
+}).partial();
+
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+  try {
+    // TODO: Add auth check (Task 5)
+    const id = params.id;
+    const body = await request.json();
+    const validatedData = leadUpdateSchema.parse(body);
+
+    if (validatedData.status) {
+      await leadService.updateStatus(id, validatedData.status);
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
+    console.error('[ADMIN_LEADS_PATCH]', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  try {
+    // TODO: Add auth check (Task 5)
+    const id = params.id;
+    await leadService.delete(id);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('[ADMIN_LEADS_DELETE]', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}

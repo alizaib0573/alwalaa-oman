@@ -5,11 +5,17 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --ivory: #FDFCFB;
-  --warm-white: #F5F5F5;
+  --ivory: #F7F5F0;
+  --warm-white: #FDFCFB;
   --champagne: #E7D8C9;
   --gold: #C5A059;
   --matte-black: #1A1A1A;
+  --gold-primary: #C7A75A;
+  --gold-light: #D8BD78;
+  --gold-dark: #A8873D;
+  --luxury-black: #0F0F10;
+  --charcoal: #17181A;
+  --luxury-border: rgba(199,167,90,0.18);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -52,6 +58,12 @@
   --color-champagne: var(--champagne);
   --color-gold: var(--gold);
   --color-matte-black: var(--matte-black);
+  --color-gold-primary: var(--gold-primary);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-luxury-black: var(--luxury-black);
+  --color-charcoal: var(--charcoal);
+  --color-luxury-border: var(--luxury-border);
   --font-sans: var(--font-sans);
   --font-serif: 'Playfair Display', serif;
   --font-heading: var(--font-sans);
@@ -138,6 +150,22 @@ h1, h2, h3, h4, .luxury-serif {
 }
 
 @layer base {
+  html.lenis {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overflow: inherit !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden !important;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }

@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: 'alwalaaoman.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'jribpfntcosbyntbyvsg.supabase.co',
+        pathname: '/**',
+      },
     ],
   },
 };

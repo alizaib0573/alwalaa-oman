@@ -6,7 +6,9 @@
       "Bash(curl *)",
       "Bash(npm install *)",
       "Bash(npx prisma *)",
-      "Bash(npx tsx *)"
+      "Bash(npx tsx *)",
+      "Bash(npm list *)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }

@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
 import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,28 +23,55 @@ export default function InvestorJourney() {
   useEffect(() => {
     const section = sectionRef.current;
     const trigger = triggerRef.current;
-
     if (!section || !trigger) return;
 
-    const totalWidth = section.scrollWidth;
-    const windowWidth = window.innerWidth;
+    const setup = () => {
+      const totalWidth = section.scrollWidth;
+      const windowWidth = window.innerWidth;
 
-    gsap.to(section, {
-      x: -(totalWidth - windowWidth),
-      ease: "none",
-      scrollTrigger: {
-        trigger: trigger,
-        start: "top top",
-        end: `+=${totalWidth}`,
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-      },
-    });
+      const ctx = gsap.context(() => {
+        gsap.to(section, {
+          x: -(totalWidth - windowWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: trigger,
+            start: "top top",
+            end: `+=${totalWidth}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+
+      ScrollTrigger.refresh();
+
+      return ctx;
+    };
+
+    let ctx: gsap.Context | undefined;
+
+    const handleLoad = () => { ctx = setup(); };
+    const handleResize = () => { ScrollTrigger.refresh(); };
+
+    if (document.readyState === "complete") {
+      ctx = setup();
+    } else {
+      addEventListener("load", handleLoad);
+    }
+
+    addEventListener("resize", handleResize);
+
+    return () => {
+      if (ctx) ctx.revert();
+      removeEventListener("load", handleLoad);
+      removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
-    <div ref={triggerRef} className="overflow-hidden">
+    <div ref={triggerRef} className="relative overflow-hidden">
       <div
         ref={sectionRef}
         className="flex h-screen items-center gap-20 px-20 bg-ivory"
@@ -63,23 +89,18 @@ export default function InvestorJourney() {
 
         {steps.map((step, i) => (
           <div key={i} className="flex-shrink-0 w-[400px] group">
-            <div className="relative h-[500px] w-full rounded-3xl overflow-hidden shadow-xl ">
-              {/* Background Image */}
+            <div className="relative h-[500px] w-full rounded-3xl overflow-hidden shadow-xl">
               <Image
                 src={step.image}
                 alt={step.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
-
-              {/* Gradient Overlay for text readability */}
               <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/20 to-transparent" />
-
               <div className="absolute top-0 left-0 p-8 text-8xl font-serif text-warm-white select-none">
                 {step.step}
               </div>
-
-              <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col justify-end transition-all duration-500 ">
+              <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col justify-end transition-all duration-500">
                 <h3 className="text-2xl font-serif text-ivory mb-4 uppercase tracking-wide">
                   {step.title}
                 </h3>

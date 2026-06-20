@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", playfair.variable, "font-sans", geist.variable)}
+      className={cn("antialiased", playfair.variable, "font-sans", geist.variable)}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex flex-col">
         <SmoothScroll>
           {children}
         </SmoothScroll>

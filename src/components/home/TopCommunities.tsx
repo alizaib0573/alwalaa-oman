@@ -1,54 +1,10 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-
-const communities = [
-  {
-    name: "Al Mouj",
-    description: "Prestigious waterfront communities and world-class golf living.",
-    image: "/p3.jpg",
-    tag: "Waterfront Luxury",
-    layout: "wide",
-  },
-  {
-    name: "Muscat Bay",
-    description: "A flagship destination combining mountain peaks with turquoise waters.",
-    image: "/p4.jpg",
-    tag: "Exclusive Retreat",
-    layout: "tall",
-  },
-  {
-    name: "Sultan Haitham City",
-    description: "Oman's visionary urban future, blending sustainability with modernism.",
-    image: "/p5.jpg",
-    tag: "Urban Vision",
-    layout: "square",
-  },
-  {
-    name: "Jebel Sifah",
-    description: "A serene escape where nature meets a vibrant city lifestyle.",
-    image: "/p1.jpg",
-    tag: "Coastal Serenity",
-    layout: "slim",
-  },
-  {
-    name: "Sustainable City",
-    description: "Eco-smart community prioritizing zero-carbon luxury homes.",
-    image: "/p2.jpg",
-    tag: "Eco-Innovation",
-    layout: "square",
-  },
-  {
-    name: "Qurum",
-    description: "Where elegance meets vibrant city living in the heart of Muscat.",
-    image: "/p3.jpg",
-    tag: "Urban Elegance",
-    layout: "tall",
-  },
-];
+import Link from "next/link";
 
 const layoutMap = {
   wide: "md:col-span-3 row-span-2",
@@ -58,6 +14,24 @@ const layoutMap = {
 };
 
 export default function TopCommunities() {
+  const [communities, setCommunities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchCommunities() {
+      try {
+        const res = await fetch('/api/communities');
+        const data = await res.json();
+        setCommunities(data);
+      } catch (e) {
+        console.error('Failed to fetch communities', e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchCommunities();
+  }, []);
+
   return (
     <section className="relative py-24 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -85,47 +59,68 @@ export default function TopCommunities() {
 
         {/* Editorial Masonry Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 grid-flow-dense gap-6 auto-rows-[250px]">
-          {communities.map((community, index) => (
-            <motion.div
-              key={community.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={cn(
-                "group relative overflow-hidden rounded-3xl cursor-pointer",
-                layoutMap[community.layout as keyof typeof layoutMap] || "md:col-span-2 row-span-1"
-              )}
-            >
-              {/* Image with Zoom Effect */}
-              <Image
-                src={community.image}
-                alt={community.name}
-                fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
+          {isLoading ? (
+            <div className="col-span-full py-20 text-center text-zinc-400 animate-pulse">
+              Curating exclusive enclaves...
+            </div>
+          ) : communities.length === 0 ? (
+            <div className="col-span-full py-20 text-center text-zinc-400">
+              No communities available at the moment.
+            </div>
+          ) : (
+            communities.map((community: any, index: number) => {
+              // Since DB doesn't have layout, we assign one based on index or random
+              const layouts = ['wide', 'tall', 'square', 'slim'];
+              const layout = layouts[index % 4];
 
-              {/* Premium Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-              {/* Content Overlay */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end text-ivory">
-                <motion.div
-                  className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+              return (
+                <Link
+                  key={community.id}
+                  href={`/communities/${community.slug}`}
+                  className={cn(
+                    "group relative overflow-hidden rounded-3xl cursor-pointer block h-full",
+                    layoutMap[layout as keyof typeof layoutMap] || "md:col-span-2 row-span-1"
+                  )}
                 >
-                  <span className="text-gold text-[10px] uppercase tracking-widest font-bold mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    {community.tag}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl font-serif mb-2 group-hover:text-gold transition-colors duration-500">
-                    {community.name}
-                  </h3>
-                  <p className="text-sm text-ivory/60 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 translate-y-2 group-hover:translate-y-0">
-                    {community.description}
-                  </p>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="relative w-full h-full"
+                  >
+                    {/* Image with Zoom Effect */}
+                    <Image
+                      src={community.imageUrl || '/placeholder.jpg'}
+                      alt={community.name}
+                      fill
+                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+
+                    {/* Premium Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 p-8 flex flex-col justify-end text-ivory">
+                      <motion.div
+                        className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                      >
+                        <span className="text-gold text-[10px] uppercase tracking-widest font-bold mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                          Exclusive Enclave
+                        </span>
+                        <h3 className="text-2xl md:text-3xl font-serif mb-2 group-hover:text-gold transition-colors duration-500">
+                          {community.name}
+                        </h3>
+                        <p className="text-sm text-ivory/60 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 translate-y-2 group-hover:translate-y-0">
+                          {community.description}
+                        </p>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </Link>
+              );
+            })
+          )}
         </div>
 
         {/* Bottom Explore Link */}

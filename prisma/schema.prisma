@@ -11,14 +11,20 @@ enum PropertyType {
   APARTMENT
   VILLA
   TOWNHOUSE
+  PENTHOUSE
+  DUPLEX
+  STUDIO
+  COMMERCIAL
   LAND
+  OFFICE
+  RETAIL
 }
 
 enum PropertyStatus {
+  OFF_PLAN
+  UNDER_CONSTRUCTION
+  READY_TO_MOVE
   FOR_SALE
-  FOR_RENT
-  SOLD
-  RENTED
 }
 
 enum AgentRole {
@@ -70,6 +76,8 @@ model Property {
   description String            @db.Text
   type        PropertyType
   status      PropertyStatus
+  city        String
+  location    String
   community   Community         @relation(fields: [communityId], references: [id])
   communityId String            @db.Uuid
   agent       Agent             @relation(fields: [agentId], references: [id])
@@ -86,6 +94,7 @@ model Property {
   metrics     InvestmentMetric?
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt @default(now())
+  leads       Lead[]
 
   @@map("properties")
 }
@@ -101,4 +110,26 @@ model InvestmentMetric {
   lastUpdated          DateTime        @default(now())
 
   @@map("investment_metrics")
+}
+
+model Lead {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  email       String
+  phone       String
+  propertyId String?   @db.Uuid
+  property    Property? @relation(fields: [propertyId], references: [id])
+  message     String   @db.Text
+  status      LeadStatus @default(NEW)
+  createdAt   DateTime @default(now())
+
+  @@map("leads")
+}
+
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  ARCHIVED
 }

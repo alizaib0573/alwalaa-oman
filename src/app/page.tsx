@@ -12,6 +12,7 @@ import ChooseProperty from "@/components/home/ChooseProperty";
 import TopCommunities from "@/components/home/TopCommunities";
 import WhoWeAre from "@/components/home/WhoWeAre";
 import BuySellSection from "@/components/home/BuySellSection";
+import TeamSection from "@/components/home/TeamSection";
 
 export default function Home() {
   return (
@@ -19,8 +20,8 @@ export default function Home() {
       <Navbar  />
 
       <Hero />
-      <OurPartners />
-      <SignatureDestinations />
+      
+      {/* <SignatureDestinations /> */}
       <WhyInvestOman />
       
 
@@ -28,11 +29,13 @@ export default function Home() {
       <ChooseProperty />
      
       <WhoWeAre />
+      <TeamSection />
       <BuySellSection />
 
-      <InvestorJourney />
+      {/* <InvestorJourney /> */}
       <TrustSection />
       <FeaturedProperties />
+      <OurPartners />
       <FinalCTA />
 
       <Footer />

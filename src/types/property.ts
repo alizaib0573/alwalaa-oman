@@ -61,7 +61,6 @@ export interface AgentWithProperties extends Agent {
 export interface PropertyFilters {
   status: PropertyStatus[];
   communities: string[];
-  cities: string[];
   type: PropertyType[];
   minBeds: number;
   maxBeds: number;
