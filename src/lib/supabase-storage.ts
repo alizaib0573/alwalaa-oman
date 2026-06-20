@@ -1,9 +1,15 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+let _supabaseAdmin: SupabaseClient | null = null;
 
-export const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
+function getSupabaseAdmin() {
+  if (!_supabaseAdmin) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+    _supabaseAdmin = createClient(supabaseUrl, supabaseKey);
+  }
+  return _supabaseAdmin;
+}
 
 export const storageService = {
   /**
@@ -15,7 +21,7 @@ export const storageService = {
     const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
     const filePath = `properties/${slug}/${fileName}`;
 
-    const { data, error } = await supabaseAdmin.storage
+    const { data, error } = await getSupabaseAdmin().storage
       .from('real-estate')
       .upload(filePath, file);
 
@@ -27,7 +33,7 @@ export const storageService = {
    * Deletes a file from storage
    */
   async deleteImage(path: string) {
-    const { data, error } = await supabaseAdmin.storage
+    const { data, error } = await getSupabaseAdmin().storage
       .from('real-estate')
       .remove([path]);
 
@@ -39,7 +45,7 @@ export const storageService = {
    * Returns the public URL for a stored image
    */
   getPublicUrl(path: string) {
-    const { data } = supabaseAdmin.storage
+    const { data } = getSupabaseAdmin().storage
       .from('real-estate')
       .getPublicUrl(path);
 
