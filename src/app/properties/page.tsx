@@ -122,10 +122,10 @@ function PropertiesContent() {
       if (filters.status.length > 0 && !filters.status.includes(prop.status as any)) return false;
       if (filters.type.length > 0 && !filters.type.includes(prop.type as any)) return false;
       if (filters.communities.length > 0 && !filters.communities.includes(prop.community)) return false;
-      if (filters.minPrice && prop.price < filters.minPrice) return false;
-      if (filters.maxPrice && prop.price > filters.maxPrice) return false;
-      if (filters.minBeds && prop.bedrooms < filters.minBeds) return false;
-      if (filters.maxBeds && prop.bedrooms > filters.maxBeds) return false;
+      if (filters.minPrice != null && prop.price != null && prop.price < filters.minPrice) return false;
+      if (filters.maxPrice != null && prop.price != null && prop.price > filters.maxPrice) return false;
+      if (prop.bedrooms && filters.minBeds && prop.bedrooms < filters.minBeds) return false;
+      if (prop.bedrooms && filters.maxBeds && prop.bedrooms > filters.maxBeds) return false;
       return true;
     });
   }, [filters, properties]);

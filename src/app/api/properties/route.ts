@@ -9,7 +9,7 @@ export async function GET(request: Request) {
       type: searchParams.get('type') as any,
       status: searchParams.get('status') as any,
       communityId: searchParams.get('communityId') || undefined,
-      featured: searchParams.get('featured') === 'true',
+      featured: searchParams.has('featured') ? searchParams.get('featured') === 'true' : undefined,
       minPrice: searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined,
       maxPrice: searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined,
       search: searchParams.get('search') || undefined,

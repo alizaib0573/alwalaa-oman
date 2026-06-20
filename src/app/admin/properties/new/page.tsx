@@ -39,8 +39,8 @@ export default function NewPropertyPage() {
     agentId: '',
     price: 0,
     currency: 'OMR',
-    bedrooms: 0,
-    bathrooms: 0,
+    bedrooms: null,
+    bathrooms: null,
     areaSqm: 0,
     featured: false,
     coordinates: { lat: 0, lng: 0 },
@@ -367,7 +367,7 @@ export default function NewPropertyPage() {
                   <input
                     type="number"
                     name="bedrooms"
-                    value={formData.bedrooms}
+                    value={formData.bedrooms ?? ''}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
                   />
@@ -379,7 +379,7 @@ export default function NewPropertyPage() {
                   <input
                     type="number"
                     name="bathrooms"
-                    value={formData.bathrooms}
+                    value={formData.bathrooms ?? ''}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
                   />
@@ -393,7 +393,7 @@ export default function NewPropertyPage() {
                 <input
                   type="number"
                   name="areaSqm"
-                  value={formData.areaSqm}
+                  value={formData.areaSqm ?? ''}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
                 />
