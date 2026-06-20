@@ -10,10 +10,10 @@ const communityUpdateSchema = z.object({
   featured: z.boolean().optional(),
 }).partial();
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // TODO: Add auth check (Task 5)
-    const id = params.id;
+    const { id } = await params;
     const body = await request.json();
     const validatedData = communityUpdateSchema.parse(body);
     const community = await communityService.update(id, validatedData);
@@ -27,10 +27,10 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // TODO: Add auth check (Task 5)
-    const id = params.id;
+    const { id } = await params;
     await communityService.delete(id);
     return NextResponse.json({ success: true });
   } catch (error) {
@@ -39,10 +39,11 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   }
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // TODO: Add auth check (Task 5)
-    const community = await communityService.getById(params.id);
+    const { id } = await params;
+    const community = await communityService.getById(id);
     if (!community) {
       return NextResponse.json({ error: 'Community not found' }, { status: 404 });
     }
