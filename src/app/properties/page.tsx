@@ -94,10 +94,12 @@ function PropertiesContent() {
         if (filters.communities.length > 0) params.set('communityId', filters.communities[0]);
 
         const res = await fetch(`/api/properties?${params.toString()}`);
+        if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
+        const arr = Array.isArray(data) ? data : [];
 
         // Transform Prisma data to PropertyUI
-        const mapped = data.map((p: any) => ({
+        const mapped = arr.map((p: any) => ({
           ...p,
           location: p.community?.location || p.location,
           community: p.community?.name || '',

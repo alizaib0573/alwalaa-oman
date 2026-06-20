@@ -6,15 +6,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function FeaturedProperties() {
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchFeatured() {
       try {
         const res = await fetch('/api/properties?featured=true');
+        if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
-        setProperties(data);
+        setProperties(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error('Failed to fetch featured properties', e);
       } finally {

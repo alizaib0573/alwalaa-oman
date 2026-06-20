@@ -14,15 +14,16 @@ const layoutMap = {
 };
 
 export default function TopCommunities() {
-  const [communities, setCommunities] = useState([]);
+  const [communities, setCommunities] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCommunities() {
       try {
         const res = await fetch('/api/communities');
+        if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
-        setCommunities(data);
+        setCommunities(Array.isArray(data) ? data : []);
       } catch (e) {
         console.error('Failed to fetch communities', e);
       } finally {
