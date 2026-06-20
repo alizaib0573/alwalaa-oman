@@ -6,10 +6,10 @@ const leadUpdateSchema = z.object({
   status: z.enum(['NEW', 'CONTACTED', 'QUALIFIED', 'ARCHIVED']),
 }).partial();
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // TODO: Add auth check (Task 5)
-    const id = params.id;
+    const { id } = await params;
     const body = await request.json();
     const validatedData = leadUpdateSchema.parse(body);
 
@@ -20,17 +20,17 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     return NextResponse.json({ success: true });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
     console.error('[ADMIN_LEADS_PATCH]', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     // TODO: Add auth check (Task 5)
-    const id = params.id;
+    const { id } = await params;
     await leadService.delete(id);
     return NextResponse.json({ success: true });
   } catch (error) {

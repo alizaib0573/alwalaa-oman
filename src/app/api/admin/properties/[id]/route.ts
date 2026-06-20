@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import { propertyService } from '@/services/property.service';
 import { z } from 'zod';
+import { PropertyType, PropertyStatus } from '@prisma/client';
 
 const propertyUpdateSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
-  type: z.string().optional(),
-  status: z.string().optional(),
+  type: z.nativeEnum(PropertyType).optional(),
+  status: z.nativeEnum(PropertyStatus).optional(),
   city: z.string().optional(),
   location: z.string().optional(),
   communityId: z.string().uuid().optional(),
@@ -34,7 +35,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return NextResponse.json(property);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
     console.error('[ADMIN_PROPERTIES_PATCH]', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

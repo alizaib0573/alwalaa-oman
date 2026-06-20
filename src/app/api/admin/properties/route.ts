@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import { propertyService } from '@/services/property.service';
 import { z } from 'zod';
+import { Prisma, PropertyType, PropertyStatus } from '@prisma/client';
 
 const propertySchema = z.object({
   slug: z.string(),
   title: z.string(),
   description: z.string(),
-  type: z.string(),
-  status: z.string(),
+  type: z.nativeEnum(PropertyType),
+  status: z.nativeEnum(PropertyStatus),
   city: z.string(),
   location: z.string(),
   communityId: z.string().uuid(),
@@ -35,11 +36,19 @@ export async function POST(request: Request) {
     return NextResponse.json(property);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error('[ADMIN_PROPERTIES_POST_VALIDATION_ERROR]', error.errors);
+      console.error('[ADMIN_PROPERTIES_POST_VALIDATION_ERROR]', error.issues);
       return NextResponse.json({
         error: 'Validation failed',
-        details: error.errors
+        details: error.issues
       }, { status: 400 });
+    }
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        return NextResponse.json({
+          error: 'A property with this slug already exists',
+          target: error.meta?.target,
+        }, { status: 400 });
+      }
     }
     console.error('[ADMIN_PROPERTIES_POST]', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

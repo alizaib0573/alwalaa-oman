@@ -13,10 +13,7 @@ const navLinks = [
     name: "Properties",
     href: "/properties",
     children: [
-      { name: "Sultan Haitham City", href: "/properties/sultan-haitham" },
-      { name: "Al Mouj", href: "/properties/al-mouj" },
-      { name: "Muscat Bay", href: "/properties/muscat-bay" },
-      { name: "Jebel Sifah", href: "/properties/jebel-sifah" },
+  
     ]
   },
   { name: "Blogs", href: "/blog" },
@@ -96,28 +93,7 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
                 </Link>
 
                 {/* Mega Menu */}
-                <AnimatePresence>
-                  {link.children && activeMenu === link.name && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute top-full left-0 mt-4 w-64 bg-ivory border border-champagne p-6 shadow-xl"
-                    >
-                      <div className="grid gap-4">
-                        {link.children.map((child) => (
-                          <Link
-                            key={child.name}
-                            href={child.href}
-                            className="text-xs uppercase tracking-wider text-matte-black hover:text-gold transition-colors"
-                          >
-                            {child.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                
               </div>
             ))}
 

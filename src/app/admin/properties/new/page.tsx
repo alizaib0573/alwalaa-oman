@@ -57,9 +57,9 @@ export default function NewPropertyPage() {
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImages(prev => [...prev, ...Array.from(e.target.files)]);
-    }
+    const files = e.target.files;
+    if (!files) return;
+    setImages(prev => [...prev, ...Array.from(files)]);
   };
 
   const removeImage = (index: number) => {

@@ -1,21 +1,29 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PropertyHero from "@/components/properties/PropertyHero";
 import PropertyFilters from "@/components/properties/PropertyFilters";
 import PropertyCard from "@/components/properties/PropertyCard";
-import { PropertyFilters as FiltersType } from "@/types/property";
+import { PropertyFilters as FiltersType, PropertyUI } from "@/types/property";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function PropertiesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-ivory" />}>
+      <PropertiesContent />
+    </Suspense>
+  );
+}
+
+function PropertiesContent() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<PropertyUI[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FiltersType>({
     status: [],

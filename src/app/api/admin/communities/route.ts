@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { communityService } from '@/services/community.service';
 import { z } from 'zod';
+import { Prisma } from '@prisma/client';
 
 const communitySchema = z.object({
   slug: z.string(),
@@ -20,7 +21,15 @@ export async function POST(request: Request) {
     return NextResponse.json(community);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
+    }
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2002') {
+        return NextResponse.json({
+          error: 'A community with this slug already exists',
+          target: error.meta?.target,
+        }, { status: 400 });
+      }
     }
     console.error('[ADMIN_COMMUNITIES_POST]', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

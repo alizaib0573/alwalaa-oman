@@ -42,6 +42,7 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     areaSqm: 0,
     featured: false,
     coordinates: { lat: 0, lng: 0 },
+    gallery: [] as string[],
     seoTitle: '',
     seoDescription: '',
   });
@@ -73,9 +74,9 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImages(prev => [...prev, ...Array.from(e.target.files)]);
-    }
+    const files = e.target.files;
+    if (!files) return;
+    setImages(prev => [...prev, ...Array.from(files)]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

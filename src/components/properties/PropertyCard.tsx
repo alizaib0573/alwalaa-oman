@@ -39,7 +39,7 @@ export default function PropertyCard({ property, index }: PropertyCardProps) {
       >
         {/* Image Slider Container */}
         <div className="relative h-[300px] w-full overflow-hidden group/slider">
-          <AnimatePresence mode="popIn">
+          <AnimatePresence mode="wait">
             <motion.img
               key={currentImage}
               src={property.images[currentImage]}

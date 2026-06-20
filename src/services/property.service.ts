@@ -79,18 +79,16 @@ export const propertyService = {
     const original = await this.getById(id);
     if (!original) throw new Error("Property not found");
 
-    const { id: _id, createdAt: _createdAt, updatedAt: _updatedAt, ...rest } = original;
-
-    // Handle relations carefully
-    const data: Prisma.PropertyUncheckedCreateInput = {
-      ...rest,
-      slug: `${rest.slug}-copy-${Date.now()}`,
-      communityId: original.communityId,
-      agentId: original.agentId,
-    };
+    const { id: _id, createdAt: _createdAt, updatedAt: _updatedAt, community: _community, agent: _agent, metrics: _metrics, coordinates, ...rest } = original;
 
     return await prisma.property.create({
-      data,
+      data: {
+        ...rest,
+        coordinates: coordinates as any,
+        slug: `${rest.slug}-copy-${Date.now()}`,
+        communityId: original.communityId,
+        agentId: original.agentId,
+      },
     });
   },
 };

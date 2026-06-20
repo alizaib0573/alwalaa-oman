@@ -44,6 +44,8 @@ async function verify() {
         description: 'A stunning masterpiece of architecture.',
         type: 'VILLA',
         status: 'FOR_SALE',
+        city: 'Muscat',
+        location: 'Sultan Haitham City',
         communityId: community.id,
         agentId: agent.id,
         price: 1000000,

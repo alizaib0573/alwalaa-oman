@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { prisma } from "@/lib/prisma";
+import { Property } from "@prisma/client";
 import { COMMUNITIES_DATA } from "@/data/communities";
 import CommunityHero from "@/components/community/CommunityHero";
 import CommunityOverview from "@/components/community/CommunityOverview";
@@ -17,7 +18,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
   const normalizedSlug = slug.toLowerCase();
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function CommunityPage({ params }: { params: { slug: string } }) {
+export default async function CommunityPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
   const normalizedSlug = slug.toLowerCase();
@@ -41,7 +42,7 @@ export default async function CommunityPage({ params }: { params: { slug: string
     notFound();
   }
 
-  let properties = [];
+  let properties: Property[] = [];
   try {
     properties = await prisma.property.findMany({
       where: {
@@ -120,8 +121,8 @@ export default async function CommunityPage({ params }: { params: { slug: string
                   title: prop.title,
                   price: Number(prop.price),
                   currency: prop.currency,
-                  bedrooms: prop.bedrooms,
-                  bathrooms: prop.bathrooms,
+                  bedrooms: prop.bedrooms ?? undefined,
+                  bathrooms: prop.bathrooms ?? undefined,
                   areaSqm: prop.areaSqm ? Number(prop.areaSqm) : undefined,
                   type: prop.type,
                   gallery: prop.gallery,

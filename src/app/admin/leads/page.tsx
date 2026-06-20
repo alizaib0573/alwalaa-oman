@@ -127,7 +127,7 @@ export default function LeadsAdminPage() {
           </div>
         ) : (
           <div className="space-y-6">
-            <AnimatePresence mode="popIn">
+            <AnimatePresence mode="popLayout">
               {leads.map((lead: any) => (
                 <motion.div
                   key={lead.id}

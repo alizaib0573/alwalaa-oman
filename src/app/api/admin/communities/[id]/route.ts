@@ -20,7 +20,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return NextResponse.json(community);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.errors }, { status: 400 });
+      return NextResponse.json({ error: error.issues }, { status: 400 });
     }
     console.error('[ADMIN_COMMUNITIES_PATCH]', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
