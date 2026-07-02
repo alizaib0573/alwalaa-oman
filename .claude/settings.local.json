@@ -9,7 +9,9 @@
       "Bash(npx tsx *)",
       "Bash(npm list *)",
       "mcp__ide__getDiagnostics",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(powershell *)",
+      "PowerShell(New-Item *)"
     ]
   }
 }

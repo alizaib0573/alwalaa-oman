@@ -29,12 +29,12 @@ export default function Home() {
       <ChooseProperty />
      
       <WhoWeAre />
-      <TeamSection />
+      {/* <TeamSection /> */}
       <BuySellSection />
 
       {/* <InvestorJourney /> */}
-      <TrustSection />
-      <FeaturedProperties />
+      {/* <TrustSection /> */}
+      {/* <FeaturedProperties /> */}
       <OurPartners />
       <FinalCTA />
 

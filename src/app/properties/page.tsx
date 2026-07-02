@@ -50,37 +50,33 @@ function PropertiesContent() {
     const newMaxPrice = params.maxPrice ? Number(params.maxPrice) : null;
     const newSortBy = params.sortBy || "Newest First";
 
-    if (
-      JSON.stringify(newStatus) !== JSON.stringify(filters.status) ||
-      JSON.stringify(newCommunities) !== JSON.stringify(filters.communities) ||
-      JSON.stringify(newType) !== JSON.stringify(filters.type) ||
-      newMinPrice !== filters.minPrice ||
-      newMaxPrice !== filters.maxPrice ||
-      newSortBy !== filters.sortBy
-    ) {
-      setFilters(prev => ({
-        ...prev,
-        status: newStatus,
-        communities: newCommunities,
-        type: newType,
-        minPrice: newMinPrice,
-        maxPrice: newMaxPrice,
-        sortBy: newSortBy,
-      }));
-    }
+    setFilters(prev => ({
+      ...prev,
+      status: newStatus,
+      communities: newCommunities,
+      type: newType,
+      minPrice: newMinPrice,
+      maxPrice: newMaxPrice,
+      sortBy: newSortBy,
+    }));
   }, [searchParams]);
 
-  useEffect(() => {
-    const params = new URLSearchParams();
-    if (filters.status.length > 0) params.set("status", filters.status.join(","));
-    if (filters.communities.length > 0) params.set("communities", filters.communities.join(","));
-    if (filters.type.length > 0) params.set("type", filters.type.join(","));
-    if (filters.minPrice) params.set("minPrice", filters.minPrice.toString());
-    if (filters.maxPrice) params.set("maxPrice", filters.maxPrice.toString());
-    if (filters.sortBy !== "Newest First") params.set("sortBy", filters.sortBy);
+  const updateFilters = (newFilters: Partial<FiltersType>) => {
+    setFilters(prev => {
+      const updated = { ...prev, ...newFilters };
 
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }, [filters, pathname, replace]);
+      const params = new URLSearchParams();
+      if (updated.status.length > 0) params.set("status", updated.status.join(","));
+      if (updated.communities.length > 0) params.set("communities", updated.communities.join(","));
+      if (updated.type.length > 0) params.set("type", updated.type.join(","));
+      if (updated.minPrice) params.set("minPrice", updated.minPrice.toString());
+      if (updated.maxPrice) params.set("maxPrice", updated.maxPrice.toString());
+      if (updated.sortBy !== "Newest First") params.set("sortBy", updated.sortBy);
+
+      replace(`${pathname}?${params.toString()}`, { scroll: false });
+      return updated;
+    });
+  };
 
   useEffect(() => {
     async function fetchProperties() {
@@ -138,7 +134,7 @@ function PropertiesContent() {
 
       <div className="max-w-7xl mx-auto px-6 py-24">
         <div className="space-y-12">
-          <PropertyFilters filters={filters} setFilters={setFilters} />
+          <PropertyFilters filters={filters} setFilters={updateFilters} />
 
           <div className="space-y-12">
             <div className="flex justify-between items-center">
@@ -149,7 +145,7 @@ function PropertiesContent() {
               <div className="relative group">
                 <select
                   value={filters.sortBy}
-                  onChange={(e) => setFilters({ ...filters, sortBy: e.target.value })}
+                  onChange={(e) => updateFilters({ sortBy: e.target.value })}
                   className="bg-transparent border-b border-matte-black/20 text-xs uppercase tracking-widest py-2 pl-2 pr-8 appearance-none outline-none cursor-pointer hover:text-gold transition-colors"
                 >
                   <option value="Newest First">Newest First</option>
@@ -178,7 +174,7 @@ function PropertiesContent() {
                 <h3 className="text-3xl font-serif text-matte-black">No Properties Found</h3>
                 <p className="text-matte-black/60 font-light">We couldn't find any properties matching your current filters.</p>
                 <button
-                  onClick={() => setFilters({
+                  onClick={() => updateFilters({
                     status: [], communities: [], type: [],
                     minBeds: 1, maxBeds: 6, minBaths: 1, maxBaths: 6,
                     minPrice: null, maxPrice: null, minArea: null, maxArea: null,

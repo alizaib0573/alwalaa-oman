@@ -13,7 +13,8 @@ const navLinks = [
     name: "Properties",
     href: "/properties",
     children: [
-  
+      { name: "Off-Plan", href: "/properties?status=OFF_PLAN" },
+      { name: "Ready-To-Move", href: "/properties?status=READY_TO_MOVE" },
     ]
   },
   { name: "Blogs", href: "/blog" },
@@ -63,11 +64,12 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
               className="flex items-center"
             >
               <Image
-                src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
+                src="/Logo.png"
                 alt="Alwalaa Logo"
-                width={180}
-                height={50}
-                className="h-15 w-auto object-contain"
+                width={80}
+                height={80}
+               
+                className=" max-h-24 scale-325"
               />
             </motion.div>
           </Link>
@@ -93,16 +95,37 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
                 </Link>
 
                 {/* Mega Menu */}
-                
+                {/* Dropdown Menu */}
+<AnimatePresence>
+  {link.children && activeMenu === link.name && (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      transition={{ duration: 0.2 }}
+      className="absolute left-0 top-full mt-3 w-56 rounded-md bg-white shadow-xl border border-gray-200 overflow-hidden z-50"
+    >
+      {link.children.map((child) => (
+        <Link
+          key={child.name}
+          href={child.href}
+          className="block px-5 py-3 text-sm text-matte-black hover:bg-gold hover:text-white transition-colors"
+        >
+          {child.name}
+        </Link>
+      ))}
+    </motion.div>
+  )}
+</AnimatePresence>
               </div>
             ))}
 
-            <Link
-              href="#contact"
-              className="bg-matte-black text-ivory px-6 py-2 text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-300"
-            >
-              Inquire Now
-            </Link>
+              {/* <Link
+                href="#contact"
+                className="bg-matte-black text-ivory px-6 py-2 text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-300"
+              >
+                Book Call
+              </Link> */}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -126,21 +149,36 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
             className="fixed inset-0 bg-ivory z-[55] flex flex-col items-center justify-center gap-8 overflow-hidden"
           >
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="text-3xl font-serif text-matte-black uppercase tracking-wide"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
+              <React.Fragment key={link.name}>
+                <Link
+                  href={link.href}
+                  className="text-3xl font-serif text-matte-black uppercase tracking-wide"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.name}
+                </Link>
+                {link.children && (
+                  <div className="flex flex-col items-center gap-3 -mt-2 mb-2">
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.name}
+                        href={child.href}
+                        className="text-xl text-matte-black/60 font-light uppercase tracking-wide hover:text-gold transition-colors"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </React.Fragment>
             ))}
             <Link
               href="#contact"
               className="bg-matte-black text-ivory px-8 py-3 text-sm uppercase tracking-widest"
               onClick={() => setIsOpen(false)}
             >
-              Inquire Now
+              Book Call         
             </Link>
           </motion.div>
         )}

@@ -5,6 +5,7 @@ export interface PropertyFilters {
   type?: PropertyType;
   status?: PropertyStatus;
   communityId?: string;
+  communitySlug?: string;
   featured?: boolean;
   minPrice?: number;
   maxPrice?: number;
@@ -13,12 +14,13 @@ export interface PropertyFilters {
 
 export const propertyService = {
   async getAll(filters: PropertyFilters = {}) {
-    const { type, status, communityId, featured, minPrice, maxPrice, search } = filters;
+    const { type, status, communityId, communitySlug, featured, minPrice, maxPrice, search } = filters;
 
     const where: Prisma.PropertyWhereInput = {
       ...(type && { type }),
       ...(status && { status }),
       ...(communityId && { communityId }),
+      ...(communitySlug && { community: { slug: communitySlug } }),
       ...(featured !== undefined && { featured }),
       ...(minPrice || maxPrice) && {
         price: {

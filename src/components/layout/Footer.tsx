@@ -12,11 +12,11 @@ export default function Footer() {
         {/* Brand Section */}
         <div className="space-y-8">
           <Image
-            src="https://alwalaaoman.com/wp-content/uploads/2026/04/alwalaa-LOGO-scaled-2.avif"
+            src="/Logo white.png"
             alt="Alwalaa Logo"
-            width={180}
-            height={45}
-            className="h-12 w-auto invert brightness-0 invert"
+            width={80}
+            height={80}
+            className="max-h-24 scale-325"
           />
           <p className="text-champagne text-sm leading-relaxed max-w-xs">
             Redefining real estate investment for foreign investors and high-net-worth individuals.

@@ -11,6 +11,26 @@ interface PropertyFiltersProps {
   setFilters: (filters: PropertyFilters) => void;
 }
 
+function getFilterValue(key: keyof PropertyFilters, option: string): string {
+  const statusMap: Record<string, string> = {
+    "Off-plan": "OFF_PLAN",
+    "Under Construction": "UNDER_CONSTRUCTION",
+    "Ready to Move": "READY_TO_MOVE",
+    "For Sale": "FOR_SALE",
+  };
+  const typeMap: Record<string, string> = {
+    "Villa": "VILLA",
+    "Apartment": "APARTMENT",
+    "Townhouse": "TOWNHOUSE",
+    "Penthouse": "PENTHOUSE",
+    "Land": "LAND",
+    "Commercial": "COMMERCIAL",
+  };
+  if (key === "status") return statusMap[option];
+  if (key === "type") return typeMap[option];
+  return option;
+}
+
 export default function PropertyFilters({ filters, setFilters }: PropertyFiltersProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,23 +41,7 @@ export default function PropertyFilters({ filters, setFilters }: PropertyFilters
   const toggleOption = (key: keyof PropertyFilters, option: string) => {
     const current = filters[key] as string[];
 
-    // Map friendly name to Enum value
-    const statusMap: Record<string, string> = {
-      "Off-plan": "OFF_PLAN",
-      "Under Construction": "UNDER_CONSTRUCTION",
-      "Ready to Move": "READY_TO_MOVE",
-      "For Sale": "FOR_SALE",
-    };
-    const typeMap: Record<string, string> = {
-      "Villa": "VILLA",
-      "Apartment": "APARTMENT",
-      "Townhouse": "TOWNHOUSE",
-      "Penthouse": "PENTHOUSE",
-      "Land": "LAND",
-      "Commercial": "COMMERCIAL",
-    };
-
-    const enumValue = key === "status" ? statusMap[option] : key === "type" ? typeMap[option] : option;
+    const enumValue = getFilterValue(key, option);
 
     const next = current.includes(enumValue)
       ? current.filter(o => o !== enumValue)
@@ -171,13 +175,13 @@ export default function PropertyFilters({ filters, setFilters }: PropertyFilters
                         >
                           <div className={cn(
                             "w-4 h-4 rounded-full border border-gold/30 flex items-center justify-center transition-all",
-                            section.current.includes(option) ? "bg-gold border-gold" : "bg-transparent"
+                            section.current.includes(getFilterValue(section.key, option)) ? "bg-gold border-gold" : "bg-transparent"
                           )}>
-                            {section.current.includes(option) && <div className="w-1.5 h-1.5 bg-matte-black rounded-full" />}
+                            {section.current.includes(getFilterValue(section.key, option)) && <div className="w-1.5 h-1.5 bg-matte-black rounded-full" />}
                           </div>
                           <span className={cn(
                             "text-xs transition-colors",
-                            section.current.includes(option) ? "text-matte-black font-medium" : "text-matte-black/60"
+                            section.current.includes(getFilterValue(section.key, option)) ? "text-matte-black font-medium" : "text-matte-black/60"
                           )}>
                             {option}
                           </span>

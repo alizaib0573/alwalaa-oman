@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = ["/p1.jpg", "/p2.jpg", "/p3.jpg", "/p4.jpg"];
+  const images = [ "/p2.jpg"];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -53,19 +53,19 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.5 }}
           className="max-w-4xl"
         >
-          <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block">
+          {/* <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block">
             Welcome to Excellence
-          </span>
+          </span> */}
           <h1 className="text-5xl md:text-8xl 2xl:text-9xl font-serif text-ivory leading-tight mb-8">
-            Invest in Oman&apos;s <br />
-            <span className="italic">Most Prestigious</span> Properties
+            Buy Luxury <br />
+            <span className="italic">Property in</span> <br /> Oman
           </h1>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <Link
-              href="/projects"
+              href="/properties"
               className="bg-gold text-matte-black px-10 py-4 text-xs uppercase tracking-widest font-bold hover:bg-ivory transition-all duration-500"
             >
-              Explore Developments
+              Explore Properties
             </Link>
             <Link
               href="/about"
@@ -78,7 +78,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom Scroll Indicator */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 2 }}
@@ -88,7 +88,7 @@ export default function Hero() {
           Scroll to explore
         </span>
         <div className="w-px h-12 bg-gradient-to-b from-gold to-transparent" />
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }

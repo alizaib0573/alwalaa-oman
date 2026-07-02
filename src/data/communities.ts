@@ -176,7 +176,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       locationBadge: "Muscat, Oman",
       investmentScore: "9.8/10",
       startingPrice: "OMR 450,000",
-      bannerImage: "/p3.jpg",
+      bannerImage: "/communities/Al Mouj/1 (1).jpg",
     },
     overview: {
       developer: "Al Mouj Muscat",
@@ -275,7 +275,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       locationBadge: "Southern Coast, Oman",
       investmentScore: "9.2/10",
       startingPrice: "OMR 280,000",
-      bannerImage: "/p1.jpg",
+      bannerImage: "/communities/AIDA/1 (1).jpeg",
     },
     overview: {
       developer: "AIDA Developers",
@@ -365,7 +365,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       locationBadge: "Muscat Coast",
       investmentScore: "9.6/10",
       startingPrice: "OMR 600,000",
-      bannerImage: "/p4.jpg",
+      bannerImage: "/communities/Muscat Bay/image.png",
     },
   },
   "sultan-haitham-city": {
@@ -375,7 +375,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       locationBadge: "Muscat Central",
       investmentScore: "9.4/10",
       startingPrice: "OMR 200,000",
-      bannerImage: "/p5.jpg",
+      bannerImage: "/communities/Sultan Haithem City/1.jpg",
     },
   },
   "jebel-sifah": {
@@ -385,7 +385,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       locationBadge: "East Muscat",
       investmentScore: "8.8/10",
       startingPrice: "OMR 150,000",
-      bannerImage: "/p1.jpg",
+      bannerImage: "/communities/Jebel Sifah/1 (1).png",
     },
   },
   "sustainable-city": {
@@ -398,14 +398,24 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       bannerImage: "/p2.jpg",
     },
   },
-  "qurum": {
+  "madinat-al-irfan": {
     ...DEFAULT_DATA,
     hero: {
-      tagline: "URBAN ELEGANCE • THE HEART OF THE CITY",
-      locationBadge: "Qurum, Muscat",
-      investmentScore: "9.7/10",
-      startingPrice: "OMR 500,000",
-      bannerImage: "/p3.jpg",
+      tagline: "THE NEW HEART OF MUSCAT • ARCHITECTURAL BRILLIANCE",
+      locationBadge: "Muscat Central",
+      investmentScore: "9.3/10",
+      startingPrice: "OMR 300,000",
+      bannerImage: "/communities/Madinat Al Irfan/1 (1).jpg",
+    },
+  },
+  "hawana-salalah": {
+    ...DEFAULT_DATA,
+    hero: {
+      tagline: "SOVEREIGN SHORES • THE JEWEL OF THE SOUTH",
+      locationBadge: "Southern Coast, Oman",
+      investmentScore: "9.0/10",
+      startingPrice: "OMR 250,000",
+      bannerImage: "/communities/Hawana Salalah/1 (1).jpg",
     },
   },
 };

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -10,7 +10,7 @@ const markets = [
     id: "primary",
     title: "Primary Market",
     subtitle: "Off-Plan Investments",
-    description: "Secure your future with cutting-edge developments. Primary market properties are off-plan units directly from the developer, offering high capital appreciation potential, modern architectural standards, and flexible payment plans tailored for luxury investors.",
+    description: "Explore the finest property for sale in Oman with Alwalaa Real Estate a trusted real estate company in Oman. From off-plan developments and ready to move homes to luxury villas, waterfront residences, apartments and freehold properties in Muscat, discover exceptional real estate opportunities for living, investment and lifetime residency Oman. ",
     highlight: "High Capital Appreciation",
     features: ["Direct Developer Access", "Modern Design", "Flexible Payments", "Investment Growth"],
     image: "/p1.jpg",
@@ -29,123 +29,104 @@ const markets = [
 ];
 
 export default function ChooseProperty() {
-  const [activeTab, setActiveTab] = useState("primary");
-
   return (
-    <section className="relative py-24 bg-matte-black text-ivory overflow-hidden">
+    <section className="relative py-16 bg-matte-black text-ivory overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        {/* Section Header - More Compact */}
+        <div className="flex flex-col items-center text-center mb-12 gap-3">
           <div className="max-w-2xl">
             <motion.span
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block"
+              className="text-gold uppercase tracking-[0.3em] text-[10px] font-bold mb-2 block"
             >
               Investment Pathways
             </motion.span>
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-6xl font-serif leading-tight"
+              className="text-3xl md:text-5xl font-serif leading-tight"
             >
-              Choose Your <span className="italic text-gold">Portfolio Strategy</span>
+              Find the perfect  <span className="italic text-gold">Property in Oman</span>
             </motion.h2>
-          </div>
-
-          {/* Tab Switcher */}
-          <div className="flex p-1 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm">
-            {markets.map((market) => (
-              <button
-                key={market.id}
-                onClick={() => setActiveTab(market.id)}
-                className={cn(
-                  "relative px-6 py-2 text-xs uppercase tracking-widest font-medium transition-all duration-500 rounded-full",
-                  activeTab === market.id ? "text-matte-black" : "text-ivory/60 hover:text-ivory"
-                )}
-              >
-                {activeTab === market.id && (
-                  <motion.div
-                    layoutId="activeTab"
-                    className="absolute inset-0 bg-gold rounded-full"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10">{market.title}</span>
-              </button>
-            ))}
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[600px]">
-          <AnimatePresence mode="wait">
+        {/* Symmetrical Luxury Layout - Compressed for viewport fit */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {markets.map((market, index) => (
             <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex flex-col gap-8"
+              key={market.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
+              className="flex flex-col gap-6"
             >
-              <div className="space-y-4">
-                <span className="text-gold text-sm font-medium uppercase tracking-widest">
-                  {markets.find(m => m.id === activeTab)?.subtitle}
-                </span>
-                <p className="text-xl text-ivory/70 leading-relaxed font-light">
-                  {markets.find(m => m.id === activeTab)?.description}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                {markets.find(m => m.id === activeTab)?.features.map((feature) => (
-                  <div key={feature} className="flex items-center gap-3 text-sm text-ivory/50 group hover:text-gold transition-colors duration-300">
-                    <div className="w-1 h-1 rounded-full bg-gold group-hover:scale-150 transition-transform" />
-                    {feature}
-                  </div>
-                ))}
-              </div>
-
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-fit bg-gold text-matte-black px-10 py-4 text-xs uppercase tracking-widest font-bold hover:bg-ivory transition-all duration-500"
-              >
-                Discover Listings
-              </motion.button>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="relative h-[500px] w-full rounded-3xl overflow-hidden group">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                className="absolute inset-0"
-              >
+              {/* Image Container - Reduced Aspect Ratio (more horizontal) */}
+              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden group">
                 <Image
-                  src={markets.find(m => m.id === activeTab)?.image || "/p1.jpg"}
-                  alt="Property Market"
+                  src={market.image}
+                  alt={market.title}
                   fill
                   className="object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-matte-black/80 via-transparent to-transparent" />
-                <div className="absolute bottom-8 left-8">
-                  <span className="text-gold text-xs uppercase tracking-widest font-bold mb-2 block">
+                <div className="absolute bottom-6 left-6 right-6">
+                  <span className="text-gold text-[9px] uppercase tracking-widest font-bold mb-1 block">
                     Strategic Advantage
                   </span>
-                  <h3 className="text-3xl font-serif text-ivory italic">
-                    {markets.find(m => m.id === activeTab)?.highlight}
+                  <h3 className="text-2xl font-serif text-ivory italic leading-tight">
+                    {market.highlight}
                   </h3>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+              </div>
+
+              {/* Content Area - More Compact */}
+              <div className="flex flex-col gap-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <span className="text-gold text-[10px] font-medium uppercase tracking-widest">
+                      {market.subtitle}
+                    </span>
+                    <div className="h-px flex-1 bg-white/10" />
+                  </div>
+                  <h4 className="text-2xl font-serif text-ivory">
+                    {market.title}
+                  </h4>
+                  <p className="text-ivory/60 leading-relaxed font-light text-sm line-clamp-3">
+                    {market.description}
+                  </p>
+                </div>
+
+                {/* Features Grid - Compact */}
+                <div className="grid grid-cols-2 gap-y-3 gap-x-4 py-4 border-y border-white/10">
+                  {market.features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-2 text-xs text-ivory/50">
+                      <div className="w-1 h-1 rounded-full bg-gold" />
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Action Button - Smaller padding */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={cn(
+                    "w-fit px-8 py-3 text-[10px] uppercase tracking-widest font-bold transition-all duration-500 rounded-full",
+                    market.id === "primary"
+                      ? "bg-gold text-matte-black hover:bg-ivory"
+                      : "bg-ivory text-matte-black hover:bg-gold"
+                  )}
+                >
+                  Discover Listings
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

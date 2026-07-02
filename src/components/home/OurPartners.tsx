@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const partners = [
-  { name: "Eagle Hills Muscat", logo: "/partner1.webp" },
-  { name: "Diamond Developers", logo: "/partner2.webp" },
-  { name: "OMRAN Group", logo: "/partner3.webp" },
-  { name: "Sultan Haitham City", logo: "/partner4.webp" },
-  { name: "Al Mouj Muscat", logo: "/partner5.webp" },
-  { name: "Oman Investment Fund", logo: "/partner1.webp" },
-  { name: "Muscat Luxury Homes", logo: "/partner2.webp" },
-  { name: "Elite Oman Real Estate", logo: "/partner3.webp" },
+  { name: "Al Adrak", logo: "/Logos/AL ADRAK/AL ADRAK.png" },
+  { name: "Al Ahly Sabbour", logo: "/Logos/AL AHLY SABBOUR/AL AHLY SABBOUR.png" },
+  { name: "Dar Global", logo: "/Logos/Dar Global/DAR GLOBAL BLACK.png" },
+  { name: "Muriya", logo: "/Logos/Muriya/Muriya.png" },
+  { name: "Muscat Bay", logo: "/Logos/Muscat bay/MUSCAT BAY.png" },
+  { name: "Omran", logo: "/Logos/OMRAN/OMRAN.png" },
+  { name: "The Sustainable City", logo: "/Logos/The Sustainable City/The Sustainable City.png" },
+  { name: "Zen", logo: "/Logos/ZEN/ZEN BLACK.png" },
 ];
 
 export default function OurPartners() {
@@ -43,18 +43,18 @@ export default function OurPartners() {
 
       <div className="relative w-full overflow-hidden">
         <motion.div
-          className="flex items-center"
-          animate={{ x: ["0%", "-30%"] }}
+          className="flex items-center w-max"
+          animate={{ x: ["0%", "-50%"] }}
           transition={{
             repeat: Infinity,
             ease: "linear",
-            duration: 6,
+            duration: 30,
           }}
         >
           {[...partners, ...partners].map((partner, i) => (
             <div
               key={i}
-              className="relative w-[500px] h-[300px] flex-shrink-0 mx-1  opacity-50"
+              className="relative w-32 h-16 md:w-48 md:h-24 flex-shrink-0 mx-8 md:mx-12 opacity-90 hover:opacity-100 transition-opacity duration-300"
             >
               <Image
                 src={partner.logo}

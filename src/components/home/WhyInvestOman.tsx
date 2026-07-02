@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const stats = [
-  { label: "Expected ROI", value: "8-12%", description: "Strong yields in prime coastal and urban areas." },
+  { label: "Expected ROI", value: "6-8%", description: "Strong yields in prime coastal and urban areas." },
   { label: "Residency", value: "Lifetime", description: "Qualify for residency through strategic property ownership." },
   { label: "Market Growth", value: "High", description: "Sultan Haitham City driving new urban expansion." },
-  { label: "Ownership", value: "Freehold", description: "Available options for international investors in key zones." },
+  { label: "Ownership", value: "Freehold", description: "Own luxury villas and apartment in approved ITC zones" },
 ];
 
 export default function WhyInvestOman() {
@@ -19,14 +19,13 @@ export default function WhyInvestOman() {
           <div className="space-y-12">
             <div className="space-y-6">
               <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold block">
-                Strategic Advantage
+                Inspired by Tradition
               </span>
               <h2 className="text-4xl md:text-6xl font-serif leading-tight">
-                Why Invest in <span className="italic text-gold">Sultanate of Oman</span>
+                Why Invest in <span className="italic text-gold"> Oman Real Estate</span>
               </h2>
               <p className="text-warm-white/60 text-lg leading-relaxed font-light">
-                Oman offers a unique blend of stability, breathtaking natural beauty, and a forward-looking vision for urban development. From the prestigious waterfront of Al Mouj to the futuristic Sultan Haitham City, the landscape is ripe for high-yield investment.
-              </p>
+Oman Real Estate offers excellent opportunities for property investment, high rental returns and lifetime residency Oman. Alwalaa Real Estate is a trusted and best real estate company in Oman, helps you discover luxury villas, apartments and freehold properties in the country’s top investment destination.              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
@@ -58,7 +57,7 @@ export default function WhyInvestOman() {
               className="absolute inset-0 z-0"
             >
               <Image
-                src="/p5.jpg"
+                src="/why-invest/flag.jpg"
                 alt="Oman Architecture"
                 fill
                 className="object-cover grayscale-[0.2] contrast-125"

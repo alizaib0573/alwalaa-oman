@@ -10,7 +10,7 @@ export default function PropertyHero() {
     <section className="relative h-[70vh] w-full flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/p1.jpg"
+          src="/p2.jpg"
           alt="Luxury Properties Oman"
           fill
           className="object-cover brightness-50"
@@ -25,10 +25,10 @@ export default function PropertyHero() {
           transition={{ duration: 1 }}
           className="space-y-8"
         >
-          <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
+          {/* <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
             The Elite Portfolio
-          </span>
-          <h1 className="text-5xl md:text-7xl font-serif text-ivory leading-tight">
+          </span> */}
+          <h1 className="text-5xl md:text-7xl font-serif text-ivory leading-tight mt-7 ">
             Discover Exceptional <br />
             <span className="italic">Properties Across Oman</span>
           </h1>
