@@ -36,7 +36,7 @@ export default function LuxRelatedCommunities({ currentSlug, communities }: LuxR
               whileHover={{ y: -10 }}
               className="group relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10 cursor-pointer"
             >
-              <Link href={`/communities/${community.slug}`}>
+              <Link href={`/${community.slug}`}>
                 <div className="absolute inset-0 z-0">
                   <Image
                     src={community.image}

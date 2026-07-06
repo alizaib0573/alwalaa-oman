@@ -31,7 +31,7 @@ export default function SultanHaithamCityPage() {
       <LuxHero
         title="Sultan Haitham City"
         tagline="VISIONARY URBANISM • THE FUTURE OF OMAN"
-        description="A landmark of modern urban living, meticulously designed to blend sustainable innovation with an unmatched quality of life in the heart of Muscat."
+        description=" A new benchmark for modern living, Sultan Haitham City offers premium villas and apartments for sale in one of Oman’s leading smart communities and provides excellent investment opportunities."
         image="/communities/Sultan Haithem City/1.jpg"
         primaryCta={{ text: "Explore the Masterplan", href: "/properties?communities=Sultan%20Haitham%20City" }}
         secondaryCta={{ text: "Investment Guide", href: "#contact" }}
@@ -39,8 +39,8 @@ export default function SultanHaithamCityPage() {
 
       <LuxEditorial
         badge="Urban Innovation"
-        title="A New Standard for Modernity"
-        content="Sultan Haitham City is not just a residential area; it is the architectural manifestation of Oman's Vision 2040. By integrating smart-city infrastructure with sprawling green corridors and cultural hubs, the city creates a seamless flow between work, life, and wellness. It is where global urban trends meet authentic Omani heritage."
+        title="Why Invest in Sultan Haitham City"
+        content=" Sultan Haitham City is one of the best places to buy property in Oman, part of a master-planned community inspired by Oman Vision 2040. Whether you are looking to buy property in Sultan Haitham City or make a long-term real estate investment in Oman, the city offers a prime location, excellent connectivity, modern infrastructure and strong growth potential, making it one of the top choices for homeowners and investors."
         image="/communities/Sultan Haithem City/1 (2).jpg"
       />
 
@@ -59,7 +59,7 @@ export default function SultanHaithamCityPage() {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif text-white tracking-tight">
-              The <span className="text-gold italic">Investment Catalyst</span>
+              Investment  <span className="text-gold italic">Advantaged </span>
             </h2>
             <div className="w-12 h-px bg-gold mx-auto" />
           </div>
@@ -67,23 +67,23 @@ export default function SultanHaithamCityPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <LuxInvestmentCard
               icon={TrendingUp}
-              title="Institutional Stability"
-              description="Backed by national strategic planning, ensuring long-term value stability and steady capital growth."
+              title="Oman Vision 2040"
+              description="Developed under Oman Vision 2040, Sultan Haitham City support sustainable growth, modern infrastructure and long-term real estate investment in Oman. "
             />
             <LuxInvestmentCard
               icon={Building2}
-              title="Mixed-Use Synergy"
-              description="The integration of commercial, cultural, and residential zones drives high rental demand and property liquidity."
+              title="Master- planned Community"
+              description="A master planned community designed with residential, retail, commercial and leisure spaces to create a connected lifestyle and enhance everyday living. "
             />
             <LuxInvestmentCard
               icon={Leaf}
-              title="Sustainability Premium"
-              description="Eco-certified developments attract a new generation of conscious high-net-worth buyers from across the globe."
+              title="Sustainable Living"
+              description="Enjoy green spaces, modern amenities and sustainable community planning that support healthier living and long-term property value."
             />
             <LuxInvestmentCard
               icon={Map}
-              title="Strategic Hub"
-              description="Perfectly positioned as the new central heart of Muscat, optimizing accessibility and urban connectivity."
+              title="Prime Location"
+              description="Located in AL Seeb near Muscat International Airport, Sultan Haitham City offers excellent connectivity to schools, business districts, healthcare and major attractions across Muscat."
             />
           </div>
         </div>
@@ -92,8 +92,8 @@ export default function SultanHaithamCityPage() {
       <LuxEditorial
         reverse
         badge="The Lifestyle"
-        title="Living in Harmony"
-        content="Experience a city that breathes. With expansive parks, world-class museums, and a pedestrian-first design, Sultan Haitham City removes the friction of urban living. It is a sanctuary for the family, a hub for the professional, and a masterpiece for the investor."
+        title=" Lifestyle in Sultan Haitham City"
+        content="Experience modern lifestyle in SUltan Haitham City, a master planned community in Oman designed with green parks, walkable neighbourhoods and world class amenities. Located in Muscat, it is one of the top destinations for real estate investment in Oman. offering strong long-term property value for home buyers and investors seeking premium living."
         image="/communities/Sultan Haithem City/1 (3).jpg"
       />
 
@@ -129,13 +129,20 @@ export default function SultanHaithamCityPage() {
       />
 
       <LuxFAQ
-        title="City Intelligence"
+        title="FAQ’s"
         faqs={[
-          { question: "What makes Sultan Haitham City a unique investment?", answer: "It is a planned city from the ground up, meaning there is no legacy infrastructure. Everything is optimized for smart-living and sustainable growth." },
-          { question: "Who is the target buyer for these properties?", answer: "A mix of local families seeking a modernized lifestyle and international investors looking for stable, state-backed capital appreciation." },
-          { question: "How does it differ from other Muscat developments?", answer: "The scale and the focus on 'Walkability' and 'Greenery' set it apart from traditional sprawl-style developments." },
-          { question: "Are there payment plans available?", answer: "Yes, developers in the city are offering highly competitive payment structures to support the early-phase growth." },
-          { question: "Is there a timeline for the full city completion?", answer: "The city is being delivered in phases, aligning with Oman's Vision 2040 strategic goals." },
+          { question: "What are the benefits of buying Off-Plan Property in Sultan Haitham City?", answer: "Off-Plan Property in Sultan Haitham City offers competitive prices, flexible payment plans and strong potential for long-term capital appreciation as the community dvelops." },
+          { question: "Is Sultan Haitham City Property a good investment?", answer: "Yes, Sultan Haitham City Property offers excellent long-term property investment in Oman, backed by Oman Vision 2040, modern infrastructure and continuous urban development. " },
+          { question: "Is Property for sale  in Sultan Haitham City available now?", answer: "Yes, property for sale in Sultan Haitham City includes apartments, villas, duplexes, penthouses and townhouses across premium residential communities in Muscat" },
+          { question: "Can expats buy property in Sulatan Haitham City, Oman?", answer: "Yes, Eligible expats can buy Property in Sultan Haitham City Oman, including selected freehold apartments and villas, under Oman’s property ownership regulations." },
+          { question: "What is the Sultan Haitham City Payment Plan?", answer: "The Sultan Haitham City Payment Plan varies by developer, with many projects offering flexible installments and attractive payment options for local and international buyers." },
+          { question: "What is Sultan Haitham City Price?", answer: "The Sultan Haitham City price depends on the project, property type, location and size with options available for different budgets and investment goals." },
+          { question: "How can I buy property in Sultan Haitham City?", answer: "To Buy Property in Sultan Haitham City, choose your preferred project, complete the booking process and follow the developer’s approved payment plan." },
+          { question: "Can I get Oman Residency by Buying Property In Sultan Haitham City?", answer: "Eligible buyers may qualify for Oman residency by buying property in Sultan Haitham City, subject to the latest resident and investment regulations." },
+          { question: "Which are the best Communities in Sultan Haitham City?", answer: "Popular Communities in Sultan Haitham City include Hay Al Wafa, Wadi Zaha and Yeneir, offering premium homes, modern amenities and strong investment potential." },
+          { question: "Which Apartments for Sale in Sultan Haitham City are Available?", answer: "Apartments for Sale in Sultan Haitham City include 1,2 and 3-bedroom residences with smart layouts, premium facilities, and flexible payment plan." },
+          { question: "Which Villas for Sale in Sultan Haitham City are available?", answer: "Villas for Sale in Sultan Haitham City range from luxury family villas to spacious detached homes designed for comfortable living and long-term property investment." },
+        
         ]}
       />
 

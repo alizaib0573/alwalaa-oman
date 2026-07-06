@@ -31,7 +31,7 @@ export default function AlMoujPage() {
       <LuxHero
         title="Al Mouj Muscat"
         tagline="PRESTIGIOUS WATERFRONT LIVING • WORLD-CLASS GOLF"
-        description="A breathtaking waterfront sanctuary where Mediterranean elegance meets Omani hospitality. An exclusive enclave for those who define their own standard of excellence."
+        description="Luxury villas, marina apartments and waterfront homes in Al Mouj Muscat creat one of the country’s prestigious coastal communities for premium living and long-term property investment."
         image="/communities/Al Mouj/1 (1).jpg"
         primaryCta={{ text: "Explore the Portfolio", href: "/properties?communities=Al%20Mouj" }}
         secondaryCta={{ text: "Request Brochure", href: "#contact" }}
@@ -39,8 +39,8 @@ export default function AlMoujPage() {
 
       <LuxEditorial
         badge="The Waterfront Legacy"
-        title="A Masterpiece of Coastal Urbanism"
-        content="Al Mouj Muscat is more than a residential development; it is a curated lifestyle destination. Designed as a seamless integration of luxury lagoons, professional marinas, and manicured landscapes, it offers an unparalleled sanctuary of privacy and prestige. Here, the rhythm of the tides dictates the pace of life, and every residence is a testament to architectural brilliance."
+        title="Why Invest in Al Mouj"
+        content="Al Mouj Muscat is one of Oman’s most popular and well-known places to buy property. It offers a mix of luxury living, great lifestyle, and strong investment value. Located on a beautiful part of the Muscat coast, Al Mouj includes freehold homes for foreigners, a world-class marina, a top golf course, five-star hotels, and many shops and restaurants. The area is carefully planned, with modern buildings and natural surroundings, making it attractive to both buyers and investors from around the world. With high rental demand, growing property prices, and solid infrastructure, Al Mouj is a smart and safe place to invest in Oman."
         image="/communities/Al Mouj/1 (1).png"
       />
 
@@ -67,13 +67,13 @@ export default function AlMoujPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <LuxInvestmentCard
               icon={TrendingUp}
-              title="Unrivaled Capital Growth"
-              description="The extreme scarcity of waterfront plots in Muscat ensures a consistent and aggressive upward trajectory in property valuation."
+              title="Luxury Waterfront Homes "
+              description=" Choose from luxury villas, marina apartments, and waterfront homes in Al Mouj Oman, designed for premium coastal living and long-term property value."
             />
             <LuxInvestmentCard
               icon={Trophy}
-              title="Executive Rental Demand"
-              description="A primary choice for diplomats, CEOs, and global expatriates, guaranteeing high occupancy and premium rental yields."
+              title="Freehold Ownership"
+              description="Buy property in Al Mouj with freehold ownership, offering eligible local and international buyers a secure investment in one of Oman's most prestigious communities."
             />
             <LuxInvestmentCard
               icon={Anchor}
@@ -92,8 +92,14 @@ export default function AlMoujPage() {
       <LuxEditorial
         reverse
         badge="Curated Experience"
-        title="Beyond the Residence"
-        content="Life at Al Mouj is defined by the intersection of leisure and luxury. From the precision of the championship golf course to the curated high-street retail promenade, every detail is engineered for the discerning few. It is a place where your morning coffee is accompanied by the view of a superyacht, and your evening is a walk through manicured gardens of global standard."
+        title="Key Reasons to Invest"
+        content="Freehold for Foreigners – Foreign buyers can own property with full ownership rights.
+Luxury Lifestyle – Enjoy top facilities like a marina, golf course, five-star hotels, and fine dining.
+Strong Rental Demand – High demand from locals, expats, and tourists ensures good rental returns.
+Rising Property Values – Property prices are steadily increasing, offering strong capital growth.
+Modern Infrastructure – Al Mouj is a master-planned community with excellent roads, utilities, and services.
+Safe Investment – Backed by government support and a growing real estate market in Oman.
+"
         image="/communities/Al Mouj/1 (2).jpg"
       />
 
@@ -129,14 +135,59 @@ export default function AlMoujPage() {
       />
 
       <LuxFAQ
-        title="Investment Intelligence"
+          title="FAQ's"
         faqs={[
-          { question: "Is Al Mouj a viable long-term investment?", answer: "Absolutely. Due to the finite amount of waterfront land available in Muscat, Al Mouj properties function as scarcity-driven assets, historically showing strong capital appreciation." },
-          { question: "What are the expected rental yields?", answer: "Typically, the luxury segment in Al Mouj commands yields between 6% and 8%, depending on the property type and proximity to the marina." },
-          { question: "Can foreign nationals own property here?", answer: "Yes, Al Mouj is designed for international investors, offering secure ownership frameworks that attract global buyers." },
-          { question: "How does the community manage maintenance?", answer: "The community is managed by a dedicated professional entity ensuring that the luxury standards of the roads, parks, and common areas remain world-class." },
-          { question: "What makes it different from other Muscat developments?", answer: "The integration of a professional marina and a championship golf course within a gated, master-planned community is unique in the region." },
-        ]}
+  {
+    question: "Why should I buy property in Al Mouj Oman?",
+    answer:
+      "Al Mouj Oman offers luxury waterfront homes, freehold ownership, and one of the best property investment opportunities in Muscat.",
+  },
+  {
+    question: "Is Al Mouj Oman a good place to invest in real estate?",
+    answer:
+      "Yes, Al Mouj Property combines a prime location, luxury lifestyle, and strong long-term investment potential with consistent buyer demand.",
+  },
+  {
+    question: "What types of property can I buy in Al Mouj Oman?",
+    answer:
+      "You can buy luxury villas, marina apartments, townhouses, golf-view homes, and waterfront residences in Al Mouj Oman.",
+  },
+  {
+    question: "Can foreigners buy property in Al Mouj Oman?",
+    answer:
+      "Yes, eligible foreign buyers can buy freehold property in Al Mouj Oman under Oman's Integrated Tourism Complex (ITC) regulations.",
+  },
+  {
+    question: "Are there luxury villas for sale in Al Mouj Oman?",
+    answer:
+      "Yes, Al Mouj offers luxury villas for sale with premium amenities, private outdoor spaces, and access to world-class community facilities.",
+  },
+  {
+    question: "Are marina apartments available in Al Mouj Oman?",
+    answer:
+      "Yes, buyers can choose from modern marina apartments with waterfront views and direct access to Al Mouj's vibrant marina lifestyle.",
+  },
+  {
+    question: "Is Al Mouj Oman a good choice for families?",
+    answer:
+      "Yes, Al Mouj offers a safe, family-friendly community with parks, leisure facilities, retail outlets, and convenient access to Muscat.",
+  },
+  {
+    question: "How close is Al Mouj Oman to Muscat International Airport?",
+    answer:
+      "Al Mouj is located just minutes from Muscat International Airport, making it ideal for residents, investors, and frequent travelers.",
+  },
+  {
+    question: "Can buying property in Al Mouj Oman qualify for residency?",
+    answer:
+      "Eligible property purchases may qualify buyers for Oman Residency by Investment, subject to the latest government requirements.",
+  },
+  {
+    question: "Why is Al Mouj one of the best places to buy property in Muscat?",
+    answer:
+      "Al Mouj combines luxury waterfront living, freehold ownership, an award-winning marina, championship golf, and premium residences in one of Muscat's most prestigious communities.",
+  },
+]} 
       />
 
       <LuxRelatedCommunities

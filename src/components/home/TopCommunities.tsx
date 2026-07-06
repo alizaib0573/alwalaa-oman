@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { COMMUNITIES_DATA } from "@/data/communities";
@@ -124,7 +123,7 @@ export default function TopCommunities() {
               className="px-3 w-[calc(100vw/2)] md:w-[calc(100vw/4)] lg:w-[calc(1280px/4)]"
             >
               <Link
-                href={`/communities/${community.slug}`}
+                href={`/${community.slug}`}
                 className="group relative overflow-hidden rounded-3xl cursor-pointer block h-[400px]"
               >
                 <motion.div

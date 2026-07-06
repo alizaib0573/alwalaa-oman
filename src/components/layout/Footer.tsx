@@ -38,18 +38,21 @@ export default function Footer() {
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold">Company</h4>
             <ul className="space-y-4 text-sm text-warm-white/60">
               <li><Link href="/" className="hover:text-ivory transition-colors">Home</Link></li>
-              <li><Link href="/about" className="hover:text-ivory transition-colors">About Us</Link></li>
+              <li><Link href="/about-us" className="hover:text-ivory transition-colors">About Us</Link></li>
               <li><Link href="/careers" className="hover:text-ivory transition-colors">Careers</Link></li>
-              <li><Link href="/projects" className="hover:text-ivory transition-colors">Projects</Link></li>
+              <li><Link href="" className="hover:text-ivory transition-colors">Projects</Link></li>
             </ul>
           </div>
           <div className="space-y-6">
             <h4 className="text-gold uppercase tracking-widest text-xs font-bold">Explore</h4>
             <ul className="space-y-4 text-sm text-warm-white/60">
-              <li><Link href="#" className="hover:text-ivory transition-colors">Sultan Haitham City</Link></li>
-              <li><Link href="#" className="hover:text-ivory transition-colors">Al Mouj</Link></li>
-              <li><Link href="#" className="hover:text-ivory transition-colors">Muscat Bay</Link></li>
-              <li><Link href="#" className="hover:text-ivory transition-colors">Jebel Sifah</Link></li >
+              <li><Link href="/sultan-haitham-city" className="hover:text-ivory transition-colors">Sultan Haitham City</Link></li>
+              <li><Link href="/al-mouj" className="hover:text-ivory transition-colors">Al Mouj</Link></li>
+              <li><Link href="/muscat-bay" className="hover:text-ivory transition-colors">Muscat Bay</Link></li>
+              <li><Link href="/jebel-sifah" className="hover:text-ivory transition-colors">Jebel Sifah</Link></li >
+              <li><Link href="/aida" className="hover:text-ivory transition-colors">Aida</Link></li >
+              <li><Link href="/hawana-salalah" className="hover:text-ivory transition-colors">Hawana Salalah</Link></li >
+              <li><Link href="/the-sustainable-city" className="hover:text-ivory transition-colors">The Sustainable City</Link></li >
             </ul>
           </div>
         </div>

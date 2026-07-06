@@ -388,7 +388,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       bannerImage: "/communities/Jebel Sifah/1 (1).png",
     },
   },
-  "sustainable-city": {
+  "the-sustainable-city": {
     ...DEFAULT_DATA,
     hero: {
       tagline: "ECO-INNOVATION • ZERO-CARBON LUXURY",
@@ -398,16 +398,16 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       bannerImage: "/p2.jpg",
     },
   },
-  "madinat-al-irfan": {
-    ...DEFAULT_DATA,
-    hero: {
-      tagline: "THE NEW HEART OF MUSCAT • ARCHITECTURAL BRILLIANCE",
-      locationBadge: "Muscat Central",
-      investmentScore: "9.3/10",
-      startingPrice: "OMR 300,000",
-      bannerImage: "/communities/Madinat Al Irfan/1 (1).jpg",
-    },
-  },
+  // "madinat-al-irfan": {
+  //   ...DEFAULT_DATA,
+  //   hero: {
+  //     tagline: "THE NEW HEART OF MUSCAT • ARCHITECTURAL BRILLIANCE",
+  //     locationBadge: "Muscat Central",
+  //     investmentScore: "9.3/10",
+  //     startingPrice: "OMR 300,000",
+  //     bannerImage: "/communities/Madinat Al Irfan/1 (1).jpg",
+  //   },
+  // },
   "hawana-salalah": {
     ...DEFAULT_DATA,
     hero: {

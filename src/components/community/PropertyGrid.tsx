@@ -38,7 +38,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       <div className="p-6">
         <h4 className="text-ivory font-serif text-xl mb-2 group-hover:text-gold transition-colors">{property.title}</h4>
         <div className="text-gold font-serif text-2xl mb-4">
-          {property.currency} {property.price.toLocaleString()}
+          {property.currency} {Math.round(property.price).toLocaleString('en-US')}
         </div>
         <div className="grid grid-cols-3 gap-4 py-4 border-t border-ivory/10 text-ivory/50 text-[10px] uppercase tracking-widest font-medium">
           <div className="flex items-center gap-2">

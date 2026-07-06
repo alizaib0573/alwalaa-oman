@@ -31,7 +31,7 @@ export default function AidaPage() {
       <LuxHero
         title="AIDA"
         tagline="THE FUTURE OF LUXURY • COASTAL SOPHISTICATION"
-        description="A visionary coastal destination redefining the southern shores of Oman. Where avant-garde architecture meets the raw, untamed beauty of the ocean."
+        description=" Explore AIDA in Muscat Oman, a premium destination for luxury property in Oman with villas and apartments for sale, creating one of the most prestigious coastal communities in Oman."
         image="/communities/AIDA/1 (1).jpeg"
         primaryCta={{ text: "Discover the Vision", href: "/properties?communities=AIDA" }}
         secondaryCta={{ text: "Early Access Brochure", href: "#contact" }}
@@ -41,22 +41,22 @@ export default function AidaPage() {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif text-white tracking-tight">
-              The <span className="text-gold italic">AIDA</span> Philosophy
+              Why   <span className="text-gold italic">Invest in</span> AIDA Oman
             </h2>
             <div className="w-12 h-px bg-gold mx-auto" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <LuxEditorial
-              title="Sustainably Sophisticated"
-              content="AIDA is not just a project; it is a manifesto for a new era of coastal living. By integrating zero-carbon initiatives with uncompromising luxury, AIDA proves that the highest standards of elegance can coexist with a deep respect for the environment."
+              title=" Luxury Property in Oman"
+              content=" AIDA Oman Property offers luxury property in Oman with breathtaking sea view villas, premium apartments and freehold ownership in one of Muscat’s most prestigious coastal communities. Home to Trump Golf Villas for Sale in AIDA, it combines world-class amenities, flexible payment plans and outstanding long-term investment potential."
               image="/communities/AIDA/1 (1).jpg"
               badge="Eco-Luxury"
             />
             <LuxEditorial
               reverse
-              title="Architectural Avant-Garde"
-              content="Moving away from traditional forms, AIDA's architecture is inspired by the organic curves of the shoreline. Every villa and residence is positioned to maximize the cinematic views of the southern coast while ensuring absolute privacy."
+              title="Sea View Villas Oman"
+              content="Sea View Villas Oman at AIDA Oman feature iconic branded apartments for sale in AIDA, panoramic coastal views and modern architecture beside the Trump International Golf Club Oman. Eligible buyers can benefit from AIDA Oman investor Visa opportunities, tax-friendly ownership and an exceptional luxury lifestyle with strong future value."
               image="/communities/AIDA/1 (2).jpg"
               badge="The Design"
             />
@@ -79,7 +79,7 @@ export default function AidaPage() {
         <div className="max-w-7xl mx-auto space-y-16">
           <div className="text-center space-y-4">
             <h2 className="text-4xl md:text-6xl font-serif text-white tracking-tight">
-              Why AIDA is a <span className="text-gold italic">Strategic Move</span>
+            Key Benefits of<span className="text-gold italic">AIDA Property</span>
             </h2>
             <div className="w-12 h-px bg-gold mx-auto" />
           </div>
@@ -141,14 +141,84 @@ export default function AidaPage() {
       />
 
       <LuxFAQ
-        title="Visionary Intelligence"
+        title="FAQ’s"
         faqs={[
-          { question: "What is the primary appeal of AIDA?", answer: "AIDA offers a first-mover advantage in a brand new luxury market, combining sustainable living with a high-growth coastal location." },
-          { question: "How does the payment plan work for off-plan units?", answer: "AIDA offers bespoke flexible payment plans designed for international investors, with specific milestones tied to construction progress." },
-          { question: "Is it a good alternative to Muscat's luxury market?", answer: "Yes, for investors seeking diversification and higher potential growth, AIDA provides an alternative to the more saturated capital market." },
-          { question: "What sustainability features are included?", answer: "From zero-carbon energy solutions to smart water management and native landscaping, AIDA is built for the next century." },
-          { question: "When can I expect the first handover?", answer: "Phased delivery is planned, with the most exclusive units expected to be completed by 2027." },
-        ]}
+  {
+    question: "What is the primary appeal of AIDA?",
+    answer:
+      "AIDA offers a first-mover advantage in a brand-new luxury market, combining sustainable living with a high-growth coastal location.",
+  },
+  {
+    question: "How does the payment plan work for off-plan units?",
+    answer:
+      "AIDA offers bespoke flexible payment plans designed for international investors, with specific milestones tied to construction progress.",
+  },
+  {
+    question: "Is it a good alternative to Muscat's luxury market?",
+    answer:
+      "Yes, for investors seeking diversification and higher potential growth, AIDA provides an attractive alternative to the more established Muscat luxury market.",
+  },
+  {
+    question: "What sustainability features are included?",
+    answer:
+      "From zero-carbon energy solutions to smart water management and native landscaping, AIDA is designed as a sustainable community for the future.",
+  },
+  {
+    question: "When can I expect the first handover?",
+    answer:
+      "Phased delivery is planned, with the first premium residential units expected to be handed over by 2027.",
+  },
+  {
+    question: "How can I buy a villa in AIDA Oman?",
+    answer:
+      "You can purchase a villa directly through approved brokers such as Alwalaa Real Estate or through the official developer. Freehold ownership is available for eligible local and international buyers.",
+  },
+  {
+    question: "Is AIDA Oman a good place to invest in property?",
+    answer:
+      "Yes. AIDA offers luxury branded villas and apartments, strong capital appreciation potential, attractive rental yields, tax-free ownership benefits, and eligibility for investor residency visas.",
+  },
+  {
+    question: "Can foreigners get a residency visa by buying property in AIDA?",
+    answer:
+      "Yes. Foreign buyers purchasing qualifying property valued at OMR 250,000 or more may be eligible for a renewable 5-year investor residency visa in Oman, subject to government regulations.",
+  },
+  {
+    question: "What type of homes are available in AIDA Oman?",
+    answer:
+      "AIDA offers a selection of Trump Golf Villas, smart townhouses, branded apartments, luxury residences, and cliffside homes with panoramic sea views.",
+  },
+  {
+    question: "How far is AIDA from Muscat city center?",
+    answer:
+      "AIDA is approximately 20 minutes from downtown Muscat and around 25 km from Muscat International Airport, providing convenient access while maintaining an exclusive coastal setting.",
+  },
+  {
+    question: "What is the starting price of villas in AIDA?",
+    answer:
+      "Villa prices in AIDA typically start from OMR 120,000, depending on the project phase, property type, size, and location.",
+  },
+  {
+    question: "Do Trump Villas in AIDA include golf membership?",
+    answer:
+      "Yes. Most Trump Villas include either full or social membership to the Trump International Golf Club Oman, depending on the specific property and developer package.",
+  },
+  {
+    question: "Are there freehold properties available in Yiti, Oman?",
+    answer:
+      "Yes. AIDA, located in Yiti, offers freehold ownership for eligible foreign buyers, including luxury villas, branded apartments, and premium residences.",
+  },
+  {
+    question: "Is AIDA Oman a freehold development?",
+    answer:
+      "Yes. AIDA is a freehold development that allows eligible local and international buyers to own property, making it an excellent choice for long-term investment and residence.",
+  },
+  {
+    question: "Who is the developer of AIDA Oman?",
+    answer:
+      "AIDA Oman is developed by Dar Global in partnership with Omran Group, creating a world-class luxury destination featuring premium residences, championship golf, and exceptional lifestyle amenities.",
+  },
+]}
       />
 
       <LuxRelatedCommunities

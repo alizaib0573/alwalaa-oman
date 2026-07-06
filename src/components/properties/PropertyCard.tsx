@@ -104,7 +104,7 @@ export default function PropertyCard({ property, index }: PropertyCardProps) {
 
           <div className="flex justify-between items-center">
             <p className="text-xl font-serif text-matte-black">
-              {property.price.toLocaleString()} <span className="text-xs uppercase tracking-tighter">{property.currency}</span>
+              {Math.round(property.price).toLocaleString('en-US')} <span className="text-xs uppercase tracking-tighter">{property.currency}</span>
             </p>
           </div>
 

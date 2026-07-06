@@ -28,12 +28,11 @@ export default function PropertyHero() {
           {/* <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
             The Elite Portfolio
           </span> */}
-          <h1 className="text-5xl md:text-7xl font-serif text-ivory leading-tight mt-7 ">
-            Discover Exceptional <br />
-            <span className="italic">Properties Across Oman</span>
+          <h1 className="text-5xl md:text-7xl font-serif text-ivory leading-tight mt-15 ">
+           Properties in Oman 
           </h1>
-          <p className="text-ivory/80 text-lg font-light max-w-2xl mx-auto">
-            Explore luxury villas, apartments, waterfront residences and exclusive investment opportunities in the most prestigious communities.
+          <p className="text-ivory/80 text-lg font-light max-w-5xl mx-auto">
+            Your next home or investment starts here. Choose luxury villas, beachfront apartments, waterfront homes and investment properties in Oman, Buy property in Oman with Alwalaa real estate, your trusted Oman real estate partner for Muscat, Salalah and the country’s most sought-after communities.
           </p>
         </motion.div>
 

@@ -31,7 +31,7 @@ export default function HawanaSalalahPage() {
       <LuxHero
         title="Hawana Salalah"
         tagline="SOVEREIGN SHORES • THE JEWEL OF THE SOUTH"
-        description="A breathtaking coastal destination where luxury is measured by the horizon. Experience the ultimate blend of tropical beauty and sophisticated urban planning."
+        description=" Hawana Salalah offers luxury villas, beachfront apartments, and lagoon homes in Oman's leading resort community, perfect for holiday homes, family living, and long-term property investment. "
         image="/communities/Hawana Salalah/1 (1).jpg"
         primaryCta={{ text: "View Waterfront Estates", href: "/properties?communities=Hawana%20Salalah" }}
         secondaryCta={{ text: "Request Exclusive Brochure", href: "#contact" }}
@@ -39,8 +39,8 @@ export default function HawanaSalalahPage() {
 
       <LuxEditorial
         badge="The Southern Prestige"
-        title="A Tropical Masterpiece"
-        content="Hawana Salalah is the crown jewel of the south. Designed as an integrated luxury resort and residential community, it offers a lifestyle of unparalleled ease. From the turquoise lagoons to the white sandy beaches, every inch of the development is engineered to provide a feeling of absolute freedom and prestige."
+        title="Why Invest in Hawana Salalah"
+        content="Hawana Salalah is more than a resort, it's a fully integrated community with strong investment potential. The real estate market here is rapidly growing due to its luxurious amenities, modern infrastructure, and high tourism demand. From Hawana Salalah resort homes to luxury villas, every property is crafted for quality and comfort. If you’re planning to buy a house in Oman, Hawana Salalah offers a safe, luxurious, and high-return option in one of the country’s most beautiful coastal zones."
         image="/communities/Hawana Salalah/1 (1).png"
       />
 
@@ -92,8 +92,14 @@ export default function HawanaSalalahPage() {
       <LuxEditorial
         reverse
         badge="Sovereign Living"
-        title="The Art of the Escape"
-        content="Life at Hawana Salalah is an endless summer. Whether it's a morning sail through the marina, a lazy afternoon by the infinity pool, or a sunset dinner overlooking the Arabian Sea, the experience is one of absolute serenity. It is the ultimate destination for those who wish to own a piece of paradise."
+        title="Top Locations in Hawana Salalah"
+        content="Hawana Salalah is home to some of Oman's most desirable waterfront locations, featuring luxury villas, beachfront apartments, marina residences, and lagoon homes. Every location offers a unique lifestyle, premium amenities, and excellent opportunities to buy property in Hawana Salalah.
+Marina Residences,
+Lagoon Residences,
+Beachfront Villas,
+Fanar Residences,
+and Rotana Residences
+"
         image="/communities/Hawana Salalah/1 (2).png"
       />
 
@@ -128,14 +134,79 @@ export default function HawanaSalalahPage() {
       />
 
       <LuxFAQ
-        title="Sovereign Intelligence"
+       title="FAQ's"
         faqs={[
-          { question: "Is Hawana Salalah a good choice for vacation home investors?", answer: "Absolutely. The combination of high-end infrastructure and the unique climate of Salalah makes it one of the most desirable vacation destinations in the region." },
-          { question: "What are the expected rental yields?", answer: "Rental yields are particularly strong during the Khareef season, with premium rates for beachfront villas and luxury apartments." },
-          { question: "Can I manage my property remotely?", answer: "Yes, the community offers professional property management services that handle everything from guest booking to maintenance." },
-          { question: "How is the connectivity to the rest of Oman?", answer: "With the expansion of Salalah Airport and improved road networks, the community is perfectly connected to the rest of the country." },
-          { question: "What makes Hawana different from other coastal projects?", answer: "The scale of the integrated resort services combined with private residential ownership creates a unique 'hotel-lifestyle' at home." },
-        ]}
+  {
+    question: "Why do property buyers choose Hawana Salalah?",
+    answer:
+      "Buyers choose Hawana Salalah for its beachfront lifestyle, premium residences, freehold ownership, and long-term investment potential.",
+  },
+  {
+    question: "Which properties are available in Hawana Salalah?",
+    answer:
+      "Hawana Salalah offers luxury villas, beachfront apartments, marina residences, lagoon homes, and waterfront properties.",
+  },
+  {
+    question: "Is Hawana Salalah a good place to buy a holiday home?",
+    answer:
+      "Yes, Hawana Salalah is one of the best destinations in Oman for holiday homes, offering year-round resort-style living and exceptional coastal experiences.",
+  },
+  {
+    question: "Can foreign buyers purchase property in Hawana Salalah?",
+    answer:
+      "Yes, eligible international buyers can purchase freehold property in Hawana Salalah under Oman's Integrated Tourism Complex (ITC) regulations.",
+  },
+  {
+    question: "How does Hawana Salalah support property investment?",
+    answer:
+      "Growing tourism, premium waterfront locations, and strong rental demand make Hawana Salalah a valuable long-term real estate investment.",
+  },
+  {
+    question: "What lifestyle can residents enjoy in Hawana Salalah?",
+    answer:
+      "Residents enjoy private beaches, marina facilities, luxury resorts, restaurants, walking trails, and a relaxed coastal lifestyle.",
+  },
+  {
+    question: "Are beachfront properties available in Hawana Salalah?",
+    answer:
+      "Yes, Hawana Salalah features beachfront villas, waterfront apartments, and lagoon-view residences within a premium resort community.",
+  },
+  {
+    question: "Who should buy property in Hawana Salalah?",
+    answer:
+      "Hawana Salalah is ideal for families, holiday home buyers, retirees, and investors looking for luxury coastal property in Oman.",
+  },
+  {
+    question: "Why is Hawana Salalah different from other waterfront developments in Oman?",
+    answer:
+      "Its tropical climate, natural lagoons, luxury resorts, and year-round tourism create a unique lifestyle unlike any other waterfront destination in Oman.",
+  },
+  {
+    question: "Does Hawana Salalah offer lagoon-view properties?",
+    answer:
+      "Yes, buyers can choose from premium lagoon-view apartments and waterfront homes with spectacular scenic views.",
+  },
+  {
+    question: "Is Hawana Salalah suitable for short-term rental investment?",
+    answer:
+      "Yes, Hawana Salalah attracts holiday visitors throughout the year, creating strong demand for short-term rental properties and excellent rental income potential.",
+  },
+  {
+    question: "Can I buy a second home in Hawana Salalah?",
+    answer:
+      "Yes, Hawana Salalah is one of Oman's most popular destinations for second homes, vacation properties, and luxury waterfront living.",
+  },
+  {
+    question: "What is the best property to buy in Hawana Salalah?",
+    answer:
+      "Luxury villas, beachfront apartments, and lagoon residences are among the most sought-after property options in Hawana Salalah.",
+  },
+  {
+    question: "Why is Hawana Salalah popular with international buyers?",
+    answer:
+      "International buyers value Hawana Salalah for its freehold ownership, waterfront lifestyle, premium resort community, and strong long-term investment opportunities.",
+  },
+]}
       />
 
       <LuxRelatedCommunities

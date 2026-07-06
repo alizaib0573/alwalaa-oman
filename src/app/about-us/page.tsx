@@ -35,11 +35,11 @@ export default function AboutPage() {
             transition={{ duration: 1 }}
           >
             <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
-              Our Heritage
+          Crafting a legacy 
             </span>
             <h1 className="text-5xl md:text-8xl font-serif text-ivory leading-tight">
-              Crafting a Legacy <br />
-              <span className="italic">of Excellence</span>
+               Setting the Standard in<br />
+              <span className="italic">Oman Real Estate</span>
             </h1>
           </motion.div>
         </div>
@@ -56,11 +56,11 @@ export default function AboutPage() {
             className="space-y-8"
           >
             <h2 className="text-4xl md:text-6xl font-serif text-matte-black">
-              More than just <br />
-              <span className="italic text-gold">Real Estate.</span>
+              Crafting a<br />
+              <span className="italic text-gold">Legacy</span>
             </h2>
             <p className="text-matte-black/70 text-lg leading-relaxed font-light">
-              At Alwalaa, our goal isn’t just to sell properties; it’s to truly help you feel at home in Oman. We believe in cultivating trust, relationships, and a future together. We redefine real estate investment for foreign investors and high-net-worth individuals, ensuring every transaction is a step toward a prestigious legacy.
+              At AlWalaa Real Estate, we don't just help you buy property, we help you invest with confidence, secure your future, and find a place you'll truly call home. From luxury villas and waterfront apartments to freehold investment opportunities, we're committed to delivering trusted guidance and exceptional value at every step.
             </p>
             <div className="w-20 h-px bg-gold" />
           </motion.div>
