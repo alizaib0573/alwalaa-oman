@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const markets = [
   {
@@ -29,6 +30,7 @@ const markets = [
 ];
 
 export default function ChooseProperty() {
+  const router = useRouter();
   return (
     <section className="relative py-16 bg-matte-black text-ivory overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -71,16 +73,17 @@ export default function ChooseProperty() {
                   src={market.image}
                   alt={market.title}
                   fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                 
+                  className=" choose-img object-cover   transition-transform duration-1000 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-matte-black/80 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <span className="text-gold text-[9px] uppercase tracking-widest font-bold mb-1 block">
+                  {/* <span className="text-gold text-[9px] uppercase tracking-widest font-bold mb-1 block">
                     Strategic Advantage
                   </span>
                   <h3 className="text-2xl font-serif text-ivory italic leading-tight">
                     {market.highlight}
-                  </h3>
+                  </h3> */}
                 </div>
               </div>
 
@@ -113,6 +116,7 @@ export default function ChooseProperty() {
 
                 {/* Action Button - Smaller padding */}
                 <motion.button
+                  onClick={() => router.push("/properties")}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={cn(

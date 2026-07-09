@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,9 @@ import { COMMUNITIES_DATA } from "@/data/communities";
 export default function TopCommunities() {
   const [communities, setCommunities] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<number | undefined>(undefined);
+  const timeoutRef = useRef<number | undefined>(undefined);
 
   const communityImageMap: Record<string, string> = {
     "AIDA": "/communities/AIDA/1 (1).jpeg",
@@ -24,7 +27,6 @@ export default function TopCommunities() {
   useEffect(() => {
     async function fetchCommunities() {
       try {
-        // Use local COMMUNITIES_DATA instead of API to ensure all 8 communities are present
         const data = Object.entries(COMMUNITIES_DATA).map(([slug, metadata]) => ({
           id: slug,
           slug: slug,
@@ -41,6 +43,71 @@ export default function TopCommunities() {
     }
     fetchCommunities();
   }, []);
+
+  const startAutoScroll = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = window.setInterval(() => {
+      if (!scrollContainerRef.current) return;
+      const container = scrollContainerRef.current;
+      const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth || 320;
+      const maxScroll = container.scrollWidth / 2;
+
+      if (container.scrollLeft + cardWidth >= maxScroll) {
+        container.scrollTo({ left: 0, behavior: 'instant' });
+      } else {
+        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      }
+    }, 3000);
+  }, []);
+
+  const stopAutoScroll = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+  }, []);
+
+  const scheduleAutoScroll = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = window.setTimeout(() => {
+      startAutoScroll();
+      timeoutRef.current = undefined;
+    }, 2000);
+  }, [startAutoScroll]);
+
+  useEffect(() => {
+    if (communities.length > 0) startAutoScroll();
+    return () => {
+      stopAutoScroll();
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [communities, startAutoScroll, stopAutoScroll]);
+
+  const scroll = useCallback((direction: 'left' | 'right') => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth || 320;
+    const maxScroll = container.scrollWidth / 2;
+
+    stopAutoScroll();
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    if (direction === 'left') {
+      if (container.scrollLeft - cardWidth < 0) {
+        container.scrollTo({ left: maxScroll - cardWidth, behavior: 'instant' });
+      } else {
+        container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+      }
+    } else {
+      if (container.scrollLeft + cardWidth >= maxScroll) {
+        container.scrollTo({ left: 0, behavior: 'instant' });
+      } else {
+        container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      }
+    }
+
+    scheduleAutoScroll();
+  }, [stopAutoScroll, scheduleAutoScroll]);
 
   if (isLoading) {
     return (
@@ -61,9 +128,6 @@ export default function TopCommunities() {
       </section>
     );
   }
-
-  // Duplicate communities for seamless loop
-  const duplicatedCommunities = [...communities, ...communities];
 
   return (
     <section className="relative py-24 bg-background overflow-hidden">
@@ -101,50 +165,44 @@ export default function TopCommunities() {
         </div>
       </div>
 
-      {/* Seamless Carousel */}
+      {/* Carousel with Arrow Controls */}
       <div className="relative w-full">
-        <motion.div
-          className="flex w-max"
-          animate={{
-            x: [0, "-50%"]
-          }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              duration: 30,
-              ease: "linear"
-            }
-          }}
-          style={{ width: 'max-content' }}
+        <button
+          onClick={() => scroll('left')}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-white transition-all"
+          aria-label="Scroll left"
         >
-          {duplicatedCommunities.map((community, index) => (
+          <svg className="w-4 h-4 md:w-5 md:h-5 text-matte-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <div
+          ref={scrollContainerRef}
+          onMouseEnter={stopAutoScroll}
+          onMouseLeave={startAutoScroll}
+          className="flex overflow-x-auto scroll-smooth"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {[...communities, ...communities].map((community, index) => (
             <div
               key={`${community.id}-${index}`}
-              className="px-3 w-[calc(100vw/2)] md:w-[calc(100vw/4)] lg:w-[calc(1280px/4)]"
+              className="flex-shrink-0 px-3 w-[calc(100vw/2)] md:w-[calc(100vw/4)] lg:w-[calc(1280px/4)]"
             >
               <Link
                 href={`/${community.slug}`}
                 className="group relative overflow-hidden rounded-3xl cursor-pointer block h-[400px]"
               >
-                <motion.div
-                  className="relative w-full h-full"
-                >
-                  {/* Image with Zoom Effect */}
+                <div className="relative w-full h-full">
                   <Image
                     src={communityImageMap[community.name] || community.imageUrl || '/placeholder.jpg'}
                     alt={community.name}
                     fill
                     className="object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
-
-                  {/* Premium Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-
-                  {/* Content Overlay */}
                   <div className="absolute inset-0 p-8 flex flex-col justify-end text-ivory">
-                    <motion.div
-                      className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                    >
+                    <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                       <span className="text-gold text-[10px] uppercase tracking-widest font-bold mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
                         Exclusive Enclave
                       </span>
@@ -154,17 +212,27 @@ export default function TopCommunities() {
                       <p className="text-sm text-ivory/60 line-clamp-2 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200 translate-y-2 group-hover:translate-y-0">
                         {community.description}
                       </p>
-                    </motion.div>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               </Link>
             </div>
           ))}
-        </motion.div>
+        </div>
+
+        <button
+          onClick={() => scroll('right')}
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-white transition-all"
+          aria-label="Scroll right"
+        >
+          <svg className="w-4 h-4 md:w-5 md:h-5 text-matte-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
 
       {/* Bottom Explore Link */}
-      <div className="mt-16 text-center">
+      {/* <div className="mt-16 text-center">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -179,7 +247,7 @@ export default function TopCommunities() {
             Explore &rarr;
           </span>
         </motion.div>
-      </div>
+      </div> */}
     </section>
   );
 }

@@ -11,22 +11,16 @@ export default function AboutPage() {
       <Navbar />
 
       {/* About Hero */}
-      <section className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden">
+      <section className="relative h-[100vh] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          {/* <img
-            src="https://alwalaaoman.com/wp-content/uploads/2025/02/1.webp"
+          <Image
+            src="/p3.jpg"
             alt="About Alwalaa"
-            className="h-full w-full object-cover brightness-50"
-          /> */}
-          <div className="absolute inset-0 z-0 overflow-hidden">
-  <iframe
-    className="absolute top-1/2 left-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 scale-125"
-    src="https://www.youtube.com/embed/mPdMWJdCbMQ?autoplay=1&mute=1&controls=0&loop=1&playlist=mPdMWJdCbMQ&playsinline=1"
-    title="Hero Background Video"
-    allow="autoplay; fullscreen"
-  />
-  <div className="absolute inset-0 bg-black/45" />
-</div>
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/45" />
         </div>
         <div className="relative z-10 text-center px-6">
           <motion.div

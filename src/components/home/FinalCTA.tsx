@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { usePopup } from "@/context/PopupContext";
 
 export default function FinalCTA() {
+    const { openPopup } = usePopup();
+  
   return (
     <section className="relative h-[80vh] w-full overflow-hidden flex items-center justify-center">
       <div className="absolute inset-0 z-0">
@@ -32,12 +35,12 @@ export default function FinalCTA() {
             Start Your Oman <br />
             <span className="italic text-gold">Property Journey</span>
           </h2>
-          <Link
-            href="#contact"
+          <button
+            onClick={openPopup}
             className="inline-block bg-ivory text-matte-black px-12 py-5 text-xs uppercase tracking-[0.3em] font-bold hover:bg-gold transition-all duration-500"
           >
             Request a Consultation
-          </Link>
+          </button>
         </motion.div>
       </div>
     </section>

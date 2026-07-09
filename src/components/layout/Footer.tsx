@@ -2,85 +2,155 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { Camera, Mail } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { usePopup } from "@/context/PopupContext";
+import {
+  FaWhatsapp,
+  FaInstagram,
+  FaFacebookF,
+  FaLinkedinIn,
+  FaTelegramPlane
+} from "react-icons/fa";
+
+// --- Data Definitions ---
+const NAV_LINKS = [
+  { name: "Properties", href: "/properties" },
+  { name: "Blog", href: "/blog" },
+  { name: "About Us", href: "/about-us" },
+  { name: "Contact", href: "/about-us" },
+];
+
+const SOCIAL_LINKS = [
+  { name: "WhatsApp", href: "https://wa.me/96800000000", icon: <FaWhatsapp size={20} /> },
+  { name: "Instagram", href: "https://instagram.com", icon: <FaInstagram size={20} /> },
+  { name: "Facebook", href: "https://facebook.com", icon: <FaFacebookF size={20} /> },
+  { name: "LinkedIn", href: "https://linkedin.com", icon: <FaLinkedinIn size={20} /> },
+  { name: "Telegram", href: "https://t.me", icon: <FaTelegramPlane size={20} /> },
+];
+
+const LEGAL_LINKS = [
+  { name: "Privacy Policy", href: "#" },
+  { name: "Terms", href: "#" },
+  { name: "Cookies", href: "#" },
+  { name: "Disclaimer", href: "#" },
+];
+
+const CONTACT_INFO = {
+  address: "Muscat, Oman",
+  email: "info@alwalaaoman.com",
+  phone: "+968 71555067",
+  hours: "Mon - Fri: 9am - 6pm",
+};
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 export default function Footer() {
+  const { openPopup } = usePopup();
+
   return (
-    <footer className="bg-matte-black text-ivory pt-24 pb-12 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
-        {/* Brand Section */}
-        <div className="space-y-8">
-          <Image
-            src="/Logo white.png"
-            alt="Alwalaa Logo"
-            width={80}
-            height={80}
-            className="max-h-24 scale-325"
-          />
-          <p className="text-champagne text-sm leading-relaxed max-w-xs">
-            Redefining real estate investment for foreign investors and high-net-worth individuals.
-            Helping you find the most prestigious properties in Oman.
-          </p>
-          <div className="flex gap-4">
-            <Link href="#" className="p-2 bg-white/5 rounded-full hover:bg-gold transition-all duration-300 text-ivory hover:text-matte-black group">
-              <Camera size={18} className="transition-transform duration-300 group-hover:scale-110" />
-            </Link>
-            <Link href="#" className="p-2 bg-white/5 rounded-full hover:bg-gold transition-all duration-300 text-ivory hover:text-matte-black group">
-              <Mail size={18} className="transition-transform duration-300 group-hover:scale-110" />
-            </Link>
-          </div>
-        </div>
+    <footer className="bg-[#050505] text-white pt-[120px] pb-[80px] px-6 overflow-hidden">
+      <div className="max-w-[1600px] mx-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[100px] gap-y-16 mb-24"
+        >
+          <motion.div variants={itemVariants} className="flex flex-col space-y-8">
+            <div className="flex flex-col items-start">
+              <Image src="/Logo white.png" alt="Alwalaa Logo" width={180} height={80} className="" priority />
+            </div>
+            <div className="space-y-4">
+              <h2 className="text-white text-l font-serif font-medium leading-tight">Luxury Real Estate in Oman</h2>
+              <p className="text-gray-400 text-[12px] font-light leading-relaxed max-w-sm">
+                Connecting discerning buyers with Oman&apos;s most exclusive residences, waterfront communities and investment opportunities.
+              </p>
+            </div>
+            {/* <div className="space-y-2 pt-4">
+              <p className="text-gray-500 text-[12px] uppercase tracking-widest font-medium">RERA License: 123456</p>
+              <p className="text-gray-500 text-[12px] uppercase tracking-widest font-medium">Company Registration: 789012</p>
+              <p className="text-gray-500 text-[12px] uppercase tracking-widest font-medium">Trusted Since 20XX</p>
+            </div> */}
+          </motion.div>
 
-        {/* Quick Links */}
-        <div className="grid grid-cols-2 gap-8">
-          <div className="space-y-6">
-            <h4 className="text-gold uppercase tracking-widest text-xs font-bold">Company</h4>
-            <ul className="space-y-4 text-sm text-warm-white/60">
-              <li><Link href="/" className="hover:text-ivory transition-colors">Home</Link></li>
-              <li><Link href="/about-us" className="hover:text-ivory transition-colors">About Us</Link></li>
-              <li><Link href="/careers" className="hover:text-ivory transition-colors">Careers</Link></li>
-              <li><Link href="" className="hover:text-ivory transition-colors">Projects</Link></li>
-            </ul>
-          </div>
-          <div className="space-y-6">
-            <h4 className="text-gold uppercase tracking-widest text-xs font-bold">Explore</h4>
-            <ul className="space-y-4 text-sm text-warm-white/60">
-              <li><Link href="/sultan-haitham-city" className="hover:text-ivory transition-colors">Sultan Haitham City</Link></li>
-              <li><Link href="/al-mouj" className="hover:text-ivory transition-colors">Al Mouj</Link></li>
-              <li><Link href="/muscat-bay" className="hover:text-ivory transition-colors">Muscat Bay</Link></li>
-              <li><Link href="/jebel-sifah" className="hover:text-ivory transition-colors">Jebel Sifah</Link></li >
-              <li><Link href="/aida" className="hover:text-ivory transition-colors">Aida</Link></li >
-              <li><Link href="/hawana-salalah" className="hover:text-ivory transition-colors">Hawana Salalah</Link></li >
-              <li><Link href="/the-sustainable-city" className="hover:text-ivory transition-colors">The Sustainable City</Link></li >
-            </ul>
-          </div>
-        </div>
+          <motion.div variants={itemVariants} className="flex flex-col">
+            <div className="mb-6">
+              <h3 className="text-white text-[18px] font-semibold uppercase tracking-wider">Explore</h3>
+              <div className="w-12 h-px bg-[#C9A56A] mt-2" />
+            </div>
+            <nav className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-8 gap-y-3">
+              {NAV_LINKS.map((link) => (
+                <motion.div key={link.name} variants={itemVariants} className="group overflow-hidden">
+                  <Link href={link.href} className="text-gray-400 text-[16px] font-regular hover:text-[#C9A56A] transition-colors duration-300 inline-block relative">
+                    {link.name}
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-[#C9A56A] transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+          </motion.div>
 
-        {/* Contact Section */}
-        <div className="space-y-8">
-          <h4 className="text-gold uppercase tracking-widest text-xs font-bold">Investment Inquiry</h4>
-          <div className="space-y-4 text-sm text-warm-white/60">
-            <p>UFC gym Building, Shihab Building,<br />Al Mauj St, Muscat, Oman</p>
-            <p>Phone: <span className="text-ivory">+968 71555067</span></p>
-            <p>Email: <span className="text-ivory">info@alwalaaoman.com</span></p>
-          </div>
-          <div className="pt-4">
-            <Link
-              href="mailto:info@alwalaaoman.com"
-              className="inline-block border-b border-gold text-gold pb-1 text-xs uppercase tracking-widest hover:text-ivory transition-colors"
-            >
-              Get in Touch
-            </Link>
-          </div>
-        </div>
-      </div>
+          <motion.div variants={itemVariants} className="flex flex-col items-start space-y-10">
+            <div className="space-y-2">
+              <p className="text-gray-400 text-[12px] uppercase tracking-widest font-medium">Contact Us</p>
+              <a href={`tel:${CONTACT_INFO.phone}`} className="text-[#C9A56A] text-[48px] font-bold leading-none block hover:text-white transition-colors duration-300">{CONTACT_INFO.phone}</a>
+            </div>
+            <motion.div whileHover={{ scale: 1.03 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+              <button onClick={openPopup} className="bg-[#C9A56A] text-black font-bold text-xs uppercase tracking-widest h-[56px] px-8 flex items-center justify-center transition-all duration-300 hover:bg-white">
+                Request a private consultation 
+              </button>
+            </motion.div>
+            <div className="flex gap-5 pt-4">
+              {SOCIAL_LINKS.map((social) => (
+                <motion.a key={social.name} href={social.href} target="_blank" rel="noopener noreferrer" whileHover={{ y: -3 }} className="text-gray-400 hover:text-[#C9A56A] transition-all duration-300 p-2" aria-label={social.name}>
+                  {social.icon}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
 
-      <div className="max-w-7xl mx-auto mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest text-warm-white/40">
-        <p>© {new Date().getFullYear()} Alwalaa Real Estate. All Rights Reserved.</p>
-        <div className="flex gap-6">
-          <Link href="#" className="hover:text-ivory transition-colors">Privacy Policy</Link>
-          <Link href="#" className="hover:text-ivory transition-colors">Terms of Service</Link>
+        <div className="border-t border-white/10 pt-12 mt-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+            <div className="flex flex-col space-y-3">
+              {LEGAL_LINKS.map((link) => (
+                <Link key={link.name} href={link.href} className="text-gray-500 text-[12px] hover:text-gray-300 transition-colors">{link.name}</Link>
+              ))}
+            </div>
+            <div className="space-y-1">
+              <p className="text-white text-[14px] font-medium mb-1">Address</p>
+              <address className="not-italic text-gray-500 text-[12px] leading-relaxed">{CONTACT_INFO.address}</address>
+            </div>
+            <div className="space-y-2">
+              <p className="text-white text-[14px] font-medium mb-1">Connect</p>
+              <div className="text-gray-500 text-[12px] space-y-1">
+                <p>Email: {CONTACT_INFO.email}</p>
+                <p>Phone: {CONTACT_INFO.phone}</p>
+                <p>Hours: {CONTACT_INFO.hours}</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-start lg:items-end justify-self-end">
+              <p className="text-gray-500 text-[12px] text-right max-w-xs">© {new Date().getFullYear()} Alwalaa Real Estate. <br /> All Rights Reserved.</p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

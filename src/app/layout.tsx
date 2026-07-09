@@ -3,6 +3,8 @@ import { Inter, Playfair_Display, Geist } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/core/SmoothScroll";
 import LoadingScreen from "@/components/core/LoadingScreen";
+import { PopupProvider } from "@/context/PopupContext";
+import GlobalPopup from "@/components/core/GlobalPopup";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -28,9 +30,12 @@ export default function RootLayout({
       className={cn("antialiased", playfair.variable, "font-sans", geist.variable)}
     >
       <body className="flex flex-col">
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
+        <PopupProvider>
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
+          <GlobalPopup />
+        </PopupProvider>
       </body>
     </html>
   );

@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { usePopup } from "@/context/PopupContext";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { openPopup } = usePopup();
+  const hasOpened = useRef(false);
   const images = [ "/p2.jpg"];
 
   useEffect(() => {
@@ -15,6 +19,15 @@ export default function Hero() {
     }, 7000);
     return () => clearInterval(timer);
   }, [images.length]);
+
+  useEffect(() => {
+    if (hasOpened.current) return;
+    hasOpened.current = true;
+    const popupTimer = setTimeout(() => {
+      openPopup();
+    }, 5000);
+    return () => clearTimeout(popupTimer);
+  }, [openPopup]);
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -53,9 +66,6 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.5 }}
           className="max-w-4xl"
         >
-          {/* <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-6 block">
-            Welcome to Excellence
-          </span> */}
           <h1 className="text-5xl md:text-8xl 2xl:text-9xl font-serif text-ivory leading-tight mb-8">
             Buy Luxury <br />
             <span className="italic">Property in</span> <br /> Oman
@@ -68,7 +78,7 @@ export default function Hero() {
               Explore Properties
             </Link>
             <Link
-              href="/about"
+              href="/about-us"
               className="text-ivory border-b border-ivory/30 px-4 py-4 text-xs uppercase tracking-widest font-medium hover:border-gold transition-all duration-500"
             >
               Our Story
@@ -77,18 +87,20 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Bottom Scroll Indicator */}
-      {/* <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 2 }}
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3"
+      {/* WhatsApp Floating Icon */}
+      <motion.a
+        href="https://wa.me/96800000000"
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1 }}
+        whileHover={{ scale: 1.1 }}
+        className="absolute bottom-10 right-10 z-20 w-14 h-14 bg-gold rounded-full flex items-center justify-center shadow-lg hover:bg-ivory transition-colors duration-300 group"
       >
-        <span className="text-ivory/40 text-[10px] uppercase tracking-widest font-medium">
-          Scroll to explore
-        </span>
-        <div className="w-px h-12 bg-gradient-to-b from-gold to-transparent" />
-      </motion.div> */}
+        <FaWhatsapp className="text-matte-black text-2xl group-hover:text-gold transition-colors duration-300" />
+      </motion.a>
+
     </section>
   );
 }

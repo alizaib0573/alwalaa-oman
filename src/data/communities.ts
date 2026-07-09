@@ -395,7 +395,7 @@ export const COMMUNITIES_DATA: Record<string, CommunityMetadata> = {
       locationBadge: "Muscat",
       investmentScore: "9.1/10",
       startingPrice: "OMR 220,000",
-      bannerImage: "/p2.jpg",
+      bannerImage: "/sustainable-city.jpeg",
     },
   },
   // "madinat-al-irfan": {

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePopup } from "@/context/PopupContext";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -45,6 +46,7 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
       document.body.style.overflow = "";
     };
   }, [isOpen]);
+  const { openPopup } = usePopup();
 
   return (
     <>
@@ -120,12 +122,12 @@ export default function Navbar({ forceBlack = false }: { forceBlack?: boolean })
               </div>
             ))}
 
-              {/* <Link
-                href="#contact"
+              <button
+               onClick={openPopup}
                 className="bg-matte-black text-ivory px-6 py-2 text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-300"
               >
                 Book Call
-              </Link> */}
+              </button>
           </div>
 
           {/* Mobile Menu Toggle */}
