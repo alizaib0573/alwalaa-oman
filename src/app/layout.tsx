@@ -28,8 +28,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn("antialiased", playfair.variable, "font-sans", geist.variable)}
+      suppressHydrationWarning
     >
-      <body className="flex flex-col">
+      <body className="flex flex-col" suppressHydrationWarning>
         <PopupProvider>
           <SmoothScroll>
             {children}
