@@ -26,72 +26,105 @@ export default function FeaturedProperties() {
   }, []);
 
   return (
-    <section className="py-32 px-6 bg-ivory overflow-hidden">
+    <section className="py-20 px-6 bg-warm-white border-t border-champagne/20">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-          <div className="max-w-2xl">
-            <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+          <div>
+            <span className="text-gold uppercase tracking-[0.25em] text-[10px] font-bold mb-2 block">
               Elite Collection
             </span>
-            <h2 className="text-4xl md:text-6xl font-serif text-matte-black">
-              Featured <span className="italic">Properties</span>
+            <h2 className="text-3xl md:text-5xl font-serif text-matte-black leading-tight">
+              Featured <span className="italic text-gold">Properties</span>
             </h2>
           </div>
           <Link
             href="/properties"
-            className="text-xs uppercase tracking-widest text-matte-black border-b border-matte-black/20 pb-2 hover:text-gold hover:border-gold transition-all duration-500"
+            className="text-[11px] uppercase tracking-widest text-matte-black hover:text-gold transition-all duration-300 group flex items-center gap-2"
           >
-            Explore All Listings
+            <span>Explore All Listings</span>
+            <span className="group-hover:translate-x-1 transition-transform duration-300">&rarr;</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Minimalist 3-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {isLoading ? (
-            <div className="col-span-full py-20 text-center text-zinc-400 animate-pulse">
+            <div className="col-span-full py-16 text-center text-zinc-400 animate-pulse text-sm">
               Curating elite collection...
             </div>
           ) : properties.length === 0 ? (
-            <div className="col-span-full py-20 text-center text-zinc-400">
+            <div className="col-span-full py-16 text-center text-zinc-400 text-sm">
               No featured properties currently available.
             </div>
           ) : (
-            properties.map((prop: any, i: number) => (
+            properties.slice(0, 3).map((prop: any, i: number) => (
               <motion.div
                 key={prop.id}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: i * 0.1 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                className="group relative h-[600px] overflow-hidden"
+                className="group flex flex-col"
               >
-                <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-110">
+                {/* Compact Image Card */}
+                <Link
+                  href={`/properties/${prop.slug}`}
+                  className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-zinc-100 mb-4 block"
+                >
                   <Image
                     src={prop.gallery?.[0] || '/placeholder.jpg'}
                     alt={prop.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-transparent to-transparent opacity-80" />
-                </div>
+                  <div className="absolute top-4 left-4 bg-matte-black/70 backdrop-blur-sm text-ivory text-[9px] uppercase tracking-widest font-semibold px-3 py-1 rounded-full">
+                    {prop.status?.replace(/_/g, ' ')}
+                  </div>
+                </Link>
 
-                <div className="absolute bottom-0 left-0 p-10 w-full space-y-6">
-                  <motion.div
-                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  >
-                    <p className="text-gold uppercase tracking-widest text-xs font-bold">{prop.community?.name || prop.location}</p>
-                  </motion.div>
-                  <h3 className="text-3xl font-serif text-ivory uppercase tracking-wide">
-                    {prop.title}
-                  </h3>
-                  <div className="flex justify-between items-end">
-                    <p className="text-ivory/60 text-sm font-light">
-                      {new Intl.NumberFormat('en-US', { style: 'currency', currency: prop.currency || 'OMR' }).format(Number(prop.price))}
+                {/* Details Container below the Image */}
+                <div className="flex flex-col flex-1 px-1">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <p className="text-gold text-[9px] uppercase tracking-widest font-semibold">
+                        {prop.community?.name || prop.location}
+                      </p>
+                      <Link href={`/properties/${prop.slug}`}>
+                        <h3 className="text-lg font-serif text-matte-black mt-1 group-hover:text-gold transition-colors duration-300">
+                          {prop.title}
+                        </h3>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Property Specs */}
+                  <div className="flex items-center gap-4 mt-3 py-3 border-y border-champagne/20 text-[11px] text-matte-black/50 font-light">
+                    {prop.bedrooms && (
+                      <span>{prop.bedrooms} {prop.bedrooms === 1 ? 'Bed' : 'Beds'}</span>
+                    )}
+                    {prop.bathrooms && (
+                      <span>{prop.bathrooms} {prop.bathrooms === 1 ? 'Bath' : 'Baths'}</span>
+                    )}
+                    {prop.areaSqm && (
+                      <span>{Number(prop.areaSqm)} Sqm</span>
+                    )}
+                  </div>
+
+                  {/* Price & Action */}
+                  <div className="flex justify-between items-center mt-3 pt-1">
+                    <p className="text-matte-black font-semibold text-sm">
+                      {new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: prop.currency || 'OMR',
+                        maximumFractionDigits: 0
+                      }).format(Number(prop.price))}
                     </p>
                     <Link
                       href={`/properties/${prop.slug}`}
-                      className="text-xs uppercase tracking-widest text-ivory border border-ivory/30 px-6 py-3 hover:bg-ivory hover:text-matte-black transition-all duration-500"
+                      className="text-[10px] uppercase tracking-widest text-matte-black hover:text-gold transition-all font-semibold"
                     >
-                      View Detail
+                      View Details &rarr;
                     </Link>
                   </div>
                 </div>
