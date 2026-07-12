@@ -136,23 +136,72 @@ export default function CareersPage() {
             viewport={{ once: true }}
             className="grid grid-cols-2 gap-4 relative"
           >
-            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg">
-              <Image
-                src="/consultation.jpg"
-                fill
-                className="object-cover"
-                alt="Alwalaa consultation"
-                sizes="300px"
-              />
+            {/* SVG 1 — Dark Excellence Seal */}
+            <div className="h-56 rounded-2xl shadow-lg bg-[#0c0c0c] flex items-center justify-center">
+              <svg viewBox="0 0 240 220" width="210" height="192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Outer octagonal double border */}
+                <path d="M18 4 L222 4 L236 18 L236 202 L222 216 L18 216 L4 202 L4 18 Z" stroke="#C9A56A" strokeWidth="1.2"/>
+                <path d="M22 9 L218 9 L230 21 L230 199 L218 211 L22 211 L10 199 L10 21 Z" stroke="#C9A56A" strokeWidth="0.5" opacity="0.4"/>
+                {/* Corner L-ornaments */}
+                <path d="M26 21 L26 33 M26 21 L38 21" stroke="#C9A56A" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M214 21 L214 33 M214 21 L202 21" stroke="#C9A56A" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M26 199 L26 187 M26 199 L38 199" stroke="#C9A56A" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M214 199 L214 187 M214 199 L202 199" stroke="#C9A56A" strokeWidth="1.5" strokeLinecap="round"/>
+                {/* Header */}
+                <text x="120" y="40" textAnchor="middle" fontSize="10" fill="#C9A56A" letterSpacing="6" fontFamily="Georgia,serif">ALWALAA</text>
+                <line x1="70" y1="49" x2="170" y2="49" stroke="#C9A56A" strokeWidth="0.5" opacity="0.5"/>
+                {/* Double circle */}
+                <circle cx="120" cy="118" r="60" stroke="#C9A56A" strokeWidth="0.9"/>
+                <circle cx="120" cy="118" r="53" stroke="#C9A56A" strokeWidth="0.4" opacity="0.45"/>
+                {/* 8-pointed star — alternating outer r=52 & inner r=23 */}
+                <polygon
+                  points="120,66 129,95 159,80 142,108 172,118 142,128 159,156 129,141 120,170 111,141 81,156 98,128 68,118 98,108 81,80 111,95"
+                  stroke="#C9A56A" strokeWidth="1" fill="rgba(201,165,106,0.04)"
+                />
+                {/* Centre diamond */}
+                <polygon points="120,112 126,118 120,124 114,118" fill="#C9A56A"/>
+                {/* Footer */}
+                <line x1="70" y1="185" x2="170" y2="185" stroke="#C9A56A" strokeWidth="0.5" opacity="0.5"/>
+                <text x="120" y="197" textAnchor="middle" fontSize="7.5" fill="#C9A56A" letterSpacing="4" fontFamily="sans-serif" opacity="0.75">REAL ESTATE</text>
+              </svg>
             </div>
-            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg mt-10">
-              <Image
-                src="/about.jpg"
-                fill
-                className="object-cover"
-                alt="Alwalaa properties"
-                sizes="300px"
-              />
+
+            {/* SVG 2 — Ivory Compass Rose Medallion */}
+            <div className="h-56 rounded-2xl shadow-lg mt-10 bg-[#f5f0e6] flex items-center justify-center">
+              <svg viewBox="0 0 240 220" width="210" height="192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Outer ring */}
+                <circle cx="120" cy="110" r="95" stroke="#C9A56A" strokeWidth="0.4" opacity="0.25"/>
+                <circle cx="120" cy="110" r="88" stroke="#C9A56A" strokeWidth="0.8" opacity="0.5"/>
+                {/* Cardinal ticks (outward from r=88 circle) */}
+                <line x1="120" y1="22" x2="120" y2="14" stroke="#C9A56A" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="208" y1="110" x2="216" y2="110" stroke="#C9A56A" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="120" y1="198" x2="120" y2="206" stroke="#C9A56A" strokeWidth="2" strokeLinecap="round"/>
+                <line x1="32" y1="110" x2="24" y2="110" stroke="#C9A56A" strokeWidth="2" strokeLinecap="round"/>
+                {/* Intercardinal ticks */}
+                <line x1="182" y1="48" x2="186" y2="44" stroke="#C9A56A" strokeWidth="1" strokeLinecap="round" opacity="0.55"/>
+                <line x1="182" y1="172" x2="186" y2="176" stroke="#C9A56A" strokeWidth="1" strokeLinecap="round" opacity="0.55"/>
+                <line x1="58" y1="172" x2="54" y2="176" stroke="#C9A56A" strokeWidth="1" strokeLinecap="round" opacity="0.55"/>
+                <line x1="58" y1="48" x2="54" y2="44" stroke="#C9A56A" strokeWidth="1" strokeLinecap="round" opacity="0.55"/>
+                {/* Inner circle ring */}
+                <circle cx="120" cy="110" r="22" stroke="#C9A56A" strokeWidth="0.8" opacity="0.55"/>
+                {/* Main 4-pointed compass star */}
+                <polygon
+                  points="120,40 134,96 190,110 134,124 120,180 106,124 50,110 106,96"
+                  stroke="#C9A56A" strokeWidth="1.3" fill="rgba(201,165,106,0.07)"
+                />
+                {/* Rotated 45° secondary star */}
+                <polygon
+                  points="152,78 140,110 152,142 120,130 88,142 100,110 88,78 120,90"
+                  stroke="#C9A56A" strokeWidth="0.8" fill="rgba(201,165,106,0.04)" opacity="0.8"
+                />
+                {/* Centre dot + ring */}
+                <circle cx="120" cy="110" r="8" stroke="#C9A56A" strokeWidth="0.7" opacity="0.55"/>
+                <circle cx="120" cy="110" r="3.5" fill="#C9A56A"/>
+                {/* N label */}
+                <text x="120" y="11" textAnchor="middle" fontSize="8" fill="#C9A56A" fontFamily="Georgia,serif" fontWeight="bold" opacity="0.9">N</text>
+                {/* Bottom label */}
+                <text x="120" y="213" textAnchor="middle" fontSize="7" fill="#C9A56A" letterSpacing="3" fontFamily="sans-serif" opacity="0.65">MUSCAT · OMAN</text>
+              </svg>
             </div>
           </motion.div>
         </div>
