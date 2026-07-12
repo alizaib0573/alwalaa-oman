@@ -20,7 +20,7 @@ export default function LuxEditorial({
   badge,
 }: LuxEditorialProps) {
   return (
-    <section className="py-24 md:py-48 px-6 bg-black overflow-hidden">
+    <section className="py-20 md:py-28 px-6 bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className={`flex flex-col ${reverse ? 'md:flex-row-reverse' : 'md:flex-row'} gap-16 lg:gap-24 items-center`}>
 

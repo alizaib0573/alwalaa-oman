@@ -31,7 +31,7 @@ export default function MuscatBayPage() {
       <LuxHero
         title="Muscat Bay"
         tagline="SOPHISTICATED SERENITY • PEAKS & WATERS"
-        description="Own a luxury escape at Muscat Bay Oman, where beachfront villas, sea view apartments and premium waterfront homes create an exceptional coastal lifestyle. Whether you are looking to buy property in Muscat Bay or make a long-term real estate investment in Oman, Muscat Bay offers privacy, world-class amenities and lasting value."
+        description="Beachfront villas and sea-view apartments nestled between the Al Hajar Mountains and the Arabian Sea. Oman's most coveted coastal address."
         image="/communities/Muscat Bay/image.png"
         primaryCta={{ text: "View Exclusive Villas", href: "/properties?communities=Muscat%20Bay" }}
         secondaryCta={{ text: "Request Private Guide", href: "#contact" }}
@@ -48,10 +48,10 @@ export default function MuscatBayPage() {
         title="The Essence of Exclusivity"
         subtitle="A rare intersection of nature and high-end architectural engineering."
         stats={[
-          { label: "Beach Access", value: "Direct", unit: "" },
-          { label: "Privacy Index", value: "Maximum", unit: "" },
-          { label: "Property Type", value: "Villas", unit: "" },
-          { label: "Investment Score", value: "9.6", unit: "/10" },
+          { label: "Private Beach", value: "1.8", unit: "km" },
+          { label: "Freehold", value: "100", unit: "%" },
+          { label: "Avg. Annual ROI", value: "7", unit: "%+" },
+          { label: "Completion", value: "2026", unit: "" },
         ]}
       />
 
@@ -94,9 +94,9 @@ export default function MuscatBayPage() {
 
       <LuxEditorial
   reverse
-  badge="Luxury Coastal Living"
-  title="Luxury Coastal Living"
-  content="Experience the finest luxury coastal living at Muscat Bay, where beachfront villas, sea view apartments and premium waterfront residences come together in one of Oman’s most exclusive communities. Surrounded by the Arabian Sea, private beaches and world-class amenities, Muscat Bay offers an exceptional lifestyle with lasting value for homeowners and property investors."
+  badge="Coastal Lifestyle"
+  title="Life at the Water's Edge"
+  content="Experience the finest luxury coastal living at Muscat Bay, where beachfront villas, sea view apartments and premium waterfront residences come together in one of Oman's most exclusive communities. Surrounded by the Arabian Sea, private beaches and world-class amenities, Muscat Bay offers an exceptional lifestyle with lasting value for homeowners and property investors."
   image="/communities/Muscat Bay/image.png"
 />
 
@@ -108,9 +108,9 @@ export default function MuscatBayPage() {
       <LuxTimeline
         title="The Evolution of Serenity"
         items={[
-          { year: "Phase I", title: "The Foundation", description: "Establishing the core luxury lapping and the first set of signature villas.", type: 'past' },
-          { year: "Phase II", title: "Expansion", description: "Introduction of the beach club and the expanded wellness amenities.", type: 'present' },
-          { year: "Future", title: "The Peak", description: "Completion of the most exclusive mountaintop retreats and a world-class spa.", type: 'future' },
+          { year: "Phase I", title: "The Foundation", description: "Delivery of the first signature beachfront villas, private beach access, and core community infrastructure.", type: 'past' },
+          { year: "Phase II", title: "The Expansion", description: "Launch of the beach club, waterfront promenade, wellness centre, and expanded apartment residences.", type: 'present' },
+          { year: "2026+", title: "The Pinnacle", description: "Completion of the marina, fine-dining precinct, and Muscat Bay's final collection of ultra-premium residences.", type: 'future' },
         ]}
       />
 
