@@ -1,18 +1,14 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
-import SignatureDestinations from "@/components/home/SignatureDestinations";
+import TrustBar from "@/components/home/TrustBar";
 import WhyInvestOman from "@/components/home/WhyInvestOman";
 import FeaturedProperties from "@/components/home/FeaturedProperties";
-import InvestorJourney from "@/components/home/InvestorJourney";
-import TrustSection from "@/components/home/TrustSection";
-import FinalCTA from "@/components/home/FinalCTA";
-import OurPartners from "@/components/home/OurPartners";
-import ChooseProperty from "@/components/home/ChooseProperty";
 import TopCommunities from "@/components/home/TopCommunities";
 import WhoWeAre from "@/components/home/WhoWeAre";
 import BuySellSection from "@/components/home/BuySellSection";
-import TeamSection from "@/components/home/TeamSection";
+import OurPartners from "@/components/home/OurPartners";
+import FinalCTA from "@/components/home/FinalCTA";
 
 export default function Home() {
   return (
@@ -20,21 +16,15 @@ export default function Home() {
       <Navbar  />
 
       <Hero />
+      <TrustBar />
       
-      {/* <SignatureDestinations /> */}
       <WhyInvestOman />
+      <TopCommunities />
+      <FeaturedProperties />
       
-
-       <TopCommunities />
-      <ChooseProperty />
-     
       <WhoWeAre />
-      {/* <TeamSection /> */}
       <BuySellSection />
 
-      {/* <InvestorJourney /> */}
-      {/* <TrustSection /> */}
-      {/* <FeaturedProperties /> */}
       <OurPartners />
       <FinalCTA />
 
@@ -42,3 +32,4 @@ export default function Home() {
     </main>
   );
 }
+

@@ -4,15 +4,37 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { usePopup } from "@/context/PopupContext";
 import { FaWhatsapp } from "react-icons/fa";
 
+const WHATSAPP_NUMBER = "96891000000"; // ← Replace with real number
+
+const trustTicker = [
+  "200+ Happy Clients",
+  "6–8% Annual ROI",
+  "Lifetime Residency in Oman",
+  "8 Premier ITC Developers",
+  "100% Free Consultation",
+  "Freehold Properties Available",
+];
+
+const propertyTypes = ["Apartment", "Villa", "Penthouse", "Townhouse", "Studio", "Commercial"];
+const communities = ["Al Mouj", "AIDA", "Muscat Bay", "Sultan Haitham City", "Jebel Sifah", "Hawana Salalah"];
+const budgets = ["Under OMR 50K", "OMR 50K–100K", "OMR 100K–200K", "OMR 200K–500K", "OMR 500K+"];
+
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [tickerIndex, setTickerIndex] = useState(0);
+  const [propertyType, setPropertyType] = useState("");
+  const [community, setCommunity] = useState("");
+  const [budget, setBudget] = useState("");
   const { openPopup } = usePopup();
   const hasOpened = useRef(false);
-  const images = [ "/p2.jpg"];
+  const router = useRouter();
+  const images = ["/p2.jpg"];
 
+  // Image carousel
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -20,28 +42,49 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, [images.length]);
 
+  // Trust ticker rotation
   useEffect(() => {
-    if (hasOpened.current) return;
-    hasOpened.current = true;
-    const popupTimer = setTimeout(() => {
-      openPopup();
-    }, 5000);
-    return () => clearTimeout(popupTimer);
+    const timer = setInterval(() => {
+      setTickerIndex((prev) => (prev + 1) % trustTicker.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Popup on scroll (30% scroll depth)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (hasOpened.current) return;
+      const scrollDepth = window.scrollY / document.body.scrollHeight;
+      if (scrollDepth > 0.3) {
+        hasOpened.current = true;
+        openPopup();
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [openPopup]);
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (propertyType) params.set("type", propertyType);
+    if (community) params.set("community", community);
+    if (budget) params.set("budget", budget);
+    router.push(`/properties?${params.toString()}`);
+  };
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Cinematic Background Carousel */}
+      {/* Cinematic Background */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentIndex}
             initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 1, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1.06 }}
             exit={{ opacity: 0 }}
             transition={{
               opacity: { duration: 2, ease: "linear" },
-              scale: { duration: 7, ease: "linear" }
+              scale: { duration: 7, ease: "linear" },
             }}
             className="absolute inset-0 h-full w-full"
           >
@@ -52,55 +95,147 @@ export default function Hero() {
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-black/45" />
-            <div className="absolute inset-0 bg-gradient-to-b from-matte-black/40 via-transparent to-matte-black/60" />
+            <div className="absolute inset-0 bg-black/50" />
+            <div className="absolute inset-0 bg-gradient-to-b from-matte-black/30 via-transparent to-matte-black/70" />
           </motion.div>
         </AnimatePresence>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
+      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 md:px-6 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="max-w-4xl"
+          transition={{ duration: 1, delay: 0.4 }}
+          className="w-full max-w-5xl"
         >
-          <h1 className="text-5xl md:text-8xl 2xl:text-9xl font-serif text-ivory leading-tight mb-8">
-            Buy Luxury <br />
-            <span className="italic">Property in</span> <br /> Oman
+          {/* Trust badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm border border-gold/40 rounded-full px-4 py-1.5 mb-6"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="text-gold text-[10px] uppercase tracking-[0.25em] font-semibold">
+              Oman&apos;s Trusted Luxury Real Estate Partner
+            </span>
+          </motion.div>
+
+          {/* Headline */}
+          <h1 className="text-5xl md:text-7xl 2xl:text-8xl font-serif text-ivory leading-tight mb-4">
+            Find Your Luxury <br />
+            <span className="italic text-gold">Property in Oman</span>
           </h1>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <Link
-              href="/properties"
-              className="bg-gold text-matte-black px-10 py-4 text-xs uppercase tracking-widest font-bold hover:bg-ivory transition-all duration-500"
+
+          {/* Subheadline */}
+          <p className="text-ivory/70 text-base md:text-lg font-light max-w-2xl mx-auto mb-8 leading-relaxed">
+            Villas, apartments &amp; ITC investments — with lifetime residency opportunities and 6–8% annual ROI
+          </p>
+
+          {/* Property Search Bar */}
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 md:p-4 max-w-3xl mx-auto mb-8 shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+              <select
+                value={propertyType}
+                onChange={(e) => setPropertyType(e.target.value)}
+                className="bg-white/90 text-matte-black text-sm px-4 py-3 rounded-xl outline-none font-medium cursor-pointer"
+              >
+                <option value="">Property Type</option>
+                {propertyTypes.map((t) => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+              <select
+                value={community}
+                onChange={(e) => setCommunity(e.target.value)}
+                className="bg-white/90 text-matte-black text-sm px-4 py-3 rounded-xl outline-none font-medium cursor-pointer"
+              >
+                <option value="">Community / Area</option>
+                {communities.map((c) => (
+                  <option key={c} value={c}>{c}</option>
+                ))}
+              </select>
+              <select
+                value={budget}
+                onChange={(e) => setBudget(e.target.value)}
+                className="bg-white/90 text-matte-black text-sm px-4 py-3 rounded-xl outline-none font-medium cursor-pointer"
+              >
+                <option value="">Budget Range</option>
+                {budgets.map((b) => (
+                  <option key={b} value={b}>{b}</option>
+                ))}
+              </select>
+            </div>
+            <button
+              onClick={handleSearch}
+              className="w-full bg-gold text-matte-black py-3.5 rounded-xl text-xs uppercase tracking-[0.2em] font-bold hover:bg-ivory transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Explore Properties
-            </Link>
-            <Link
-              href="/about-us"
-              className="text-ivory border-b border-ivory/30 px-4 py-4 text-xs uppercase tracking-widest font-medium hover:border-gold transition-all duration-500"
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              Search Properties
+            </button>
+          </div>
+
+          {/* Secondary CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
+            <button
+              onClick={openPopup}
+              className="text-ivory/80 border border-ivory/30 px-6 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-medium hover:border-gold hover:text-gold transition-all duration-300"
             >
-              Our Story
-            </Link>
+              Book Free Consultation
+            </button>
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-ivory/80 border border-ivory/30 px-6 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-medium hover:border-green-400 hover:text-green-400 transition-all duration-300"
+            >
+              <FaWhatsapp className="text-base" />
+              Chat on WhatsApp
+            </a>
           </div>
         </motion.div>
       </div>
 
-      {/* WhatsApp Floating Icon */}
+      {/* Trust Ticker — bottom of hero */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 bg-matte-black/70 backdrop-blur-sm border-t border-gold/20 py-3 overflow-hidden">
+        <div className="flex items-center justify-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={tickerIndex}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4 }}
+              className="text-gold text-[11px] uppercase tracking-[0.25em] font-semibold"
+            >
+              {trustTicker[tickerIndex]}
+            </motion.span>
+          </AnimatePresence>
+          <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
+        </div>
+      </div>
+
+      {/* WhatsApp Floating Button */}
       <motion.a
-        href="https://wa.me/96800000000"
+        href={`https://wa.me/${WHATSAPP_NUMBER}`}
         target="_blank"
         rel="noopener noreferrer"
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: 1.5 }}
         whileHover={{ scale: 1.1 }}
-        className="absolute bottom-10 right-10 z-20 w-14 h-14 bg-gold rounded-full flex items-center justify-center shadow-lg hover:bg-ivory transition-colors duration-300 group"
+        className="fixed bottom-8 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-xl hover:bg-green-400 transition-colors duration-300 group"
+        aria-label="Chat on WhatsApp"
       >
-        <FaWhatsapp className="text-matte-black text-2xl group-hover:text-gold transition-colors duration-300" />
+        <FaWhatsapp className="text-white text-2xl" />
+        <span className="absolute right-16 bg-matte-black text-ivory text-[10px] px-3 py-1 rounded-full whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 uppercase tracking-wider font-medium">
+          Chat with us
+        </span>
       </motion.a>
-
     </section>
   );
 }

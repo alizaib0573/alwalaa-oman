@@ -128,6 +128,27 @@ export default function WhoWeAre() {
               </div>
             </motion.div>
 
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="pt-4"
+            >
+              <button
+                onClick={() => {
+                  // Trigger the popup
+                  if (typeof window !== "undefined") {
+                    const btn = document.querySelector('[data-popup="callback"]') as HTMLElement;
+                    if (btn) btn.click();
+                  }
+                }}
+                className="bg-gold text-matte-black px-8 py-3.5 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-matte-black hover:text-ivory transition-all duration-300 rounded-full"
+              >
+                Book a Consultation with Eng. Humood
+              </button>
+            </motion.div>
+
             {/* Social Connect Strip */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}

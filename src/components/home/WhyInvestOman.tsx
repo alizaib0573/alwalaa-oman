@@ -3,15 +3,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { usePopup } from "@/context/PopupContext";
+import { FaWhatsapp } from "react-icons/fa";
+
+const WHATSAPP_NUMBER = "96891000000"; // ← Replace with real number
 
 const stats = [
   { label: "Expected ROI", value: "6-8%", description: "Strong yields in prime coastal and urban areas." },
   { label: "Residency", value: "Lifetime", description: "Qualify for residency through strategic property ownership." },
   { label: "Market Growth", value: "High", description: "Sultan Haitham City driving new urban expansion." },
-  { label: "Ownership", value: "Freehold", description: "Own luxury villas and apartment in approved ITC zones" },
+  { label: "Ownership", value: "Freehold", description: "Own luxury villas and apartments in approved ITC zones." },
 ];
 
 export default function WhyInvestOman() {
+  const { openPopup } = usePopup();
+
   return (
     <section className="py-32 px-6 bg-matte-black text-ivory overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -25,7 +31,10 @@ export default function WhyInvestOman() {
                 Why Invest in <span className="italic text-gold"> Oman Real Estate</span>
               </h2>
               <p className="text-warm-white/60 text-lg leading-relaxed font-light">
-Oman Real Estate offers excellent opportunities for property investment, high rental returns and lifetime residency Oman. Alwalaa Real Estate is a trusted and best real estate company in Oman, helps you discover luxury villas, apartments and freehold properties in the country’s top investment destination.              </p>
+                Oman Real Estate offers excellent opportunities for property investment, high rental returns and lifetime
+                residency. Alwalaa Real Estate — trusted and led by Eng. Humood AlAdhari — helps you discover luxury
+                villas, apartments and freehold properties in Oman&apos;s top ITC investment destinations.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
@@ -46,6 +55,31 @@ Oman Real Estate offers excellent opportunities for property investment, high re
                 </motion.div>
               ))}
             </div>
+
+            {/* Inline CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex flex-col sm:flex-row items-start gap-4 pt-4"
+            >
+              <button
+                onClick={openPopup}
+                className="bg-gold text-matte-black px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-ivory transition-all duration-300"
+              >
+                Book Free Consultation
+              </button>
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-ivory/70 border border-ivory/20 px-8 py-4 text-[10px] uppercase tracking-[0.2em] font-medium hover:border-green-400 hover:text-green-400 transition-all duration-300"
+              >
+                <FaWhatsapp className="text-base" />
+                Chat on WhatsApp
+              </a>
+            </motion.div>
           </div>
 
           <div className="relative h-[600px]">

@@ -231,23 +231,29 @@ export default function TopCommunities() {
         </button>
       </div>
 
-      {/* Bottom Explore Link */}
-      {/* <div className="mt-16 text-center">
+      {/* Bottom CTA */}
+      <div className="mt-16 text-center">
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="inline-flex items-center gap-4 group cursor-pointer"
+          className="inline-flex flex-col items-center gap-5"
         >
-          <span className="text-matte-black text-xs uppercase tracking-widest font-bold">
-            View All Destinations
-          </span>
-          <div className="w-12 h-px bg-gold group-hover:w-20 transition-all duration-500" />
-          <span className="text-gold text-xs uppercase tracking-widest font-bold group-hover:translate-x-2 transition-transform duration-500">
-            Explore &rarr;
-          </span>
+          <p className="text-zinc-500 text-sm font-light">
+            Discover all 8 ITC-approved communities with freehold &amp; residency eligibility
+          </p>
+          <a
+            href="/properties"
+            className="inline-flex items-center gap-3 bg-matte-black text-ivory px-10 py-4 text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-gold hover:text-matte-black transition-all duration-500"
+          >
+            View All Communities
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
         </motion.div>
-      </div> */}
+      </div>
     </section>
   );
 }
+

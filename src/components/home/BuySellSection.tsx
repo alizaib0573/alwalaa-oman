@@ -4,6 +4,11 @@ import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
+import { usePopup } from "@/context/PopupContext";
+import { FaWhatsapp } from "react-icons/fa";
+
+const WHATSAPP_NUMBER = "96891000000"; // ← Replace with real number
 
 const paths = [
   {
@@ -12,11 +17,11 @@ const paths = [
     subtitle: "Acquire the Extraordinary",
     description: "From waterfront villas to urban penthouses, we guide you through Oman's most exclusive listings and help you qualify for lifetime residency.",
     image: "/p1.jpg",
-    cta: "Explore Listings",
-    color: "bg-matte-black",
-    text: "text-ivory",
-    accent: "text-gold",
-    hoverBg: "hover:bg-gold hover:text-matte-black",
+    ctaLabel: "Explore Listings",
+    ctaHref: "/properties",
+    isPopup: false,
+    buttonClass: "bg-gold text-matte-black hover:bg-ivory",
+    bullets: ["Freehold properties", "Lifetime residency eligible", "Off-plan & ready units"],
   },
   {
     type: "Sell",
@@ -24,15 +29,17 @@ const paths = [
     subtitle: "Maximize Your Asset Value",
     description: "Leverage our global network and deep market expertise to position your luxury property before the most qualified high-net-worth investors.",
     image: "/p2.jpg",
-    cta: "Get Free Valuation",
-    color: "bg-gold",
-    text: "text-matte-black",
-    accent: "text-gold",
-    hoverBg: "hover:bg-matte-black hover:text-ivory",
+    ctaLabel: "Get Free Valuation",
+    ctaHref: "#",
+    isPopup: true,
+    buttonClass: "bg-ivory text-matte-black hover:bg-gold",
+    bullets: ["Global HNW investor network", "Expert market valuation", "Fast, discreet process"],
   },
 ];
 
 export default function BuySellSection() {
+  const { openPopup } = usePopup();
+
   return (
     <section className="relative py-24 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
@@ -74,38 +81,65 @@ export default function BuySellSection() {
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
 
-              {/* Glass Blur Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/90 via-matte-black/30 to-transparent transition-opacity duration-500" />
-              <div className="absolute inset-0 backdrop-blur-0 group-hover:backdrop-blur-sm transition-all duration-700 opacity-0 group-hover:opacity-100" />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/95 via-matte-black/40 to-transparent transition-opacity duration-500" />
 
               {/* Content */}
-              <div className="absolute inset-0 p-12 flex flex-col justify-end text-ivory">
-                <motion.div
-                  className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
-                >
-                  <span className={cn("text-xs uppercase tracking-widest font-bold mb-3 block", path.accent)}>
+              <div className="absolute inset-0 p-10 flex flex-col justify-end text-ivory">
+                <div className="translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <span className="text-gold text-xs uppercase tracking-widest font-bold mb-3 block">
                     {path.subtitle}
                   </span>
-                  <h3 className="text-4xl font-serif mb-4 leading-tight">
+                  <h3 className="text-4xl font-serif mb-3 leading-tight">
                     {path.title}
                   </h3>
-                  <p className="text-ivory/70 text-lg font-light mb-8 max-w-md leading-relaxed">
+                  <p className="text-ivory/70 text-base font-light mb-5 max-w-md leading-relaxed">
                     {path.description}
                   </p>
 
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={cn(
-                      "px-10 py-4 text-xs uppercase tracking-widest font-bold transition-all duration-500",
-                      path.color,
-                      path.text,
-                      path.hoverBg
+                  {/* Bullet points */}
+                  <ul className="space-y-1.5 mb-7">
+                    {path.bullets.map((b) => (
+                      <li key={b} className="flex items-center gap-2 text-xs text-ivory/60">
+                        <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="flex items-center gap-4">
+                    {path.isPopup ? (
+                      <button
+                        onClick={openPopup}
+                        className={cn(
+                          "px-8 py-3.5 text-[10px] uppercase tracking-widest font-bold transition-all duration-500 rounded-full",
+                          path.buttonClass
+                        )}
+                      >
+                        {path.ctaLabel}
+                      </button>
+                    ) : (
+                      <Link
+                        href={path.ctaHref}
+                        className={cn(
+                          "px-8 py-3.5 text-[10px] uppercase tracking-widest font-bold transition-all duration-500 rounded-full",
+                          path.buttonClass
+                        )}
+                      >
+                        {path.ctaLabel}
+                      </Link>
                     )}
-                  >
-                    {path.cta}
-                  </motion.button>
-                </motion.div>
+                    <a
+                      href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Chat on WhatsApp"
+                      className="w-11 h-11 rounded-full border border-ivory/30 flex items-center justify-center hover:bg-green-500 hover:border-green-500 transition-all duration-300"
+                    >
+                      <FaWhatsapp className="text-ivory text-lg" />
+                    </a>
+                  </div>
+                </div>
               </div>
             </motion.div>
           ))}
