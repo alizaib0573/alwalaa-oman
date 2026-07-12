@@ -25,7 +25,7 @@ function PropertiesContent() {
 
   const [properties, setProperties] = useState<PropertyUI[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [filters, setFilters] = useState<FiltersType>({
+  const [filters, setFilters] = useState<FiltersType & { query: string }>({
     status: [],
     communities: [],
     type: [],
@@ -38,6 +38,7 @@ function PropertiesContent() {
     minArea: null,
     maxArea: null,
     sortBy: "Newest First",
+    query: "",
   });
 
   useEffect(() => {
@@ -49,6 +50,7 @@ function PropertiesContent() {
     const newMinPrice = params.minPrice ? Number(params.minPrice) : null;
     const newMaxPrice = params.maxPrice ? Number(params.maxPrice) : null;
     const newSortBy = params.sortBy || "Newest First";
+    const newQuery = params.query || "";
 
     setFilters(prev => ({
       ...prev,
@@ -58,10 +60,11 @@ function PropertiesContent() {
       minPrice: newMinPrice,
       maxPrice: newMaxPrice,
       sortBy: newSortBy,
+      query: newQuery,
     }));
   }, [searchParams]);
 
-  const updateFilters = (newFilters: Partial<FiltersType>) => {
+  const updateFilters = (newFilters: Partial<FiltersType & { query: string }>) => {
     setFilters(prev => {
       const updated = { ...prev, ...newFilters };
 
@@ -72,6 +75,7 @@ function PropertiesContent() {
       if (updated.minPrice) params.set("minPrice", updated.minPrice.toString());
       if (updated.maxPrice) params.set("maxPrice", updated.maxPrice.toString());
       if (updated.sortBy !== "Newest First") params.set("sortBy", updated.sortBy);
+      if (updated.query) params.set("query", updated.query);
 
       replace(`${pathname}?${params.toString()}`, { scroll: false });
       return updated;
@@ -115,6 +119,14 @@ function PropertiesContent() {
 
   const filteredProperties = useMemo(() => {
     return properties.filter(prop => {
+      if (filters.query) {
+        const q = filters.query.toLowerCase();
+        const matchesTitle = prop.title?.toLowerCase().includes(q);
+        const matchesLocation = prop.location?.toLowerCase().includes(q);
+        const matchesCommunity = prop.community?.toLowerCase().includes(q);
+        const matchesDesc = prop.description?.toLowerCase().includes(q);
+        if (!matchesTitle && !matchesLocation && !matchesCommunity && !matchesDesc) return false;
+      }
       if (filters.status.length > 0 && !filters.status.includes(prop.status as any)) return false;
       if (filters.type.length > 0 && !filters.type.includes(prop.type as any)) return false;
       if (filters.communities.length > 0 && !filters.communities.includes(prop.community)) return false;
@@ -125,6 +137,7 @@ function PropertiesContent() {
       return true;
     });
   }, [filters, properties]);
+
 
   return (
     <main className="min-h-screen bg-ivory">

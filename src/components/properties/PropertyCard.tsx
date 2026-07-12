@@ -57,7 +57,11 @@ export default function PropertyCard({ property, index }: PropertyCardProps) {
           {/* Status Tags */}
           <div className="absolute top-6 left-6 flex flex-wrap gap-2">
             <span className="bg-gold text-matte-black px-3 py-1 text-[10px] uppercase tracking-widest font-bold">
-              {property.status}
+              {property.status === "OFF_PLAN" ? "Off-Plan" :
+               property.status === "UNDER_CONSTRUCTION" ? "Under Construction" :
+               property.status === "READY_TO_MOVE" ? "Ready to Move" :
+               property.status === "FOR_SALE" ? "For Sale" :
+               property.status.replace(/_/g, " ")}
             </span>
             {property.featured && (
               <span className="bg-ivory text-matte-black px-3 py-1 text-[10px] uppercase tracking-widest font-bold">
