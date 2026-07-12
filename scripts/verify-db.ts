@@ -25,7 +25,7 @@ async function verify() {
       where: { email: 'test-agent@alwalaa.com' },
       update: {},
       create: {
-        userId: '00000000-0000-0000-0000-000000000000', // Mock UUID
+        userId: '00000000-0000-0000-0000-000000000001', // Mock UUID (different from admin)
         fullName: 'Test Agent',
         email: 'test-agent@alwalaa.com',
         phone: '+968 0000 0000',
