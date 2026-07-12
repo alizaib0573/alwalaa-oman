@@ -3,148 +3,262 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  TrendingUp,
+  Users,
+  Globe,
+  Star,
+  MapPin,
+  Clock,
+  ChevronRight,
+} from "lucide-react";
+
+const PERKS = [
+  {
+    icon: <TrendingUp className="w-6 h-6 text-gold" />,
+    title: "High Commission Structure",
+    desc: "Industry-leading commission rates that reward your performance and deal-closing expertise.",
+  },
+  {
+    icon: <Globe className="w-6 h-6 text-gold" />,
+    title: "Global Exposure",
+    desc: "Work with HNW buyers from GCC, Europe, and Asia on Oman's most prestigious developments.",
+  },
+  {
+    icon: <Users className="w-6 h-6 text-gold" />,
+    title: "Mentorship Culture",
+    desc: "Direct mentorship from Eng. Humood AlAdhari and senior advisors in the Oman property market.",
+  },
+  {
+    icon: <Star className="w-6 h-6 text-gold" />,
+    title: "Premium Brand Affiliation",
+    desc: "Join a brand synonymous with trust, luxury, and excellence in Oman's real estate sector.",
+  },
+];
+
+const POSITIONS = [
+  {
+    title: "Senior Property Advisor",
+    location: "Muscat, Oman",
+    type: "Full Time",
+    desc: "Lead high-value transactions for our ITC communities portfolio and advise international clients on freehold investment opportunities.",
+  },
+  {
+    title: "Junior Property Advisor",
+    location: "Muscat, Oman",
+    type: "Full Time",
+    desc: "Support senior advisors in qualifying leads, conducting property viewings, and managing client relationships across our listings.",
+  },
+  {
+    title: "Digital Marketing Specialist",
+    location: "Muscat, Oman · Remote",
+    type: "Full Time",
+    desc: "Drive qualified international buyer traffic through paid social, SEO content, and social media campaigns targeting luxury real estate audiences.",
+  },
+  {
+    title: "Real Estate Photographer / Videographer",
+    location: "Muscat, Oman",
+    type: "Freelance / Contract",
+    desc: "Produce cinematic property photography and video tours for our portfolio of luxury villas, apartments, and ITC communities.",
+  },
+];
 
 export default function CareersPage() {
   return (
     <main className="relative min-h-screen bg-ivory">
       <Navbar />
 
-      {/* Careers Hero */}
-      <section className="relative h-[60vh] w-full flex items-center justify-center overflow-hidden">
+      {/* ── HERO ── */}
+      <section className="relative h-[65vh] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          {/* <img
-            src="https://alwalaaoman.com/wp-content/uploads/2025/02/6.webp"
-            alt="Careers"
-            className="h-full w-full object-cover brightness-50"
-          /> */}
-          <div className="absolute inset-0 z-0 overflow-hidden">
-  <iframe
-    className="absolute top-1/2 left-1/2 min-h-full min-w-full -translate-x-1/2 -translate-y-1/2 scale-125"
-    src="https://www.youtube.com/embed/mPdMWJdCbMQ?autoplay=1&mute=1&controls=0&loop=1&playlist=mPdMWJdCbMQ&playsinline=1"
-    title="Hero Background Video"
-    allow="autoplay; fullscreen"
-  />
-  <div className="absolute inset-0 bg-black/45" />
-</div>
+          <Image
+            src="/p4.jpg"
+            alt="Careers at Alwalaa"
+            fill
+            className="object-cover brightness-50"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-matte-black/40 via-transparent to-ivory" />
         </div>
-        <div className="relative z-10 text-center px-6">
+        <div className="relative z-10 text-center px-6 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
+            className="space-y-4"
           >
-            <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
+            <span className="text-gold uppercase tracking-[0.3em] text-[10px] font-bold block">
               Join Our Team
             </span>
-            <h1 className="text-5xl md:text-8xl font-serif text-ivory leading-tight">
-              Shape the Future <br />
-              <span className="italic">of Luxury</span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif text-ivory leading-tight">
+              Shape the Future of <br />
+              <span className="italic text-gold">Luxury Real Estate</span>
             </h1>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Culture */}
-      <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <h2 className="text-4xl md:text-6xl font-serif text-matte-black">
-              A Legacy <br />
-              <span className="italic text-gold">of Excellence</span>
-            </h2>
-            <p className="text-matte-black/70 text-lg leading-relaxed font-light">
-              At Alwalaa, we foster a professional environment that inspires growth, collaboration, and success. We don&apos;t just work in real estate; we innovate boldly and dare to dream big. Join a team where your ambition is matched by our commitment to luxury.
+            <p className="text-ivory/70 text-sm md:text-base font-light max-w-xl mx-auto pt-2">
+              Alwalaa is where ambitious professionals build defining careers in Oman&apos;s most prestigious property market.
             </p>
-            <div className="w-20 h-px bg-gold" />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="grid grid-cols-2 gap-4"
-          >
-            <Image
-              src="https://alwalaaoman.com/wp-content/uploads/2025/02/2.webp"
-              width={500}
-              height={500}
-              className="h-64 w-full object-cover rounded-sm"
-              alt="Office"
-            />
-            <Image
-              src="https://alwalaaoman.com/wp-content/uploads/2025/02/3.webp"
-              width={500}
-              height={500}
-              className="h-64 w-full object-cover rounded-sm mt-12"
-              alt="Team"
-            />
           </motion.div>
         </div>
       </section>
 
-      {/* Open Roles */}
-      <section className="py-32 px-6 bg-warm-white">
+      {/* ── CULTURE SECTION ── */}
+      <section className="py-24 px-6 bg-ivory">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <span className="text-gold uppercase tracking-[0.2em] text-[10px] font-bold block">
+              Our Culture
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif text-matte-black leading-tight">
+              A Legacy of <span className="italic text-gold">Excellence</span>
+            </h2>
+            <p className="text-matte-black/70 text-base leading-relaxed font-light">
+              At Alwalaa, we foster a professional environment that inspires growth, collaboration, and success. We don&apos;t just sell luxury; we build lasting partnerships with investors, communities, and the professionals who represent our brand.
+            </p>
+            <p className="text-matte-black/60 text-sm leading-relaxed font-light">
+              Whether you are an experienced real estate advisor looking to move upmarket, or an ambitious graduate eager to learn from the best, Alwalaa offers a clear path to professional distinction in Oman&apos;s property sector.
+            </p>
+            <div className="w-16 h-px bg-gold" />
+          </motion.div>
+
+          {/* Offset Image Grid */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-2 gap-4 relative"
+          >
+            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg">
+              <Image
+                src="https://alwalaaoman.com/wp-content/uploads/2025/02/2.webp"
+                fill
+                className="object-cover"
+                alt="Alwalaa office"
+                sizes="300px"
+              />
+            </div>
+            <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg mt-10">
+              <Image
+                src="https://alwalaaoman.com/wp-content/uploads/2025/02/3.webp"
+                fill
+                className="object-cover"
+                alt="Alwalaa team"
+                sizes="300px"
+              />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── PERKS ── */}
+      <section className="py-20 px-6 bg-warm-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
-            <span className="text-gold uppercase tracking-[0.3em] text-xs font-bold mb-4 block">
+          <div className="text-center mb-14">
+            <span className="text-gold uppercase tracking-[0.2em] text-[10px] font-bold block mb-2">
+              Why Join Us
+            </span>
+            <h2 className="text-3xl md:text-5xl font-serif text-matte-black">
+              The Alwalaa <span className="italic text-gold">Advantage</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {PERKS.map((perk, i) => (
+              <motion.div
+                key={perk.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-ivory p-7 rounded-2xl border border-champagne/20 hover:shadow-md transition-shadow duration-300"
+              >
+                <div className="mb-5">{perk.icon}</div>
+                <h3 className="text-base font-serif text-matte-black mb-2">{perk.title}</h3>
+                <p className="text-matte-black/60 text-sm font-light leading-relaxed">{perk.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── OPEN POSITIONS ── */}
+      <section className="py-24 px-6 bg-ivory">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-gold uppercase tracking-[0.2em] text-[10px] font-bold block mb-2">
               Current Opportunities
             </span>
-            <h2 className="text-4xl md:text-6xl font-serif text-matte-black italic">
+            <h2 className="text-3xl md:text-5xl font-serif text-matte-black italic">
               Open Positions
             </h2>
           </div>
-
-          <div className="max-w-4xl mx-auto space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="group p-10 bg-ivory border-l-4 border-gold flex justify-between items-center hover:shadow-md transition-all"
-            >
-              <div>
-                <h3 className="text-2xl font-serif text-matte-black uppercase tracking-wide">
-                  Property Advisor
-                </h3>
-                <p className="text-matte-black/60 text-sm mt-2">Location: Muscat, Oman</p>
-              </div>
-              <Link
-                href="#apply"
-                className="text-xs uppercase tracking-widest text-gold border-b border-gold pb-1 hover:text-matte-black hover:border-matte-black transition-all"
+          <div className="space-y-4">
+            {POSITIONS.map((pos, i) => (
+              <motion.div
+                key={pos.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                viewport={{ once: true }}
+                className="group bg-white border border-champagne/30 p-7 rounded-xl hover:border-gold/40 hover:shadow-sm transition-all duration-300"
               >
-                Apply Now
-              </Link>
-            </motion.div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <h3 className="text-lg font-serif text-matte-black">{pos.title}</h3>
+                      <span className="text-[9px] uppercase tracking-widest font-bold text-gold border border-gold/40 px-2.5 py-0.5 rounded-full">
+                        {pos.type}
+                      </span>
+                    </div>
+                    <p className="text-matte-black/60 text-sm font-light mb-3 leading-relaxed max-w-xl">
+                      {pos.desc}
+                    </p>
+                    <div className="flex items-center gap-1.5 text-matte-black/40 text-xs">
+                      <MapPin size={12} />
+                      <span>{pos.location}</span>
+                    </div>
+                  </div>
+                  <Link
+                    href={`mailto:info@alwalaaoman.com?subject=Application: ${encodeURIComponent(pos.title)}`}
+                    className="flex items-center gap-2 bg-matte-black text-ivory text-[10px] uppercase tracking-widest font-bold px-6 py-3 rounded-full hover:bg-gold hover:text-matte-black transition-all duration-300 whitespace-nowrap flex-shrink-0"
+                  >
+                    Apply Now <ChevronRight size={12} />
+                  </Link>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-32 px-6 text-center bg-matte-black text-ivory">
-        <div className="max-w-3xl mx-auto space-y-8">
-          <h2 className="text-4xl md:text-6xl font-serif italic">
-            Ready to elevate <br />
-            your career?
+      {/* ── GENERAL APPLICATION CTA ── */}
+      <section className="py-20 px-6 text-center bg-matte-black text-ivory relative overflow-hidden">
+        <div className="absolute top-[-80px] right-[-80px] w-64 h-64 border border-gold/10 rounded-full pointer-events-none" />
+        <div className="absolute bottom-[-80px] left-[-80px] w-64 h-64 border border-gold/10 rounded-full pointer-events-none" />
+        <div className="max-w-3xl mx-auto relative z-10 space-y-6">
+          <span className="text-gold uppercase tracking-[0.2em] text-[10px] font-bold block">
+            Don&apos;t see your role?
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif italic">
+            We&apos;re Always Looking for <br />
+            <span className="text-gold">Exceptional Talent</span>
           </h2>
-          <p className="text-ivory/60 font-light text-lg">
-            We are always looking for driven individuals who share our passion for luxury and excellence.
+          <p className="text-ivory/60 text-sm font-light max-w-xl mx-auto leading-relaxed">
+            If you are passionate about luxury real estate, driven by performance, and aligned with Alwalaa&apos;s values, send us your CV — we will reach out when the right role opens.
           </p>
-          <div className="pt-8">
-            <Link
-              href="mailto:info@alwalaaoman.com"
-              className="inline-block bg-gold text-matte-black px-12 py-5 text-xs uppercase tracking-[0.3em] font-bold hover:bg-ivory transition-all duration-500"
-            >
-              Send Your CV
-            </Link>
-          </div>
+          <Link
+            href="mailto:info@alwalaaoman.com?subject=General Application - Alwalaa Real Estate"
+            className="inline-block bg-gold text-matte-black px-10 py-4 text-xs uppercase tracking-[0.2em] font-bold hover:bg-white hover:text-matte-black transition-all duration-300"
+          >
+            Send Your CV
+          </Link>
         </div>
       </section>
 
