@@ -138,19 +138,19 @@ export default function CareersPage() {
           >
             <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg">
               <Image
-                src="https://alwalaaoman.com/wp-content/uploads/2025/02/2.webp"
+                src="/consultation.jpg"
                 fill
                 className="object-cover"
-                alt="Alwalaa office"
+                alt="Alwalaa consultation"
                 sizes="300px"
               />
             </div>
             <div className="relative h-56 rounded-2xl overflow-hidden shadow-lg mt-10">
               <Image
-                src="https://alwalaaoman.com/wp-content/uploads/2025/02/3.webp"
+                src="/about.jpg"
                 fill
                 className="object-cover"
-                alt="Alwalaa team"
+                alt="Alwalaa properties"
                 sizes="300px"
               />
             </div>
