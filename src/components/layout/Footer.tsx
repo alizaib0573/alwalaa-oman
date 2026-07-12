@@ -29,17 +29,17 @@ const PROPERTY_TYPES = [
 ];
 
 const SOCIAL_LINKS = [
-  { name: "Instagram", href: "https://www.instagram.com/alwalaa.om", icon: <FaInstagram size={16} /> },
-  { name: "YouTube", href: "https://www.youtube.com/@AlwalaaRealestate", icon: <FaYoutube size={16} /> },
-  { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61555342670178", icon: <FaFacebookF size={16} /> },
-  { name: "LinkedIn", href: "https://www.linkedin.com/company/alwalaa-realestate", icon: <FaLinkedinIn size={16} /> },
-  { name: "WhatsApp", href: "https://wa.me/96891000000", icon: <FaWhatsapp size={16} /> },
+  { name: "Instagram", href: "https://www.instagram.com/alwalaa.om", icon: <FaInstagram size={18} /> },
+  { name: "YouTube", href: "https://www.youtube.com/@AlwalaaRealestate", icon: <FaYoutube size={18} /> },
+  { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61555342670178", icon: <FaFacebookF size={18} /> },
+  { name: "LinkedIn", href: "https://www.linkedin.com/company/alwalaa-realestate", icon: <FaLinkedinIn size={18} /> },
+  { name: "WhatsApp", href: "https://wa.me/96891000000", icon: <FaWhatsapp size={18} /> },
 ];
 
 const CONTACT = {
-  address: "Muscat, Sultanate of Oman",
-  email: "info@alwalaaoman.com",
   phone: "+968 71 555 067",
+  email: "info@alwalaaoman.com",
+  address: "Muscat, Sultanate of Oman",
   hours: "Mon – Fri: 9am – 6pm",
 };
 
@@ -53,35 +53,48 @@ export default function Footer() {
   const { openPopup } = usePopup();
 
   return (
-    <footer className="bg-[#080808] text-white">
+    <footer className="bg-[#0a0a0a] text-white">
 
-      {/* ── MAIN FOOTER BODY ── */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      {/* ── MAIN BODY ── */}
+      <div className="max-w-7xl mx-auto px-6 pt-20 pb-16">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08 } } }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+          }}
+          className="grid grid-cols-1 lg:grid-cols-[2fr_1fr_1fr_2fr] gap-12 items-start"
         >
 
-          {/* Col 1 — Brand */}
+          {/* ── Col 1: Brand ── */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
-            className="flex flex-col gap-6 lg:col-span-1"
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            className="flex flex-col gap-4"
           >
-            <Image
-              src="/Logo white.png"
-              alt="Alwalaa Real Estate"
-              width={140}
-              height={60}
-              priority
-            />
-            <p className="text-white/40 text-[12px] leading-relaxed font-light max-w-[220px]">
-              Connecting discerning buyers with Oman&apos;s most exclusive residences, waterfront communities and investment opportunities.
-            </p>
-            {/* Social Icons */}
-            <div className="flex items-center gap-4 pt-2">
+            {/* Top anchor label — same height as section labels in other columns */}
+            <div className="pb-2 border-b border-white/10">
+              <Image
+                src="/Logo white.png"
+                alt="Alwalaa Real Estate"
+                width={160}
+                height={64}
+                className="brightness-125"
+                priority
+              />
+            </div>
+            {/* Tagline block */}
+            <div className="pt-1">
+              <h3 className="text-white text-sm font-serif font-medium mb-2">
+                Luxury Real Estate in Oman
+              </h3>
+              <p className="text-white/55 text-[13px] leading-relaxed font-light max-w-[230px]">
+                Connecting discerning buyers with Oman&apos;s most exclusive residences, waterfront communities and investment opportunities.
+              </p>
+            </div>
+            {/* Socials */}
+            <div className="flex items-center gap-5 pt-2">
               {SOCIAL_LINKS.map((s) => (
                 <a
                   key={s.name}
@@ -89,7 +102,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.name}
-                  className="text-white/30 hover:text-gold transition-colors duration-300"
+                  className="text-white/50 hover:text-gold transition-colors duration-300"
                 >
                   {s.icon}
                 </a>
@@ -97,18 +110,20 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Col 2 — Explore */}
+          {/* ── Col 2: Explore ── */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1 } } }}
             className="flex flex-col gap-5"
           >
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-semibold">Explore</p>
-            <nav className="flex flex-col gap-3">
+            <p className="text-white text-[11px] uppercase tracking-[0.2em] font-semibold pb-2 border-b border-white/10">
+              Explore
+            </p>
+            <nav className="flex flex-col gap-3.5">
               {EXPLORE_LINKS.map((l) => (
                 <Link
                   key={l.name}
                   href={l.href}
-                  className="text-white/60 text-sm font-light hover:text-gold transition-colors duration-300"
+                  className="text-white/65 text-sm font-light hover:text-gold hover:translate-x-1 transition-all duration-300 inline-block"
                 >
                   {l.name}
                 </Link>
@@ -116,18 +131,20 @@ export default function Footer() {
             </nav>
           </motion.div>
 
-          {/* Col 3 — Properties */}
+          {/* ── Col 3: Property Types ── */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } } }}
             className="flex flex-col gap-5"
           >
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-semibold">Property Types</p>
-            <nav className="flex flex-col gap-3">
+            <p className="text-white text-[11px] uppercase tracking-[0.2em] font-semibold pb-2 border-b border-white/10">
+              Properties
+            </p>
+            <nav className="flex flex-col gap-3.5">
               {PROPERTY_TYPES.map((l) => (
                 <Link
                   key={l.name}
                   href={l.href}
-                  className="text-white/60 text-sm font-light hover:text-gold transition-colors duration-300"
+                  className="text-white/65 text-sm font-light hover:text-gold hover:translate-x-1 transition-all duration-300 inline-block"
                 >
                   {l.name}
                 </Link>
@@ -135,33 +152,39 @@ export default function Footer() {
             </nav>
           </motion.div>
 
-          {/* Col 4 — Contact + CTA */}
+          {/* ── Col 4: Contact + CTA ── */}
           <motion.div
-            variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0 } }}
-            className="flex flex-col gap-5"
+            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3 } } }}
+            className="flex flex-col gap-6"
           >
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/30 font-semibold">Contact</p>
+            <p className="text-white text-[11px] uppercase tracking-[0.2em] font-semibold pb-2 border-b border-white/10">
+              Contact Us
+            </p>
 
-            <div className="flex flex-col gap-2.5">
-              <a
-                href={`tel:${CONTACT.phone}`}
-                className="text-gold text-xl font-serif hover:text-white transition-colors duration-300"
-              >
-                {CONTACT.phone}
-              </a>
+            {/* Phone — prominent like WhiteWill */}
+            <a
+              href={`tel:${CONTACT.phone}`}
+              className="text-gold text-3xl md:text-4xl font-serif leading-tight hover:text-white transition-colors duration-300"
+            >
+              {CONTACT.phone}
+            </a>
+
+            {/* Contact details */}
+            <div className="flex flex-col gap-2">
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="text-white/50 text-sm font-light hover:text-white/80 transition-colors duration-300"
+                className="text-white/65 text-sm font-light hover:text-white transition-colors duration-300"
               >
                 {CONTACT.email}
               </a>
-              <p className="text-white/30 text-xs font-light">{CONTACT.address}</p>
-              <p className="text-white/30 text-xs font-light">{CONTACT.hours}</p>
+              <p className="text-white/50 text-sm font-light">{CONTACT.address}</p>
+              <p className="text-white/40 text-xs font-light">{CONTACT.hours}</p>
             </div>
 
+            {/* CTA Button */}
             <button
               onClick={openPopup}
-              className="mt-2 w-full bg-gold text-matte-black text-[10px] uppercase tracking-[0.2em] font-bold py-3.5 px-6 hover:bg-white transition-all duration-300"
+              className="bg-gold text-matte-black text-[10px] uppercase tracking-[0.2em] font-bold py-4 px-6 hover:bg-white transition-all duration-300 text-center"
             >
               Book Free Consultation
             </button>
@@ -171,25 +194,22 @@ export default function Footer() {
       </div>
 
       {/* ── BOTTOM BAR ── */}
-      <div className="border-t border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-
-          <p className="text-white/25 text-[11px] font-light">
+      <div className="border-t border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-white/35 text-[11px] font-light">
             © {new Date().getFullYear()} Alwalaa Real Estate. All rights reserved.
           </p>
-
           <div className="flex items-center gap-6">
             {LEGAL.map((l) => (
               <Link
                 key={l.name}
                 href={l.href}
-                className="text-white/25 text-[11px] font-light hover:text-white/50 transition-colors duration-300"
+                className="text-white/35 text-[11px] font-light hover:text-white/70 transition-colors duration-300"
               >
                 {l.name}
               </Link>
             ))}
           </div>
-
         </div>
       </div>
 

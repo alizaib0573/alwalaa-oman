@@ -118,7 +118,7 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
                       <input
                         required
                         type="tel"
-                        placeholder="+968 ..."
+                        placeholder="+968 00000000"
                         className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black"
                         value={formData.phone}
                         onChange={e => setFormData({...formData, phone: e.target.value})}

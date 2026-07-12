@@ -8,7 +8,7 @@ import Link from "next/link";
 import { usePopup } from "@/context/PopupContext";
 import { FaWhatsapp } from "react-icons/fa";
 
-const WHATSAPP_NUMBER = "96891000000"; // ← Replace with real number
+const WHATSAPP_NUMBER = "968 00000000"; // ← Replace with real number
 
 const paths = [
   {

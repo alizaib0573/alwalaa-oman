@@ -157,7 +157,7 @@ export default function WhoWeAre() {
               transition={{ duration: 0.6, delay: 0.35 }}
               className="pt-2"
             >
-              <div className="flex items-center gap-5 p-6 rounded-2xl bg-ivory border border-champagne/50">
+              {/* <div className="flex items-center gap-5 p-6 rounded-2xl bg-ivory border border-champagne/50">
                 <div className="flex-shrink-0">
                   <p className="text-[10px] uppercase tracking-[0.2em] text-matte-black/40 font-semibold mb-3">
                     Follow Eng. Humood
@@ -222,7 +222,7 @@ export default function WhoWeAre() {
                 <p className="text-xs text-matte-black/50 font-light leading-relaxed italic">
                   Stay connected for the latest luxury property insights, market updates and investment opportunities from Oman&apos;s leading real estate partner.
                 </p>
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </div>
