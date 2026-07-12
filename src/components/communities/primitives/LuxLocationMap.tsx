@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 
 interface Landmark {
   name: string;
@@ -30,16 +30,21 @@ export default function LuxLocationMap({ center, landmarks, title }: LuxLocation
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Map Placeholder / Component */}
-          <div className="lg:col-span-2 relative h-[500px] rounded-3xl overflow-hidden border border-white/10 bg-zinc-900">
-            <div className="absolute inset-0 flex items-center justify-center text-zinc-600 font-light italic">
-              <div className="text-center space-y-4">
-                <MapPin size={48} className="mx-auto text-gold animate-bounce" />
-                <p>Interactive Luxury Map Integration</p>
-                <span className="text-xs uppercase tracking-widest opacity-50">Coordinates: {center.lat}, {center.lng}</span>
-              </div>
-            </div>
-            {/* In a real scenario, this would be a Google Maps or Mapbox instance with a dark-mode style */}
+          {/* Interactive Map Iframe styled to match the dark luxury aesthetic */}
+          <div className="lg:col-span-2 relative h-[500px] rounded-3xl overflow-hidden border border-white/10 bg-[#121212] shadow-2xl">
+            <iframe
+              title="Interactive Location Map"
+              width="100%"
+              height="100%"
+              style={{
+                border: 0,
+                filter: "grayscale(1) invert(0.9) contrast(1.2) brightness(0.9)",
+              }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://maps.google.com/maps?q=${center.lat},${center.lng}&z=14&t=m&output=embed`}
+            />
           </div>
 
           <div className="space-y-6">
