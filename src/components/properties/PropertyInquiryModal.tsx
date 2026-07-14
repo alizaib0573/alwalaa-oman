@@ -18,6 +18,7 @@ export default function PropertyInquiryModal({ property, isOpen, onClose }: Prop
     fullName: "",
     email: "",
     phone: "",
+    query: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +34,7 @@ export default function PropertyInquiryModal({ property, isOpen, onClose }: Prop
           email: formData.email,
           phone: formData.phone,
           propertyId: property.id,
-          message: `Inquiry about ${property.title}`,
+          message: `Inquiry about ${property.title}. Query: ${formData.query}`,
         }),
       });
 
@@ -134,6 +135,17 @@ export default function PropertyInquiryModal({ property, isOpen, onClose }: Prop
                         className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all"
                         value={formData.phone}
                         onChange={e => setFormData({...formData, phone: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Query</label>
+                      <textarea
+                        required
+                        rows={3}
+                        placeholder="Enter your query here..."
+                        className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all resize-none"
+                        value={formData.query}
+                        onChange={e => setFormData({...formData, query: e.target.value})}
                       />
                     </div>
                   </div>

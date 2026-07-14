@@ -11,11 +11,49 @@ interface InquiryPanelProps {
 
 export default function InquiryPanel({ property }: InquiryPanelProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    query: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/admin/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          propertyId: property.id,
+          message: `Inquiry about ${property.title}. Query: ${formData.query}`,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send inquiry');
+      }
+
+      setSubmitted(true);
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        query: "",
+      });
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (error) {
+      console.error('Inquiry panel error:', error);
+      alert('Something went wrong. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,7 +85,9 @@ export default function InquiryPanel({ property }: InquiryPanelProps) {
                 type="text"
                 required
                 placeholder="Full Name"
-                className="w-full bg-ivory border border-champagne p-4 pl-10 text-xs outline-none focus:border-gold transition-all"
+                value={formData.name}
+                onChange={e => setFormData({ ...formData, name: e.target.value })}
+                className="w-full bg-ivory border border-champagne p-4 pl-10 text-xs outline-none focus:border-gold transition-all text-matte-black"
               />
             </div>
             <div className="relative">
@@ -56,7 +96,9 @@ export default function InquiryPanel({ property }: InquiryPanelProps) {
                 type="email"
                 required
                 placeholder="Email Address"
-                className="w-full bg-ivory border border-champagne p-4 pl-10 text-xs outline-none focus:border-gold transition-all"
+                value={formData.email}
+                onChange={e => setFormData({ ...formData, email: e.target.value })}
+                className="w-full bg-ivory border border-champagne p-4 pl-10 text-xs outline-none focus:border-gold transition-all text-matte-black"
               />
             </div>
             <div className="relative">
@@ -65,25 +107,34 @@ export default function InquiryPanel({ property }: InquiryPanelProps) {
                 type="tel"
                 required
                 placeholder="Phone Number"
-                className="w-full bg-ivory border border-champagne p-4 pl-10 text-xs outline-none focus:border-gold transition-all"
+                value={formData.phone}
+                onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full bg-ivory border border-champagne p-4 pl-10 text-xs outline-none focus:border-gold transition-all text-matte-black"
               />
             </div>
             <div className="relative">
               <textarea
                 required
                 rows={4}
-                placeholder="Your Message"
-                className="w-full bg-ivory border border-champagne p-4 text-xs outline-none focus:border-gold transition-all resize-none"
+                placeholder="Query"
+                value={formData.query}
+                onChange={e => setFormData({ ...formData, query: e.target.value })}
+                className="w-full bg-ivory border border-champagne p-4 text-xs outline-none focus:border-gold transition-all resize-none text-matte-black"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-4">
             <button
+              disabled={loading}
               type="submit"
-              className="w-full bg-matte-black text-ivory py-4 text-xs uppercase tracking-widest font-bold hover:bg-gold hover:text-matte-black transition-all duration-500 flex items-center justify-center gap-3"
+              className="w-full bg-matte-black text-ivory py-4 text-xs uppercase tracking-widest font-bold hover:bg-gold hover:text-matte-black transition-all duration-500 flex items-center justify-center gap-3 disabled:opacity-50"
             >
-              Request Details <Send size={14} />
+              {loading ? (
+                <div className="w-4 h-4 border-2 border-ivory border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <>Request Details <Send size={14} /></>
+              )}
             </button>
             <button
               type="button"
@@ -93,7 +144,7 @@ export default function InquiryPanel({ property }: InquiryPanelProps) {
             </button>
           </div>
         </form>
-        )}
+      )}
     </motion.div>
   );
 }

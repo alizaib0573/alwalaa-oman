@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import {
   LayoutDashboard,
   Home,
@@ -43,29 +44,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       >
         <div className="flex flex-col h-full">
           {/* Brand Section */}
-          <div className="p-8 flex items-center justify-between">
-            {!isCollapsed && (
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gold-primary rounded-sm flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-luxury-black" />
-                  </div>
-                  <span className="font-serif text-xl tracking-tight text-white">
-                    Alwalaa <span className="text-gold-primary">Real Estate</span>
-                  </span>
-                </div>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-medium ml-11">
-                  Private Property Management
-                </span>
-              </div>
-            )}
-            <button
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="p-2 rounded-full hover:bg-white/5 transition-colors text-zinc-400 hover:text-white"
-            >
-              {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-            </button>
+          <div className="border-b border-luxury-border">
+            {/* Logo */}
+            <div className="flex items-center justify-center px-4 py-4 min-h-[96px]">
+              <Link href="/" className="block w-full">
+                {/* Use img tag to sidestep Next.js Image sizing constraints */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/Logo white.png"
+                  alt="Alwalaa Real Estate"
+                  className={cn(
+                    "object-contain transition-all duration-300",
+                    isCollapsed ? "w-10 h-10 mx-auto" : "w-full max-h-20"
+                  )}
+                />
+              </Link>
+            </div>
+            {/* Collapse toggle */}
+            <div className="flex justify-end px-3 pb-2">
+              <button
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                className="p-1.5 rounded-full hover:bg-white/5 transition-colors text-zinc-500 hover:text-white"
+              >
+                {isCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+              </button>
+            </div>
           </div>
+
 
           {/* Navigation */}
           <nav className="flex-1 px-4 py-6 space-y-2">

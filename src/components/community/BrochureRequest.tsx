@@ -13,10 +13,42 @@ interface BrochureRequestProps {
 
 export default function BrochureRequest({ data, communityName }: BrochureRequestProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    propertyInterest: "Villa",
+    query: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/admin/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: `Brochure Request for ${communityName} (Interest: ${formData.propertyInterest}). Query: ${formData.query}`,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send brochure request');
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Brochure request error:', error);
+      alert('Something went wrong. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +106,8 @@ export default function BrochureRequest({ data, communityName }: BrochureRequest
                         required
                         type="text"
                         placeholder="Enter your name"
+                        value={formData.name}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
                         className="bg-ivory/5 border-b border-ivory/20 py-4 text-ivory placeholder:text-ivory/20 focus:border-gold transition-all outline-none font-light"
                       />
                     </div>
@@ -83,6 +117,8 @@ export default function BrochureRequest({ data, communityName }: BrochureRequest
                         required
                         type="email"
                         placeholder="email@address.com"
+                        value={formData.email}
+                        onChange={e => setFormData({ ...formData, email: e.target.value })}
                         className="bg-ivory/5 border-b border-ivory/20 py-4 text-ivory placeholder:text-ivory/20 focus:border-gold transition-all outline-none font-light"
                       />
                     </div>
@@ -94,12 +130,16 @@ export default function BrochureRequest({ data, communityName }: BrochureRequest
                         required
                         type="tel"
                         placeholder="+968 0000 0000"
+                        value={formData.phone}
+                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
                         className="bg-ivory/5 border-b border-ivory/20 py-4 text-ivory placeholder:text-ivory/20 focus:border-gold transition-all outline-none font-light"
                       />
                     </div>
                     <div className="flex flex-col gap-3">
                       <label className="text-gold text-[10px] uppercase tracking-widest font-bold ml-1">Property Interest</label>
                       <select
+                        value={formData.propertyInterest}
+                        onChange={e => setFormData({ ...formData, propertyInterest: e.target.value })}
                         className="bg-ivory/5 border-b border-ivory/20 py-4 text-ivory focus:border-gold transition-all outline-none appearance-none cursor-pointer font-light"
                       >
                         <option className="bg-matte-black text-ivory">Villa</option>
@@ -109,12 +149,28 @@ export default function BrochureRequest({ data, communityName }: BrochureRequest
                       </select>
                     </div>
                   </div>
+                  <div className="flex flex-col gap-3">
+                    <label className="text-gold text-[10px] uppercase tracking-widest font-bold ml-1">Query</label>
+                    <textarea
+                      required
+                      rows={3}
+                      placeholder="Enter your query here..."
+                      value={formData.query}
+                      onChange={e => setFormData({ ...formData, query: e.target.value })}
+                      className="bg-ivory/5 border-b border-ivory/20 py-4 text-ivory placeholder:text-ivory/20 focus:border-gold transition-all outline-none font-light resize-none"
+                    />
+                  </div>
                   <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-6 bg-gold text-matte-black uppercase tracking-[0.3em] text-xs font-bold rounded-full hover:bg-white transition-all duration-500 shadow-xl shadow-gold/20 mt-4"
+                    disabled={loading}
+                    whileHover={loading ? {} : { scale: 1.02 }}
+                    whileTap={loading ? {} : { scale: 0.98 }}
+                    className="w-full py-6 bg-gold text-matte-black uppercase tracking-[0.3em] text-xs font-bold rounded-full hover:bg-white transition-all duration-500 shadow-xl shadow-gold/20 mt-4 flex items-center justify-center gap-3 disabled:opacity-50"
                   >
-                    Request Exclusive Brochure
+                    {loading ? (
+                      <div className="w-4 h-4 border-2 border-matte-black border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      "Request Exclusive Brochure"
+                    )}
                   </motion.button>
                 </motion.form>
               ) : (

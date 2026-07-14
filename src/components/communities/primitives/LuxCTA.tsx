@@ -58,7 +58,7 @@ export default function LuxCTA({ title, subtitle, primaryCta }: LuxCTAProps) {
 
             <div className="flex items-center gap-4">
               <a
-                href="https://wa.me/96871555067"
+                href="https://wa.me/96893206024"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 rounded-full border border-white/10 text-white hover:text-gold hover:border-gold transition-all duration-300 backdrop-blur-sm"

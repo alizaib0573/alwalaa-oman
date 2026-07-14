@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { usePopup } from "@/context/PopupContext";
 import { Award, Compass, ShieldCheck, Quote } from "lucide-react";
+import { FaInstagram, FaLinkedin, FaFacebookF, FaYoutube } from "react-icons/fa";
 
 const CORE_VALUES = [
   {
@@ -87,6 +88,45 @@ export default function AboutPage() {
               From waterfront villas in Al Mouj and high-yielding apartments in Muscat Bay, to forward-looking off-plan developments in Sultan Haitham City, we provide premium consulting and end-to-end guidance.
             </p>
             <div className="w-16 h-px bg-gold" />
+            <div className="flex items-center gap-3 pt-2">
+              <span className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold mr-2">Connect:</span>
+              <a
+                href="https://www.instagram.com/alwalaa.om/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-matte-black/5 hover:bg-gold text-matte-black transition-all duration-300 flex items-center justify-center hover:scale-105"
+                aria-label="Instagram"
+              >
+                <FaInstagram size={15} />
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61555342670178&locale=et_EE#"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-matte-black/5 hover:bg-gold text-matte-black transition-all duration-300 flex items-center justify-center hover:scale-105"
+                aria-label="Facebook"
+              >
+                <FaFacebookF size={15} />
+              </a>
+              <a
+                href="https://www.youtube.com/@AlwalaaRealestate"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-matte-black/5 hover:bg-gold text-matte-black transition-all duration-300 flex items-center justify-center hover:scale-105"
+                aria-label="YouTube"
+              >
+                <FaYoutube size={15} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/alwalaa-realestate"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-matte-black/5 hover:bg-gold text-matte-black transition-all duration-300 flex items-center justify-center hover:scale-105"
+                aria-label="LinkedIn"
+              >
+                <FaLinkedin size={15} />
+              </a>
+            </div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -96,12 +136,297 @@ export default function AboutPage() {
             className="relative h-[480px] rounded-2xl overflow-hidden shadow-2xl"
           >
             <Image
-              src="/about.jpg"
+              src="/omn.jpg"
               alt="Oman Waterfront Luxury"
               fill
               className="object-cover"
             />
           </motion.div>
+        </div>
+      </section>
+      {/* ── OUR ACHIEVEMENTS SECTION ── */}
+      <section className="py-14 px-6 bg-matte-black relative overflow-hidden">
+        {/* Background ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gold/5 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Section Header — compact inline layout */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-3"
+          >
+            <div>
+              <span className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold block mb-2">
+                Recognition &amp; Excellence
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif text-ivory leading-tight">
+                Our <span className="italic text-gold">Achievements</span>
+              </h2>
+            </div>
+            <p className="text-ivory/40 text-xs font-light max-w-xs leading-relaxed sm:text-right">
+              Awards &amp; recognition from Oman&apos;s most prestigious real estate platforms.
+            </p>
+          </motion.div>
+
+          {/* Awards — horizontal scroll on mobile, 7-col wrap on desktop */}
+          <div className="flex gap-4 overflow-x-auto pb-3 lg:grid lg:grid-cols-7 lg:overflow-visible lg:pb-0 scrollbar-hide">
+            {[
+              {
+                src: "/images/achievement-1.png",
+                alt: "التجمع العقاري 2026 Award",
+                label: "التجمع العقاري 2026",
+                sublabel: "Excellence Award",
+              },
+              {
+                src: "/images/achievement-2.png",
+                alt: "Al Mouj Broker Awards 2025",
+                label: "Al Mouj Broker Awards",
+                sublabel: "Certificate of Recognition",
+              },
+              {
+                src: "/images/achievement-3.png",
+                alt: "Al Ahly Sabbour Top Achiever 2025",
+                label: "Al Ahly Sabbour",
+                sublabel: "Top Achiever 2025",
+              },
+              {
+                src: "/images/achievement-4.png",
+                alt: "التجمع العقاري الرمضاني Award",
+                label: "التجمع العقاري الرمضاني",
+                sublabel: "Ministerial Recognition",
+              },
+              {
+                src: "/images/achievement-5.png",
+                alt: "Top Achiever W9 2025",
+                label: "Al Ahly Sabbour W9",
+                sublabel: "Top Achiever 2025",
+              },
+              {
+                src: "/images/achievement-6.png",
+                alt: "Top Achiever W9 2025 Second Award",
+                label: "Al Ahly Sabbour W9",
+                sublabel: "Top Achiever 2025",
+              },
+              {
+                src: "/images/achievement-7.png",
+                alt: "Al Mouj Broker Certificate 2025",
+                label: "Al Mouj Broker Awards",
+                sublabel: "Certificate of Recognition",
+              },
+            ].map((award, i) => (
+              <motion.div
+                key={`${award.src}-${i}`}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.07 }}
+                viewport={{ once: true }}
+                className="group relative flex-shrink-0 w-40 lg:w-auto"
+              >
+                <div className="relative overflow-hidden rounded-xl border border-gold/15 bg-[#171410] transition-all duration-400 group-hover:border-gold/40 group-hover:shadow-[0_0_24px_rgba(201,165,106,0.15)]">
+                  {/* Image */}
+                  <div className="relative h-44 overflow-hidden">
+                    <Image
+                      src={award.src}
+                      alt={award.alt}
+                      fill
+                      className="object-contain p-4 transition-transform duration-600 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 160px, 14vw"
+                    />
+                  </div>
+                  {/* Footer */}
+                  <div className="px-3 py-2.5 border-t border-gold/10">
+                    <p className="text-ivory text-[11px] font-serif leading-snug truncate">{award.label}</p>
+                    <p className="text-gold/60 text-[9px] uppercase tracking-wider mt-0.5 truncate">{award.sublabel}</p>
+                  </div>
+                </div>
+                {/* Number pip */}
+                <div className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-gold text-matte-black text-[9px] font-bold flex items-center justify-center shadow-md shadow-gold/20">
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Bottom rule */}
+          <div className="flex items-center justify-center gap-4 mt-10">
+            <div className="h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent flex-1 max-w-32" />
+            <span className="text-gold/30 text-[9px] uppercase tracking-[0.3em] font-light whitespace-nowrap">Recognised by Industry Leaders</span>
+            <div className="h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent flex-1 max-w-32" />
+          </div>
+        </div>
+      </section>
+
+
+      {/* ── EVENTS SECTION ── */}
+      <section className="py-16 px-6 bg-warm-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-3"
+          >
+            <div>
+              <span className="text-gold uppercase tracking-[0.4em] text-[10px] font-bold block mb-2">
+                Community &amp; Engagement
+              </span>
+              <h2 className="text-3xl md:text-4xl font-serif text-matte-black leading-tight">
+                Our <span className="italic text-gold">Events</span>
+              </h2>
+            </div>
+            <p className="text-matte-black/40 text-xs font-light max-w-xs leading-relaxed sm:text-right">
+              From championship sponsorships to exclusive gala nights — Alwalaa where business meets community.
+            </p>
+          </motion.div>
+
+          {/* Masonry Photo Grid */}
+          <div className="grid grid-cols-12 grid-rows-2 gap-3 h-[580px]">
+
+            {/* Hero image — spans 5 cols, 2 rows */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-5 row-span-2 group relative rounded-2xl overflow-hidden"
+            >
+              <Image
+                src="/images/event-4.jpg"
+                alt="FFC Fitbox Fighting Championship – Alwalaa Sponsorship"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 42vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/80 via-matte-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-6">
+                <span className="inline-block text-[9px] uppercase tracking-widest bg-gold text-matte-black font-bold px-2 py-0.5 rounded-full mb-2">FFC Championship</span>
+                <p className="text-ivory font-serif text-lg leading-snug">Fitbox Fighting Championship<br /><span className="text-ivory/60 text-xs font-light">Official Sponsor — Alwalaa Real Estate</span></p>
+              </div>
+            </motion.div>
+
+            {/* Top-right large — spans 4 cols, 1 row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-4 row-span-1 group relative rounded-2xl overflow-hidden"
+            >
+              <Image
+                src="/images/event-1.jpg"
+                alt="FFC Trophy Presentation Ceremony"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute bottom-0 left-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                <p className="text-ivory text-xs font-serif">Trophy Presentation Ceremony</p>
+              </div>
+            </motion.div>
+
+            {/* Top-right small — spans 3 cols, 1 row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-3 row-span-1 group relative rounded-2xl overflow-hidden"
+            >
+              <Image
+                src="/images/event-5.jpg"
+                alt="FFC Event – Ring Side"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute bottom-0 left-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                <p className="text-ivory text-xs font-serif">Ringside Moments</p>
+              </div>
+            </motion.div>
+
+            {/* Bottom-right medium — spans 3 cols */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-3 row-span-1 group relative rounded-2xl overflow-hidden"
+            >
+              <Image
+                src="/images/event-2.jpg"
+                alt="FFC – Winner Celebration"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+              <div className="absolute bottom-0 left-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                <p className="text-ivory text-xs font-serif">Winner Celebration</p>
+              </div>
+            </motion.div>
+
+            {/* Bottom-right wide — spans 4 cols */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              viewport={{ once: true }}
+              className="col-span-12 md:col-span-4 row-span-1 group relative rounded-2xl overflow-hidden"
+            >
+              <Image
+                src="/images/event-8.jpg"
+                alt="Alwalaa Gala Night – Executive Networking"
+                fill
+                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-matte-black/80 via-matte-black/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-4">
+                <span className="inline-block text-[9px] uppercase tracking-widest bg-ivory/20 backdrop-blur-sm text-ivory font-bold px-2 py-0.5 rounded-full mb-1.5">Gala Night</span>
+                <p className="text-ivory text-xs font-serif">Executive Networking Evening</p>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Secondary strip — 3 remaining photos horizontal */}
+          <div className="grid grid-cols-3 gap-3 mt-3 h-44">
+            {[
+              { src: "/images/event-3.jpg", label: "Championship Night – Outdoor Arena" },
+              { src: "/images/event-6.jpg", label: "FFC Ring Ceremony" },
+              { src: "/images/event-7.jpg", label: "Alwalaa at FFC – Ringside" },
+            ].map((ev, i) => (
+              <motion.div
+                key={ev.src}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 * i }}
+                viewport={{ once: true }}
+                className="group relative rounded-xl overflow-hidden"
+              >
+                <Image
+                  src={ev.src}
+                  alt={ev.label}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-matte-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                <div className="absolute bottom-0 left-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-400">
+                  <p className="text-ivory text-[10px] font-serif leading-snug">{ev.label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
         </div>
       </section>
 
@@ -156,7 +481,27 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-matte-black/80 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 text-ivory">
                 <h4 className="text-xl font-serif">Eng. Humood Al-Adhari</h4>
-                <p className="text-[10px] uppercase tracking-widest text-gold mt-1">Chief Executive Officer</p>
+                <p className="text-[10px] uppercase tracking-widest text-gold mt-1 mb-3">Chief Executive Officer</p>
+                <div className="flex items-center gap-3">
+                  <a
+                    href="https://www.instagram.com/humood.aladhari/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ivory/60 hover:text-gold transition-colors flex items-center justify-center"
+                    aria-label="Instagram"
+                  >
+                    <FaInstagram size={18} />
+                  </a>
+                  <a
+                    href="https://om.linkedin.com/in/humood-al-adhari-37bb67111"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ivory/60 hover:text-gold transition-colors flex items-center justify-center"
+                    aria-label="LinkedIn"
+                  >
+                    <FaLinkedin size={18} />
+                  </a>
+                </div>
               </div>
             </motion.div>
 

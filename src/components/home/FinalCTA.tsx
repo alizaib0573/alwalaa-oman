@@ -6,7 +6,7 @@ import Image from "next/image";
 import { usePopup } from "@/context/PopupContext";
 import { FaWhatsapp, FaCheckCircle } from "react-icons/fa";
 
-const WHATSAPP_NUMBER = "96891000000"; // ← Replace with real number
+const WHATSAPP_NUMBER = "96893206024"; // ← Replace with real number
 
 const trustBullets = [
   "100% Free Consultation",

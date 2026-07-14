@@ -33,7 +33,7 @@ const SOCIAL_LINKS = [
   { name: "YouTube", href: "https://www.youtube.com/@AlwalaaRealestate", icon: <FaYoutube size={18} /> },
   { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61555342670178", icon: <FaFacebookF size={18} /> },
   { name: "LinkedIn", href: "https://www.linkedin.com/company/alwalaa-realestate", icon: <FaLinkedinIn size={18} /> },
-  { name: "WhatsApp", href: "https://wa.me/96891000000", icon: <FaWhatsapp size={18} /> },
+  { name: "WhatsApp", href: "https://wa.me/96893206024", icon: <FaWhatsapp size={18} /> },
 ];
 
 const CONTACT = {

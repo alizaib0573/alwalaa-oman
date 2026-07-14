@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { usePopup } from "@/context/PopupContext";
 import { FaWhatsapp } from "react-icons/fa";
 
-const WHATSAPP_NUMBER = "96891000000"; // ← Replace with real number
+const WHATSAPP_NUMBER = "96893206024"; // ← Replace with real number
 
 const trustTicker = [
   "200+ Happy Clients",
@@ -102,7 +102,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 md:px-6 pt-20">
+      <div className="relative z-10 h-full flex flex-col justify-center items-center text-center px-4 md:px-6 pt-24 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -114,7 +114,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm border border-gold/40 rounded-full px-4 py-1.5 mb-6"
+            className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm border border-gold/40 rounded-full px-4 py-1.5 mb-3"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
             <span className="text-gold text-[10px] uppercase tracking-[0.25em] font-semibold">
@@ -123,18 +123,18 @@ export default function Hero() {
           </motion.div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl 2xl:text-8xl font-serif text-ivory leading-tight mb-4">
+          <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-serif text-ivory leading-tight mb-3">
             Find Your Luxury <br />
             <span className="italic text-gold">Property in Oman</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-ivory/70 text-base md:text-lg font-light max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-ivory/70 text-sm md:text-base font-light max-w-2xl mx-auto mb-5 leading-relaxed">
             Villas, apartments &amp; ITC investments — with lifetime residency opportunities and 6–8% annual ROI
           </p>
 
           {/* Property Search Bar */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 md:p-4 max-w-3xl mx-auto mb-8 shadow-2xl">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 md:p-4 max-w-3xl mx-auto mb-5 shadow-2xl">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
               <select
                 value={propertyType}
@@ -179,10 +179,10 @@ export default function Hero() {
           </div>
 
           {/* Secondary CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm mt-4">
             <button
               onClick={openPopup}
-              className="text-ivory/80 border border-ivory/30 px-6 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-medium hover:border-gold hover:text-gold transition-all duration-300"
+              className="w-full sm:w-auto bg-gold/10 backdrop-blur-md text-gold border-2 border-gold/40 hover:border-gold hover:bg-gold hover:text-matte-black px-8 py-3.5 rounded-full text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-300 shadow-lg shadow-gold/5 hover:shadow-gold/20 hover:scale-[1.02]"
             >
               Book Free Consultation
             </button>
@@ -190,9 +190,9 @@ export default function Hero() {
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-ivory/80 border border-ivory/30 px-6 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-medium hover:border-green-400 hover:text-green-400 transition-all duration-300"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 bg-green-500/10 backdrop-blur-md text-green-400 border-2 border-green-500/30 hover:border-green-500 hover:bg-green-500 hover:text-white px-8 py-3.5 rounded-full text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-300 shadow-lg shadow-green-500/5 hover:shadow-green-500/20 hover:scale-[1.02]"
             >
-              <FaWhatsapp className="text-base" />
+              <FaWhatsapp className="text-lg" />
               Chat on WhatsApp
             </a>
           </div>

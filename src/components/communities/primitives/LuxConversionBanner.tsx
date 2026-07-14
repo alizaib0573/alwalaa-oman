@@ -42,7 +42,7 @@ export default function LuxConversionBanner({
           <div className="flex items-center gap-4 flex-shrink-0">
             {showWhatsApp && (
               <a
-                href="https://wa.me/96871555067"
+                href="https://wa.me/96893206024"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-6 py-3 border-2 border-matte-black/20 text-matte-black text-xs uppercase tracking-widest font-bold rounded-full hover:bg-matte-black hover:text-gold transition-all duration-300"
@@ -81,7 +81,7 @@ export default function LuxConversionBanner({
         <div className="flex items-center gap-3 flex-shrink-0">
           {showWhatsApp && (
             <a
-              href="https://wa.me/96871555067"
+              href="https://wa.me/96893206024"
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full border border-white/10 text-zinc-400 hover:text-gold hover:border-gold transition-all duration-300"

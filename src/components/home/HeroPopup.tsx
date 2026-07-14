@@ -15,7 +15,9 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phone: "",
+    query: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,8 +30,9 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
+          email: formData.email,
           phone: formData.phone,
-          message: "Hero Popup Inquiry: Own Property in Oman",
+          message: formData.query,
         }),
       });
 
@@ -114,6 +117,17 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
                       />
                     </div>
                     <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Email Address</label>
+                      <input
+                        required
+                        type="email"
+                        placeholder="email@example.com"
+                        className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black"
+                        value={formData.email}
+                        onChange={e => setFormData({...formData, email: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Phone Number</label>
                       <input
                         required
@@ -122,6 +136,17 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
                         className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black"
                         value={formData.phone}
                         onChange={e => setFormData({...formData, phone: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Query</label>
+                      <textarea
+                        required
+                        rows={3}
+                        placeholder="Enter your query here..."
+                        className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black resize-none"
+                        value={formData.query}
+                        onChange={e => setFormData({...formData, query: e.target.value})}
                       />
                     </div>
                   </div>
