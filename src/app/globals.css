@@ -179,3 +179,29 @@ h1, h2, h3, h4, .luxury-serif {
 .choose-img {
    filter: grayscale(30%);
 }
+
+/* Achievements belt — continuous horizontal marquee */
+@keyframes achievements-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Track holds two identical copies of the list, so shifting by half
+       its width loops seamlessly. */
+    transform: translateX(-50%);
+  }
+}
+
+.achievements-marquee {
+  animation: achievements-marquee 10s linear infinite;
+}
+
+.achievements-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achievements-marquee {
+    animation: none;
+  }
+}

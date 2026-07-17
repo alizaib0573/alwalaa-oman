@@ -171,83 +171,70 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          {/* Awards — horizontal scroll on mobile, 7-col wrap on desktop */}
-          <div className="flex gap-4 overflow-x-auto pb-3 lg:grid lg:grid-cols-7 lg:overflow-visible lg:pb-0 scrollbar-hide">
-            {[
-              {
-                src: "/images/achievement-1.png",
-                alt: "التجمع العقاري 2026 Award",
-                label: "التجمع العقاري 2026",
-                sublabel: "Excellence Award",
-              },
-              {
-                src: "/images/achievement-2.png",
-                alt: "Al Mouj Broker Awards 2025",
-                label: "Al Mouj Broker Awards",
-                sublabel: "Certificate of Recognition",
-              },
-              {
-                src: "/images/achievement-3.png",
-                alt: "Al Ahly Sabbour Top Achiever 2025",
-                label: "Al Ahly Sabbour",
-                sublabel: "Top Achiever 2025",
-              },
-              {
-                src: "/images/achievement-4.png",
-                alt: "التجمع العقاري الرمضاني Award",
-                label: "التجمع العقاري الرمضاني",
-                sublabel: "Ministerial Recognition",
-              },
-              {
-                src: "/images/achievement-5.png",
-                alt: "Top Achiever W9 2025",
-                label: "Al Ahly Sabbour W9",
-                sublabel: "Top Achiever 2025",
-              },
-              {
-                src: "/images/achievement-6.png",
-                alt: "Top Achiever W9 2025 Second Award",
-                label: "Al Ahly Sabbour W9",
-                sublabel: "Top Achiever 2025",
-              },
-              {
-                src: "/images/achievement-7.png",
-                alt: "Al Mouj Broker Certificate 2025",
-                label: "Al Mouj Broker Awards",
-                sublabel: "Certificate of Recognition",
-              },
-            ].map((award, i) => (
-              <motion.div
-                key={`${award.src}-${i}`}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-                viewport={{ once: true }}
-                className="group relative flex-shrink-0 w-40 lg:w-auto"
-              >
-                <div className="relative overflow-hidden rounded-xl border border-gold/15 bg-[#171410] transition-all duration-400 group-hover:border-gold/40 group-hover:shadow-[0_0_24px_rgba(201,165,106,0.15)]">
-                  {/* Image */}
-                  <div className="relative h-44 overflow-hidden">
-                    <Image
-                      src={award.src}
-                      alt={award.alt}
-                      fill
-                      className="object-contain p-4 transition-transform duration-600 group-hover:scale-105"
-                      sizes="(max-width: 1024px) 160px, 14vw"
-                    />
+          {/* Awards — continuous moving belt. The list is duplicated so the
+              marquee can loop seamlessly (translateX(-50%) lands on the copy). */}
+          <div
+            className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+          >
+            <div className="achievements-marquee flex w-max gap-6">
+              {[
+                {
+                  src: "/images/achievement-1.png",
+                  alt: "التجمع العقاري 2026 Award",
+                },
+                {
+                  src: "/images/achievement-2.png",
+                  alt: "Al Mouj Broker Awards 2025",
+                },
+                {
+                  src: "/images/achievement-3.png",
+                  alt: "Al Ahly Sabbour Top Achiever 2025",
+                },
+                {
+                  src: "/images/achievement-4.png",
+                  alt: "التجمع العقاري الرمضاني Award",
+                },
+                {
+                  src: "/images/achievement-5.png",
+                  alt: "Top Achiever W9 2025",
+                },
+                {
+                  src: "/images/achievement-6.png",
+                  alt: "Top Achiever W9 2025 Second Award",
+                },
+                {
+                  src: "/images/achievement-7.png",
+                  alt: "Al Mouj Broker Certificate 2025",
+                },
+              ]
+                .concat([
+                  { src: "/images/achievement-1.png", alt: "التجمع العقاري 2026 Award" },
+                  { src: "/images/achievement-2.png", alt: "Al Mouj Broker Awards 2025" },
+                  { src: "/images/achievement-3.png", alt: "Al Ahly Sabbour Top Achiever 2025" },
+                  { src: "/images/achievement-4.png", alt: "التجمع العقاري الرمضاني Award" },
+                  { src: "/images/achievement-5.png", alt: "Top Achiever W9 2025" },
+                  { src: "/images/achievement-6.png", alt: "Top Achiever W9 2025 Second Award" },
+                  { src: "/images/achievement-7.png", alt: "Al Mouj Broker Certificate 2025" },
+                ])
+                .map((award, i) => (
+                  <div
+                    key={`${award.src}-${i}`}
+                    className="group relative flex-shrink-0 w-56"
+                  >
+                    <div className="relative overflow-hidden rounded-xl border border-gold/15 bg-[#171410] transition-all duration-400 group-hover:border-gold/40 group-hover:shadow-[0_0_24px_rgba(201,165,106,0.15)]">
+                      <div className="relative h-60 overflow-hidden">
+                        <Image
+                          src={award.src}
+                          alt={award.alt}
+                          fill
+                          className="object-contain p-5 transition-transform duration-600 group-hover:scale-105"
+                          sizes="224px"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  {/* Footer */}
-                  <div className="px-3 py-2.5 border-t border-gold/10">
-                    <p className="text-ivory text-[11px] font-serif leading-snug truncate">{award.label}</p>
-                    <p className="text-gold/60 text-[9px] uppercase tracking-wider mt-0.5 truncate">{award.sublabel}</p>
-                  </div>
-                </div>
-                {/* Number pip */}
-                <div className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-gold text-matte-black text-[9px] font-bold flex items-center justify-center shadow-md shadow-gold/20">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-              </motion.div>
-            ))}
+                ))}
+            </div>
           </div>
 
           {/* Bottom rule */}

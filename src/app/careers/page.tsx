@@ -230,7 +230,7 @@ export default function CareersPage() {
                     </div>
                   </div>
                   <Link
-                    href={`mailto:info@alwalaaoman.com?subject=Application: ${encodeURIComponent(pos.title)}`}
+                    href={`mailto:HR@alwalaaoman.com?subject=Application: ${encodeURIComponent(pos.title)}`}
                     className="flex items-center gap-2 bg-matte-black text-ivory text-[10px] uppercase tracking-widest font-bold px-6 py-3 rounded-full hover:bg-gold hover:text-matte-black transition-all duration-300 whitespace-nowrap flex-shrink-0"
                   >
                     Apply Now <ChevronRight size={12} />
@@ -258,7 +258,7 @@ export default function CareersPage() {
             If you are passionate about luxury real estate, driven by performance, and aligned with Alwalaa&apos;s values, send us your CV — we will reach out when the right role opens.
           </p>
           <Link
-            href="mailto:info@alwalaaoman.com?subject=General Application - Alwalaa Real Estate"
+            href="mailto:HR@alwalaaoman.com?subject=General Application - Alwalaa Real Estate"
             className="inline-block bg-gold text-matte-black px-10 py-4 text-xs uppercase tracking-[0.2em] font-bold hover:bg-white hover:text-matte-black transition-all duration-300"
           >
             Send Your CV
