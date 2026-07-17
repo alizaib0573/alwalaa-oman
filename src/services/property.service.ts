@@ -47,6 +47,58 @@ export const propertyService = {
     });
   },
 
+  async getPaginated(filters: PropertyFilters = {}, page = 1, pageSize = 20) {
+    const { type, status, communityId, communitySlug, featured, minPrice, maxPrice, search } = filters;
+
+    const where: Prisma.PropertyWhereInput = {
+      ...(type && { type }),
+      ...(status && { status }),
+      ...(communityId && { communityId }),
+      ...(communitySlug && { community: { slug: communitySlug } }),
+      ...(featured !== undefined && { featured }),
+      ...(minPrice || maxPrice) && {
+        price: {
+          ...(minPrice && { gte: minPrice }),
+          ...(maxPrice && { lte: maxPrice }),
+        },
+      },
+      ...(search && {
+        OR: [
+          { title: { contains: search, mode: 'insensitive' } },
+          { slug: { contains: search, mode: 'insensitive' } },
+          { description: { contains: search, mode: 'insensitive' } },
+        ],
+      }),
+    };
+
+    // Clamp inputs so a bad query param can't request a huge page or a negative skip.
+    const safePage = Math.max(1, Math.floor(page) || 1);
+    const safePageSize = Math.min(100, Math.max(1, Math.floor(pageSize) || 20));
+
+    const [data, total] = await prisma.$transaction([
+      prisma.property.findMany({
+        where,
+        include: {
+          community: true,
+          agent: true,
+          metrics: true,
+        },
+        orderBy: { createdAt: 'desc' },
+        skip: (safePage - 1) * safePageSize,
+        take: safePageSize,
+      }),
+      prisma.property.count({ where }),
+    ]);
+
+    return {
+      data,
+      total,
+      page: safePage,
+      pageSize: safePageSize,
+      totalPages: Math.max(1, Math.ceil(total / safePageSize)),
+    };
+  },
+
   async getById(id: string) {
     return await prisma.property.findUnique({
       where: { id },

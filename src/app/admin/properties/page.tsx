@@ -16,7 +16,9 @@ import {
   Bed,
   Bath,
   Square,
-  Building2
+  Building2,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -106,31 +108,56 @@ function PropertyAdminCard({ property, onEdit, onDelete }: PropertyAdminCardProp
   );
 }
 
+const PAGE_SIZE = 20;
+
 export default function PropertyAdminPage() {
   const [properties, setProperties] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  // Reset to the first page whenever the search term changes so results stay in sync.
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm]);
 
   useEffect(() => {
-    async function fetchProperties() {
+    let cancelled = false;
+    // Debounce so typing in the search box doesn't fire a request per keystroke.
+    const timer = setTimeout(async () => {
+      setIsLoading(true);
       try {
-        const res = await fetch('/api/admin/properties');
-        const data = await res.json();
-        setProperties(data);
+        const params = new URLSearchParams({
+          page: String(page),
+          pageSize: String(PAGE_SIZE),
+        });
+        if (searchTerm.trim()) params.set('search', searchTerm.trim());
+
+        const res = await fetch(`/api/admin/properties?${params.toString()}`);
+        const result = await res.json();
+        if (cancelled) return;
+
+        setProperties(result.data ?? []);
+        setTotalPages(result.totalPages ?? 1);
+        setTotal(result.total ?? 0);
       } catch (e) {
         console.error('Failed to fetch properties', e);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
-    }
-    fetchProperties();
-  }, []);
+    }, 300);
 
-  const filteredProperties = properties.filter((p: any) =>
-    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.slug.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [page, searchTerm]);
+
+  // Search + pagination are handled server-side now; render whatever the API returned.
+  const filteredProperties = properties;
 
   return (
     <div className="space-y-12">
@@ -321,6 +348,35 @@ export default function PropertyAdminPage() {
           </AnimatePresence>
         )}
         </div>
+
+        {!isLoading && total > 0 && (
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+            <p className="text-xs uppercase tracking-widest text-zinc-500 font-medium">
+              Showing {(page - 1) * PAGE_SIZE + 1}&ndash;{Math.min(page * PAGE_SIZE, total)} of {total}
+            </p>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page <= 1}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-charcoal border border-luxury-border rounded-xl text-xs uppercase tracking-widest font-bold text-zinc-400 hover:text-white hover:border-gold-primary/40 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-zinc-400 disabled:hover:border-luxury-border"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Previous
+              </button>
+              <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium px-2">
+                Page {page} of {totalPages}
+              </span>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page >= totalPages}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-charcoal border border-luxury-border rounded-xl text-xs uppercase tracking-widest font-bold text-zinc-400 hover:text-white hover:border-gold-primary/40 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-zinc-400 disabled:hover:border-luxury-border"
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
   );
 }

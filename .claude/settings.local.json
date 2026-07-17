@@ -11,7 +11,11 @@
       "mcp__ide__getDiagnostics",
       "Bash(npm run *)",
       "Bash(powershell *)",
-      "PowerShell(New-Item *)"
+      "PowerShell(New-Item *)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes\" npx prisma *)",
+      "Bash(taskkill *)",
+      "Bash(cmd /c \"taskkill /F /IM node.exe\")",
+      "Bash(npx tsc *)"
     ]
   }
 }

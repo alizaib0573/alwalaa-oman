@@ -3,15 +3,16 @@
 import React, { useEffect, useState } from 'react';
 import {
   Building2,
-  TrendingUp,
   Users,
   Star,
   ArrowUpRight,
-  Plus,
-  ArrowRight
+  LayoutDashboard,
+  ShieldCheck,
+  Activity
 } from 'lucide-react';
-import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import ApprovalQueue from '@/components/admin/ApprovalQueue';
+import AgentDirectory from '@/components/admin/AgentDirectory';
 
 interface StatCardProps {
   title: string;
@@ -51,164 +52,153 @@ function StatCard({ title, value, icon: Icon, trend, trendUp }: StatCardProps) {
   );
 }
 
-export default function AdminDashboard() {
-  const [stats, setStats] = useState({
-    properties: { value: '0', trend: '0%', trendUp: true },
-    featured: { value: '0', trend: '0%', trendUp: true },
-    communities: { value: '0', trend: '0%', trendUp: true },
-    leads: { value: '0', trend: '0%', trendUp: true },
-  });
+export default function AdminPage() {
+  const [session, setSession] = useState<any>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchStats() {
+    async function init() {
       try {
-        const [propRes, commRes, leadRes] = await Promise.all([
-          fetch('/api/admin/properties'),
-          fetch('/api/admin/communities'),
-          fetch('/api/admin/leads'),
-        ]);
+        const sessionRes = await fetch('/api/auth/check-session', { method: 'POST' });
+        if (sessionRes.ok) {
+          const sessionData = await sessionRes.json();
+          setSession(sessionData.session);
+        }
 
-        const properties = await propRes.json();
-        const communities = await commRes.json();
-        const leads = await leadRes.json();
-
-        setStats({
-          properties: {
-            value: properties.length,
-            trend: '+12%',
-            trendUp: true
-          },
-          featured: {
-            value: properties.filter((p: any) => p.featured).length,
-            trend: '+5%',
-            trendUp: true
-          },
-          communities: {
-            value: communities.length,
-            trend: '0%',
-            trendUp: true
-          },
-          leads: {
-            value: leads.length,
-            trend: '+18%',
-            trendUp: true
-          },
-        });
-      } catch (e) {
-        console.error('Failed to fetch dashboard stats', e);
+        const statsRes = await fetch('/api/admin/stats');
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+      } catch (err) {
+        console.error('Init failed', err);
+      } finally {
+        setIsLoading(false);
       }
     }
-    fetchStats();
+    init();
   }, []);
 
-  return (
-    <div className="space-y-16">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div className="space-y-3">
-          <h2 className="text-5xl font-serif text-white tracking-tight">
-            Estate <span className="text-gold-primary">Overview</span>
-          </h2>
-          <p className="text-zinc-500 text-base max-w-2xl font-light leading-relaxed">
-            Real-time performance across properties, communities and client enquiries.
-            A comprehensive view of your luxury portfolio's health.
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-luxury-black flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-2 border-gold-primary/20 border-t-gold-primary rounded-full animate-spin" />
+          <p className="text-zinc-500 text-xs uppercase tracking-widest font-medium">Loading Command Center</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session || session.role !== 'SUPER_ADMIN') {
+    return (
+      <div className="min-h-screen bg-luxury-black flex items-center justify-center p-6 text-center">
+        <div className="max-w-md space-y-6">
+          <div className="w-16 h-16 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center justify-center mx-auto text-red-500">
+            <ShieldAlert className="w-8 h-8" />
+          </div>
+          <h1 className="text-3xl font-serif text-white">Access Denied</h1>
+          <p className="text-zinc-500">
+            You do not have the required Super Admin privileges to access the Command Center.
           </p>
         </div>
-        <Link
-          href="/admin/properties/new"
-          className="inline-flex items-center gap-3 px-6 py-3 bg-gold-primary text-luxury-black text-xs uppercase tracking-widest font-bold rounded-lg hover:bg-gold-light transition-all duration-300 shadow-lg shadow-gold-primary/20"
-        >
-          <Plus className="w-4 h-4" />
-          Add Property
-        </Link>
       </div>
+    );
+  }
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+  return (
+    <div className="min-h-screen bg-luxury-black text-white p-8 lg:p-12 space-y-12">
+      <header className="flex flex-col gap-6">
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-2xl bg-gold-primary text-luxury-black">
+            <LayoutDashboard className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-serif tracking-tight">Command Center</h1>
+            <p className="text-zinc-500 text-sm">Manage your agency infrastructure and agent network.</p>
+          </div>
+        </div>
+      </header>
+
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
-          title="Properties Under Management"
-          value={stats.properties.value}
-          icon={Building2}
-          trend={stats.properties.trend}
-          trendUp={stats.properties.trendUp}
-        />
-        <StatCard
-          title="Featured Listings"
-          value={stats.featured.value}
-          icon={Star}
-          trend={stats.featured.trend}
-          trendUp={stats.featured.trendUp}
-        />
-        <StatCard
-          title="Premium Communities"
-          value={stats.communities.value}
-          icon={Building2}
-          trend={stats.communities.trend}
-          trendUp={stats.communities.trendUp}
-        />
-        <StatCard
-          title="Qualified Leads"
-          value={stats.leads.value}
+          title="Total Agents"
+          value={stats?.agents || 0}
           icon={Users}
-          trend={stats.leads.trend}
-          trendUp={stats.leads.trendUp}
+          trend="+12% this month"
+          trendUp={true}
         />
-      </div>
+        <StatCard
+          title="Active Listings"
+          value={stats?.properties || 0}
+          icon={Building2}
+          trend="+4.2% growth"
+          trendUp={true}
+        />
+        <StatCard
+          title="Communities"
+          value={stats?.communities || 0}
+          icon={Star}
+          trend="Stable"
+          trendUp={true}
+        />
+        <StatCard
+          title="System Health"
+          value={stats?.health || '---'}
+          icon={Activity}
+          trend="Optimized"
+          trendUp={true}
+        />
+      </section>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <div className="lg:col-span-2 bg-charcoal border border-luxury-border rounded-[24px] p-10 transition-all hover:border-gold-primary/30">
-          <div className="flex items-center justify-between mb-10">
-            <div className="space-y-1">
-              <h3 className="text-xl font-serif text-white tracking-tight">Recent Portfolio Entries</h3>
-              <p className="text-xs uppercase tracking-widest text-zinc-500 font-medium">Latest additions to the estate</p>
+      <main className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        <div className="xl:col-span-1 space-y-8">
+          <div className="p-8 rounded-[24px] bg-charcoal border border-luxury-border space-y-6">
+            <div className="flex items-center gap-3 text-gold-primary">
+              <ShieldCheck className="w-5 h-5" />
+              <h2 className="font-serif text-lg">Identity Gate</h2>
             </div>
-            <Link href="/admin/properties" className="group flex items-center gap-2 text-xs text-gold-primary uppercase tracking-widest font-bold hover:text-gold-light transition-colors">
-              View Portfolio <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="text-zinc-500 border-b border-luxury-border">
-                <tr className="uppercase tracking-widest text-[10px] font-bold">
-                  <th className="pb-6 font-medium">Property</th>
-                  <th className="pb-6 font-medium">Price</th>
-                  <th className="pb-6 font-medium">Status</th>
-                  <th className="pb-6 font-medium text-right">Date</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-luxury-border">
-                <tr className="text-zinc-400 hover:text-white transition-colors group">
-                  <td className="py-6 font-medium italic">No properties found</td>
-                  <td className="py-6">-</td>
-                  <td className="py-6">-</td>
-                  <td className="py-6 text-right">-</td>
-                </tr>
-              </tbody>
-            </table>
+            <p className="text-zinc-500 text-sm leading-relaxed">
+              Review and approve pending agent account requests. Every new identity must be verified before gaining access to the system.
+            </p>
+            <ApprovalQueue />
           </div>
         </div>
 
-        <div className="bg-charcoal border border-luxury-border rounded-[24px] p-10 transition-all hover:border-gold-primary/30">
-          <div className="flex items-center justify-between mb-10">
-            <div className="space-y-1">
-              <h3 className="text-xl font-serif text-white tracking-tight">Lead Intelligence</h3>
-              <p className="text-xs uppercase tracking-widest text-zinc-500 font-medium">Priority enquiries</p>
-            </div>
-            <Link href="/admin/leads" className="group flex items-center gap-2 text-xs text-gold-primary uppercase tracking-widest font-bold hover:text-gold-light transition-colors">
-              All Leads <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-          <div className="space-y-6">
-            <div className="p-6 rounded-2xl bg-luxury-black border border-luxury-border flex items-center gap-6 group transition-all hover:border-gold-primary/40">
-              <div className="w-12 h-12 rounded-full bg-gold-primary/10 flex items-center justify-center text-gold-primary group-hover:scale-110 transition-transform">
-                <Users className="w-6 h-6" />
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm font-serif text-white tracking-tight">No high-priority leads</p>
-                <p className="text-[10px] uppercase tracking-widest text-zinc-500 font-medium">Check back later</p>
+        <div className="xl:col-span-2 space-y-8">
+          <div className="p-8 rounded-[24px] bg-charcoal border border-luxury-border space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 text-gold-primary">
+                <Users className="w-5 h-5" />
+                <h2 className="font-serif text-lg">Agent Network</h2>
               </div>
             </div>
+            <AgentDirectory />
           </div>
         </div>
-      </div>
+      </main>
     </div>
+  );
+}
+
+function ShieldAlert({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 22h16a2 2 0 0 0 2-2z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+    </svg>
   );
 }

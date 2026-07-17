@@ -17,6 +17,8 @@ export default function AdminLogin() {
     setIsLoading(true);
     setError('');
 
+    console.log('[LOGIN_CLIENT] Attempting login for:', username);
+
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -24,16 +26,19 @@ export default function AdminLogin() {
         body: JSON.stringify({ username, password }),
       });
 
+      console.log('[LOGIN_CLIENT] Response status:', res.status);
+
       if (!res.ok) {
         const data = await res.json();
+        console.error('[LOGIN_CLIENT] Error data:', data);
         throw new Error(data.error || 'Login failed');
       }
 
-      router.push('/admin');
-      router.refresh();
+      console.log('[LOGIN_CLIENT] Login successful, redirecting...');
+      window.location.href = '/admin';
     } catch (err: any) {
+      console.error('[LOGIN_CLIENT] Unexpected error:', err);
       setError(err.message);
-    } finally {
       setIsLoading(false);
     }
   };

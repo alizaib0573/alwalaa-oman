@@ -10,6 +10,8 @@ import PropertyCard from "@/components/properties/PropertyCard";
 import { PropertyFilters as FiltersType, PropertyUI } from "@/types/property";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
+const PAGE_SIZE = 20;
+
 export default function PropertiesPage() {
   return (
     <Suspense fallback={<div className="min-h-screen bg-ivory" />}>
@@ -25,6 +27,7 @@ function PropertiesContent() {
 
   const [properties, setProperties] = useState<PropertyUI[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const [filters, setFilters] = useState<FiltersType & { query: string }>({
     status: [],
     communities: [],
@@ -138,6 +141,19 @@ function PropertiesContent() {
     });
   }, [filters, properties]);
 
+  const totalPages = Math.max(1, Math.ceil(filteredProperties.length / PAGE_SIZE));
+
+  // Keep the current page valid when filters shrink the result set.
+  useEffect(() => {
+    setPage(1);
+  }, [filters]);
+
+  // Only render the current page's slice so the grid stays fast with 500+ listings.
+  const pagedProperties = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return filteredProperties.slice(start, start + PAGE_SIZE);
+  }, [filteredProperties, page]);
+
 
   return (
     <main className="min-h-screen bg-ivory">
@@ -176,11 +192,38 @@ function PropertiesContent() {
                   Loading the collection...
                 </div>
               ) : (
-                filteredProperties.map((prop, index) => (
+                pagedProperties.map((prop, index) => (
                   <PropertyCard key={prop.id} property={prop} index={index} />
                 ))
               )}
             </div>
+
+            {!isLoading && filteredProperties.length > PAGE_SIZE && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-4 border-t border-matte-black/10">
+                <p className="text-xs uppercase tracking-widest text-matte-black/50 font-light">
+                  Showing {(page - 1) * PAGE_SIZE + 1}&ndash;{Math.min(page * PAGE_SIZE, filteredProperties.length)} of {filteredProperties.length}
+                </p>
+                <div className="flex items-center gap-6">
+                  <button
+                    onClick={() => { setPage((p) => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    disabled={page <= 1}
+                    className="text-xs uppercase tracking-widest text-matte-black border-b border-matte-black/30 pb-1 hover:text-gold hover:border-gold transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-matte-black disabled:hover:border-matte-black/30"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-xs uppercase tracking-widest text-matte-black/60 font-light">
+                    Page {page} of {totalPages}
+                  </span>
+                  <button
+                    onClick={() => { setPage((p) => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                    disabled={page >= totalPages}
+                    className="text-xs uppercase tracking-widest text-matte-black border-b border-matte-black/30 pb-1 hover:text-gold hover:border-gold transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-matte-black disabled:hover:border-matte-black/30"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            )}
 
             {!isLoading && filteredProperties.length === 0 && (
               <div className="py-32 text-center space-y-4">

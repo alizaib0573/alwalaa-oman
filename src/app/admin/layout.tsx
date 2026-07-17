@@ -12,7 +12,8 @@ import {
   Settings,
   LogOut,
   ChevronRight,
-  ChevronLeft
+  ChevronLeft,
+  UserCog
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +21,7 @@ const navItems = [
   { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { label: 'Properties', href: '/admin/properties', icon: Home },
   { label: 'Communities', href: '/admin/communities', icon: Building2 },
+  { label: 'Users', href: '/admin/users', icon: UserCog },
   { label: 'Leads', href: '/admin/leads', icon: Users },
   { label: 'Settings', href: '/admin/settings', icon: Settings },
 ];

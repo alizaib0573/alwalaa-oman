@@ -1,4 +1,5 @@
-import { PrismaClient, AgentRole, InvestmentGrade } from '@prisma/client';
+import { PrismaClient, UserRole, UserStatus, InvestmentGrade } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -10,25 +11,39 @@ async function main() {
   await prisma.property.deleteMany({});
   await prisma.community.deleteMany({});
   await prisma.agent.deleteMany({});
+  await prisma.user.deleteMany({});
 
-  // 1. Create an Agent
-  const agent = await prisma.agent.create({
+  // 1. Create a Super Admin User
+  const passwordHash = await bcrypt.hash('luxury2026', 12);
+  const superAdmin = await prisma.user.create({
     data: {
-      userId: '00000000-0000-0000-0000-000000000000',
-      fullName: 'Ahmed Al-Walaa',
       email: 'admin@alwalaa.com',
-      phone: '+968 9000 0000',
-      bio: 'Chief Investment Officer at AlWalaa, specializing in luxury real estate and high-yield investments in Oman.',
-      role: AgentRole.ADMIN,
+      passwordHash,
+      role: UserRole.SUPER_ADMIN,
+      status: UserStatus.APPROVED,
       isActive: true,
     },
   });
 
-  console.log('Agent created.');
+  // 2. Create the Agent profile for the Super Admin
+  const agent = await prisma.agent.create({
+    data: {
+      id: 'super-admin',
+      slug: 'super-admin',
+      userId: superAdmin.id,
+      fullName: 'Ahmed Al-Walaa',
+      phone: '+968 9000 0000',
+      bio: 'Chief Investment Officer at AlWalaa, specializing in luxury real estate and high-yield investments in Oman.',
+      isActive: true,
+    },
+  });
 
-  // 2. Create Communities
+  console.log('Super Admin and Agent profile created.');
+
+  // 3. Create Communities
   const communitiesData = [
     {
+      id: 'al-mouj',
       slug: 'al-mouj',
       name: 'Al Mouj Muscat',
       description: 'A breathtaking waterfront community that seamlessly blends Mediterranean charm with Omani hospitality.',
@@ -37,6 +52,7 @@ async function main() {
       featured: true,
     },
     {
+      id: 'aida',
       slug: 'aida',
       name: 'AIDA',
       description: 'A visionary development that redefines the coastal experience, combining modern architecture with the raw beauty of Oman\'s southern coast.',
@@ -45,6 +61,7 @@ async function main() {
       featured: true,
     },
     {
+      id: 'muscat-bay',
       slug: 'muscat-bay',
       name: 'Muscat Bay',
       description: 'A sanctuary of luxury nestled between the mountains and the turquoise waters of Muscat Bay.',
@@ -53,6 +70,7 @@ async function main() {
       featured: true,
     },
     {
+      id: 'sultan-haitham-city',
       slug: 'sultan-haitham-city',
       name: 'Sultan Haitham City',
       description: 'The most ambitious urban project in Oman, focusing on sustainable and smart city living.',
@@ -61,6 +79,7 @@ async function main() {
       featured: true,
     },
     {
+      id: 'jebel-sifah',
       slug: 'jebel-sifah',
       name: 'Jebel Sifah',
       description: 'A stunning coastal escape where nature\'s luxury meets the Arabian Sea.',
@@ -80,7 +99,7 @@ async function main() {
 
   console.log('Communities created.');
 
-  // 3. Create Properties
+  // 4. Create Properties
   const properties = [];
   const communityCount = communities.length;
 
@@ -123,7 +142,7 @@ async function main() {
 
   console.log('Properties created.');
 
-  // 4. Create Investment Metrics
+  // 5. Create Investment Metrics
   for (let i = 0; i < 10; i++) {
     const property = properties[i];
     await prisma.investmentMetric.create({

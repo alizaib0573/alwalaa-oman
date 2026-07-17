@@ -11,6 +11,7 @@ async function verify() {
       where: { slug: 'sultan-haitham-city' },
       update: {},
       create: {
+        id: 'sultan-haitham-city',
         slug: 'sultan-haitham-city',
         name: 'Sultan Haitham City',
         location: 'Muscat, Oman',
@@ -20,16 +21,31 @@ async function verify() {
     });
     console.log('✅ Community created/verified:', community.name);
 
-    // 2. Create a test agent (assuming a mock userId for now as auth isn't linked yet)
-    const agent = await prisma.agent.upsert({
+    // 2. Create a test user + agent. Email/role live on User; Agent holds the
+    // profile and links back via userId. Both are upserted by their unique keys
+    // so the script is safe to re-run.
+    const user = await prisma.user.upsert({
       where: { email: 'test-agent@alwalaa.com' },
       update: {},
       create: {
-        userId: '00000000-0000-0000-0000-000000000001', // Mock UUID (different from admin)
-        fullName: 'Test Agent',
         email: 'test-agent@alwalaa.com',
-        phone: '+968 0000 0000',
+        passwordHash: 'not-a-real-hash',
         role: 'AGENT',
+        status: 'APPROVED',
+        isActive: true,
+      },
+    });
+
+    const agent = await prisma.agent.upsert({
+      where: { slug: 'test-agent' },
+      update: {},
+      create: {
+        id: 'test-agent',
+        slug: 'test-agent',
+        userId: user.id,
+        fullName: 'Test Agent',
+        phone: '+968 0000 0000',
+        isActive: true,
       },
     });
     console.log('✅ Agent created/verified:', agent.fullName);
