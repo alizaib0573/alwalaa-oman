@@ -1,8 +1,8 @@
-import { Property as PrismaProperty, Community, Agent, InvestmentMetric } from '@prisma/client';
+import { Property as PrismaProperty, Community, Agent, InvestmentMetric, User } from '@prisma/client';
 
 export type PropertyType = string;
 export type PropertyStatus = string;
-export type AgentRole = Agent['role'];
+export type AgentRole = User['role'];
 export type InvestmentGrade = InvestmentMetric['investmentGrade'];
 
 export interface Amenity {

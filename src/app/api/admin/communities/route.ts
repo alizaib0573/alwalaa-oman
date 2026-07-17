@@ -17,7 +17,8 @@ export async function POST(request: Request) {
     // TODO: Add auth check (Task 5)
     const body = await request.json();
     const validatedData = communitySchema.parse(body);
-    const community = await communityService.create(validatedData);
+    // Community.id has no DB default; mirror the seed convention of id === slug.
+    const community = await communityService.create({ ...validatedData, id: validatedData.slug });
     return NextResponse.json(community);
   } catch (error) {
     if (error instanceof z.ZodError) {

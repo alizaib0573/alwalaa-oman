@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       active: true,
-      session: { userId: user.id, role: user.role }
+      session: { userId, role: user.role }
     });
   } catch (error) {
     console.error('[CHECK_SESSION]', error);
