@@ -40,7 +40,7 @@ const CONTACT = {
   phone: "+968 71 555 067",
   email: "info@alwalaaoman.com",
   address: "Muscat, Sultanate of Oman",
-  hours: "Mon – Fri: 9am – 6pm",
+  hours: "Sun – Thu: 10am – 5pm",
 };
 
 const LEGAL = [
