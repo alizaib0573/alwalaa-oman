@@ -26,9 +26,9 @@ export default function BlogHero() {
           transition={{ duration: 1 }}
           className="space-y-4"
         >
-          <span className="text-gold uppercase tracking-[0.3em] text-[10px] font-bold block">
+          {/* <span className="text-gold uppercase tracking-[0.3em] text-[10px] font-bold block">
             Intelligence & Perspectives
-          </span>
+          </span> */}
           <h1 className="text-4xl md:text-6xl font-serif text-ivory leading-tight">
             Insights & Property <br />
             <span className="italic text-gold">Intelligence</span>

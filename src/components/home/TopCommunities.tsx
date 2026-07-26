@@ -152,7 +152,7 @@ export default function TopCommunities() {
             Explore Top <br />
             <span className="italic text-gold">Communities In Oman</span>
           </motion.h2>
-          <motion.p
+          {/* <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -161,7 +161,7 @@ export default function TopCommunities() {
           >
            Oman offers a range of prime locations for freehold property Known as Integrated tourism complexes ( ITC ) zones, Catering to diverse lifestyles and preferences. Many of these property also provide opportunities for lifetime residency Oman, allowing buyers to enjoy both a premium lifestyle and long term security.
 
-          </motion.p>
+          </motion.p> */}
         </div>
       </div>
 

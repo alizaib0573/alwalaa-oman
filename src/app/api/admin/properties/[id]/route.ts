@@ -3,21 +3,33 @@ import { propertyService } from '@/services/property.service';
 import { z } from 'zod';
 import { PropertyType, PropertyStatus } from '@prisma/client';
 
+// Treat empty string / null / undefined as null so nullable numeric fields
+// don't get coerced to 0.
+const emptyToNull = (v: unknown) =>
+  v === '' || v === null || v === undefined ? null : v;
+
 const propertyUpdateSchema = z.object({
   title: z.string().optional(),
+  slug: z.string().optional(),
   description: z.string().optional(),
   type: z.nativeEnum(PropertyType).optional(),
   status: z.nativeEnum(PropertyStatus).optional(),
   city: z.string().optional(),
   location: z.string().optional(),
-  communityId: z.string().uuid().optional(),
-  agentId: z.string().uuid().optional(),
+  // Community/agent IDs are human-readable slugs (e.g. "al-mouj", "super-admin"),
+  // not UUIDs — validating them as UUIDs rejected every valid update.
+  communityId: z.string().min(1).optional(),
+  agentId: z.string().min(1).optional(),
   price: z.coerce.number().optional(),
   currency: z.string().optional(),
-  bedrooms: z.coerce.number().optional(),
-  bathrooms: z.coerce.number().optional(),
+  // Nullable in the DB. Empty string / null / undefined mean "no value" and must
+  // stay null — plain z.coerce.number() would turn them into 0 (Number(null) === 0)
+  // and silently corrupt the record.
+  bedrooms: z.preprocess(emptyToNull, z.coerce.number().nullable()).optional(),
+  bathrooms: z.preprocess(emptyToNull, z.coerce.number().nullable()).optional(),
   areaSqm: z.coerce.number().optional(),
   gallery: z.array(z.string()).optional(),
+  bannerImageUrl: z.string().optional(),
   amenities: z.array(z.string()).optional(),
   coordinates: z.any().optional(),
   featured: z.coerce.boolean().optional(),

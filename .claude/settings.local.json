@@ -15,7 +15,8 @@
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"yes\" npx prisma *)",
       "Bash(taskkill *)",
       "Bash(cmd /c \"taskkill /F /IM node.exe\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(grep -i \"properties/\\\\[id\\\\]/route\\\\|properties\\\\\\\\\\\\\\\\\\\\[id\\\\]\")"
     ]
   }
 }

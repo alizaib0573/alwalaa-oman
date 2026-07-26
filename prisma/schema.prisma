@@ -106,6 +106,7 @@ model Property {
   bathrooms   Int?
   areaSqm     Decimal?          @db.Decimal(10, 2)
   gallery     String[]
+  bannerImageUrl String?
   amenities   String[]
   coordinates Json?
   featured    Boolean           @default(false)

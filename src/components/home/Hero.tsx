@@ -2,19 +2,19 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePopup } from "@/context/PopupContext";
 import { FaWhatsapp } from "react-icons/fa";
+import LuxurySelect from "@/components/core/LuxurySelect";
 
 const WHATSAPP_NUMBER = "96893206024"; // ← Replace with real number
 
 const trustTicker = [
-  "200+ Happy Clients",
+  "189+ Happy Clients",
   "6–8% Annual ROI",
   "Lifetime Residency in Oman",
-  "8 Premier ITC Developers",
+  "20+ Premier ITC Developers",
   "100% Free Consultation",
   "Freehold Properties Available",
 ];
@@ -73,9 +73,9 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section className="relative z-50 h-screen w-full">
       {/* Cinematic Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={currentIndex}
@@ -110,7 +110,7 @@ export default function Hero() {
           className="w-full max-w-5xl"
         >
           {/* Trust badge */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -120,7 +120,7 @@ export default function Hero() {
             <span className="text-gold text-[10px] uppercase tracking-[0.25em] font-semibold">
               Oman&apos;s Trusted Luxury Real Estate Partner
             </span>
-          </motion.div>
+          </motion.div> */}
 
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl 2xl:text-7xl font-serif text-ivory leading-tight mb-3">
@@ -134,42 +134,30 @@ export default function Hero() {
           </p>
 
           {/* Property Search Bar */}
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 md:p-4 max-w-3xl mx-auto mb-5 shadow-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
-              <select
+          <div className="relative z-10 bg-matte-black/40 backdrop-blur-xl border border-gold/20 rounded-3xl p-3 md:p-5 max-w-4xl mx-auto mb-8 shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              <LuxurySelect
+                placeholder="Property Type"
+                options={propertyTypes}
                 value={propertyType}
-                onChange={(e) => setPropertyType(e.target.value)}
-                className="bg-white/90 text-matte-black text-sm px-4 py-3 rounded-xl outline-none font-medium cursor-pointer"
-              >
-                <option value="">Property Type</option>
-                {propertyTypes.map((t) => (
-                  <option key={t} value={t}>{t}</option>
-                ))}
-              </select>
-              <select
+                onChange={setPropertyType}
+              />
+              <LuxurySelect
+                placeholder="Community / Area"
+                options={communities}
                 value={community}
-                onChange={(e) => setCommunity(e.target.value)}
-                className="bg-white/90 text-matte-black text-sm px-4 py-3 rounded-xl outline-none font-medium cursor-pointer"
-              >
-                <option value="">Community / Area</option>
-                {communities.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
-              <select
+                onChange={setCommunity}
+              />
+              <LuxurySelect
+                placeholder="Budget Range"
+                options={budgets}
                 value={budget}
-                onChange={(e) => setBudget(e.target.value)}
-                className="bg-white/90 text-matte-black text-sm px-4 py-3 rounded-xl outline-none font-medium cursor-pointer"
-              >
-                <option value="">Budget Range</option>
-                {budgets.map((b) => (
-                  <option key={b} value={b}>{b}</option>
-                ))}
-              </select>
+                onChange={setBudget}
+              />
             </div>
             <button
               onClick={handleSearch}
-              className="w-full bg-gold text-matte-black py-3.5 rounded-xl text-xs uppercase tracking-[0.2em] font-bold hover:bg-ivory transition-all duration-300 flex items-center justify-center gap-2"
+              className="w-full bg-gold text-matte-black py-4 rounded-xl text-xs uppercase tracking-[0.2em] font-bold hover:bg-ivory transition-all duration-300 flex items-center justify-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -179,7 +167,7 @@ export default function Hero() {
           </div>
 
           {/* Secondary CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm mt-4">
+          {/* <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm mt-4">
             <button
               onClick={openPopup}
               className="w-full sm:w-auto bg-gold/10 backdrop-blur-md text-gold border-2 border-gold/40 hover:border-gold hover:bg-gold hover:text-matte-black px-8 py-3.5 rounded-full text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-300 shadow-lg shadow-gold/5 hover:shadow-gold/20 hover:scale-[1.02]"
@@ -195,12 +183,12 @@ export default function Hero() {
               <FaWhatsapp className="text-lg" />
               Chat on WhatsApp
             </a>
-          </div>
+          </div> */}
         </motion.div>
       </div>
 
       {/* Trust Ticker — bottom of hero */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 bg-matte-black/70 backdrop-blur-sm border-t border-gold/20 py-3 overflow-hidden">
+      {/* <div className="absolute bottom-0 mt-5 left-0 right-0 z-10 bg-matte-black/70 backdrop-blur-sm border-t border-gold/20 py-3 overflow-hidden">
         <div className="flex items-center justify-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
           <AnimatePresence mode="wait">
@@ -217,7 +205,7 @@ export default function Hero() {
           </AnimatePresence>
           <span className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0" />
         </div>
-      </div>
+      </div> */}
 
       {/* WhatsApp Floating Button */}
       <motion.a

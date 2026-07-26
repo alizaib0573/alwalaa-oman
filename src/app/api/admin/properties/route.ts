@@ -21,6 +21,7 @@ const propertySchema = z.object({
   bathrooms: z.coerce.number().nullable().optional(),
   areaSqm: z.coerce.number().nullable().optional(),
   gallery: z.array(z.string()).default([]),
+  bannerImageUrl: z.string().optional(),
   amenities: z.array(z.string()).default([]),
   coordinates: z.any().optional(),
   featured: z.coerce.boolean().default(false),

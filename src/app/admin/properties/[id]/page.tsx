@@ -3,6 +3,7 @@
 import React, { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { generateSlug } from '@/lib/slugs';
 import {
   Save,
   X,
@@ -15,7 +16,8 @@ import {
   Bath,
   Maximize,
   Globe,
-  Star
+  Star,
+  CheckCircle2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -24,7 +26,11 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const [images, setImages] = useState<File[]>([]);
+  const [bannerImageIndex, setBannerImageIndex] = useState<number | null>(null);
+  const [metadata, setMetadata] = useState<{ communities: any[], agents: any[] }>({ communities: [], agents: [] });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     title: '',
     slug: '',
@@ -42,6 +48,7 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     areaSqm: 0,
     featured: false,
     coordinates: { lat: 0, lng: 0 },
+    bannerImageUrl: '',
     gallery: [] as string[],
     seoTitle: '',
     seoDescription: '',
@@ -65,12 +72,59 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     fetchProperty();
   }, [id]);
 
+  useEffect(() => {
+    async function fetchMetadata() {
+      try {
+        const res = await fetch('/api/admin/listing-metadata');
+        if (res.ok) {
+          const data = await res.json();
+          setMetadata(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch metadata', err);
+      }
+    }
+    fetchMetadata();
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
-    }));
+    let newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+
+    if (name === 'title') {
+      setFormData(prev => ({
+        ...prev,
+        title: value,
+        slug: value ? generateSlug(value) : '',
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: newValue,
+      }));
+    }
+
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.title.trim()) newErrors.title = 'Property title is required';
+    if (!formData.description.trim()) newErrors.description = 'Description is required';
+    if (!formData.city.trim()) newErrors.city = 'City is required';
+    if (!formData.location.trim()) newErrors.location = 'Location is required';
+    if (!formData.communityId) newErrors.communityId = 'Please select a community';
+    if (formData.price <= 0) newErrors.price = 'Price must be greater than 0';
+    if (formData.areaSqm <= 0) newErrors.areaSqm = 'Area must be greater than 0';
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,11 +135,16 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setIsSaving(true);
 
     try {
       const gallery = [...(formData.gallery || [])];
-      for (const file of images) {
+      let currentBannerUrl = formData.bannerImageUrl;
+
+      for (let i = 0; i < images.length; i++) {
+        const file = images[i];
         const formDataImg = new FormData();
         formDataImg.append('file', file);
         formDataImg.append('slug', formData.slug);
@@ -96,20 +155,29 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
         });
         const data = await res.json();
         gallery.push(data.url);
+
+        if (bannerImageIndex === i) {
+          currentBannerUrl = data.url;
+        }
       }
 
       const response = await fetch(`/api/admin/properties/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, gallery }),
+        body: JSON.stringify({ ...formData, gallery, bannerImageUrl: currentBannerUrl }),
       });
 
       if (response.ok) {
-        router.push('/admin/properties');
-        router.refresh();
+        setShowSuccess(true);
+        setTimeout(() => {
+          router.push('/admin/properties');
+          router.refresh();
+        }, 2000);
+      } else {
+        throw new Error('Failed to update property');
       }
     } catch (err) {
-      alert('Error updating property');
+      alert(err instanceof Error ? err.message : 'Error updating property');
     } finally {
       setIsSaving(false);
     }
@@ -120,7 +188,18 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
   }
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="max-w-5xl mx-auto space-y-8 relative">
+      {showSuccess && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-zinc-900 border border-white/10 p-8 rounded-3xl text-center space-y-4 shadow-2xl scale-in-center">
+            <div className="w-16 h-16 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-medium text-white">Property Updated Successfully!</h3>
+            <p className="text-zinc-400 text-sm">Redirecting you to the admin panel...</p>
+          </div>
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-light tracking-tight">Edit <span className="text-gold-500 font-medium">Property</span></h2>
@@ -142,7 +221,6 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
       </div>
 
       <form className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column: Main Info */}
         <div className="lg:col-span-2 space-y-6">
           <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-2xl backdrop-blur-sm space-y-6">
             <div className="flex items-center gap-2 text-zinc-400 mb-4">
@@ -157,9 +235,13 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                  className={cn(
+                    "w-full px-4 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                    errors.title ? "border-red-500/50" : "border-white/10"
+                  )}
                   required
                 />
+                {errors.title && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.title}</p>}
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -198,9 +280,13 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                   value={formData.description}
                   onChange={handleInputChange}
                   rows={5}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                  className={cn(
+                    "w-full px-4 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                    errors.description ? "border-red-500/50" : "border-white/10"
+                  )}
                   required
                 />
+                {errors.description && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.description}</p>}
               </div>
             </div>
           </div>
@@ -218,9 +304,13 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                  className={cn(
+                    "w-full px-4 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                    errors.city ? "border-red-500/50" : "border-white/10"
+                  )}
                   required
                 />
+                {errors.city && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.city}</p>}
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-zinc-500">Location/Area</label>
@@ -228,52 +318,40 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                   name="location"
                   value={formData.location}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                  className={cn(
+                    "w-full px-4 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                    errors.location ? "border-red-500/50" : "border-white/10"
+                  )}
                   required
                 />
+                {errors.location && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.location}</p>}
               </div>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-zinc-500">Community ID (UUID)</label>
-                <input
+                <label className="text-xs uppercase tracking-widest text-zinc-500">Community</label>
+                <select
                   name="communityId"
                   value={formData.communityId}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                  className={cn(
+                    "w-full px-4 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                    errors.communityId ? "border-red-500/50" : "border-white/10"
+                  )}
                   required
-                />
+                >
+                  <option value="">Select Community</option>
+                  {metadata.communities.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+                {errors.communityId && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.communityId}</p>}
               </div>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-zinc-500">Agent ID (UUID)</label>
-                <input
-                  name="agentId"
-                  value={formData.agentId}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-zinc-500">Latitude</label>
-                <input
-                  type="number"
-                  step="any"
-                  value={formData.coordinates.lat}
-                  onChange={(e) => setFormData({...formData, coordinates: {...formData.coordinates, lat: parseFloat(e.target.value)}})}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-zinc-500">Longitude</label>
-                <input
-                  type="number"
-                  step="any"
-                  value={formData.coordinates.lng}
-                  onChange={(e) => setFormData({...formData, coordinates: {...formData.coordinates, lng: parseFloat(e.target.value)}})}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
-                />
+                <label className="text-xs uppercase tracking-widest text-zinc-500">Listing Agent</label>
+                <div className="w-full px-4 py-3 bg-zinc-950/30 border border-white/10 rounded-xl text-sm text-zinc-400 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-gold-500" />
+                  Your account
+                  <span className="ml-auto text-[10px] uppercase tracking-widest text-zinc-600">Auto-assigned</span>
+                </div>
               </div>
             </div>
           </div>
@@ -309,9 +387,25 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
 
             <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
               {formData.gallery?.map((url: string, i: number) => (
-                <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-zinc-800 group">
+                <div
+                  key={i}
+                  onClick={() => {
+                    setFormData(prev => ({ ...prev, bannerImageUrl: url }));
+                    setBannerImageIndex(null);
+                  }}
+                  className={cn(
+                    "relative aspect-square rounded-xl overflow-hidden border transition-all cursor-pointer group",
+                    formData.bannerImageUrl === url ? "border-gold-500 ring-2 ring-gold-500/20" : "border-white/10 bg-zinc-800"
+                  )}
+                >
                   <img src={url} className="w-full h-full object-cover" alt="Property" />
+                  {formData.bannerImageUrl === url && (
+                    <div className="absolute bottom-2 left-2 bg-gold-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                      Banner
+                    </div>
+                  )}
                   <button
+                    type="button"
                     onClick={() => setFormData(prev => ({ ...prev, gallery: prev.gallery?.filter((_, idx) => idx !== i) }))}
                     className="absolute top-2 right-2 p-1 rounded-full bg-black/60 text-white hover:bg-red-500 transition-all"
                   >
@@ -320,13 +414,29 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                 </div>
               ))}
               {images.map((file, i) => (
-                <div key={`new-${i}`} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-zinc-800 group">
+                <div
+                  key={`new-${i}`}
+                  onClick={() => {
+                    setBannerImageIndex(i);
+                    setFormData(prev => ({ ...prev, bannerImageUrl: '' }));
+                  }}
+                  className={cn(
+                    "relative aspect-square rounded-xl overflow-hidden border transition-all cursor-pointer group",
+                    bannerImageIndex === i ? "border-gold-500 ring-2 ring-gold-500/20" : "border-white/10 bg-zinc-800"
+                  )}
+                >
                   <img
                     src={URL.createObjectURL(file)}
                     className="w-full h-full object-cover"
                     alt="Preview"
                   />
+                  {bannerImageIndex === i && (
+                    <div className="absolute bottom-2 left-2 bg-gold-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                      Banner
+                    </div>
+                  )}
                   <button
+                    type="button"
                     onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))}
                     className="absolute top-2 right-2 p-1 rounded-full bg-black/60 text-white hover:bg-red-500 transition-all"
                   >
@@ -338,7 +448,6 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
           </div>
         </div>
 
-        {/* Right Column: Details & SEO */}
         <div className="space-y-6">
           <div className="bg-zinc-900/40 border border-white/5 p-6 rounded-2xl backdrop-blur-sm space-y-6">
             <div className="flex items-center gap-2 text-zinc-400 mb-4">
@@ -355,13 +464,17 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                     name="price"
                     value={formData.price}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                    className={cn(
+                      "w-full pl-4 pr-12 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                      errors.price ? "border-red-500/50" : "border-white/10"
+                    )}
                     required
                   />
                   <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-zinc-500 font-medium">
                     {formData.currency}
                   </span>
                 </div>
+                {errors.price && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.price}</p>}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -400,8 +513,12 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
                   name="areaSqm"
                   value={formData.areaSqm ?? ''}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-zinc-950/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all"
+                  className={cn(
+                    "w-full px-4 py-3 bg-zinc-950/50 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gold-500/50 transition-all",
+                    errors.areaSqm ? "border-red-500/50" : "border-white/10"
+                  )}
                 />
+                {errors.areaSqm && <p className="text-red-500 text-[10px] mt-1 font-medium">{errors.areaSqm}</p>}
               </div>
 
               <div className="space-y-2">

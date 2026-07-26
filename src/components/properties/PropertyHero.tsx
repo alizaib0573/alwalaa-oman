@@ -49,9 +49,9 @@ export default function PropertyHero() {
           transition={{ duration: 1 }}
           className="space-y-6"
         >
-          <span className="text-gold uppercase tracking-[0.3em] text-[10px] font-bold block">
+          {/* <span className="text-gold uppercase tracking-[0.3em] text-[10px] font-bold block">
             The Elite Portfolio
-          </span>
+          </span> */}
           <h1 className="text-4xl md:text-6xl font-serif text-ivory leading-tight">
             Properties in Oman
           </h1>
@@ -75,7 +75,7 @@ export default function PropertyHero() {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Search by community, villa, developer or keyword..."
-                className="w-full bg-transparent pl-11 pr-4 py-3.5 text-ivory placeholder:text-ivory/40 outline-none text-sm font-light"
+                className="w-full bg-transparent pl-11 pr-4 py-3.5 text-black placeholder:text-ivory/40 outline-none text-sm font-light"
               />
             </div>
             <button type="submit" className="bg-gold text-matte-black px-8 py-3.5 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-white hover:text-matte-black transition-all duration-300">

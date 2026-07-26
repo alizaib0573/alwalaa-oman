@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Bed, Bath, Square, MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 import { PropertyUI } from "@/types/property";
-import { cn } from "@/lib/utils";
 import PropertyInquiryModal from "./PropertyInquiryModal";
 
 interface PropertyCardProps {
@@ -101,7 +100,7 @@ export default function PropertyCard({ property, index }: PropertyCardProps) {
                 {property.location}
               </span>
             </div>
-            <h3 className="text-xl font-serif text-matte-black group-hover:text-gold transition-colors duration-500 line-clamp-1">
+            <h3 className="text-xl font-serif text-matte-black group-hover:text-gold transition-colors duration-500">
               {property.title}
             </h3>
           </div>

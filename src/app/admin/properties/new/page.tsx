@@ -27,6 +27,7 @@ export default function NewPropertyPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [images, setImages] = useState<File[]>([]);
+  const [bannerImageIndex, setBannerImageIndex] = useState<number | null>(null);
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [metadata, setMetadata] = useState<{ communities: any[], agents: any[] }>({ communities: [], agents: [] });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -45,6 +46,7 @@ export default function NewPropertyPage() {
     bedrooms: null,
     bathrooms: null,
     areaSqm: 0,
+    bannerImageUrl: '',
     featured: false,
     coordinates: { lat: 0, lng: 0 },
     seoTitle: '',
@@ -129,7 +131,8 @@ export default function NewPropertyPage() {
 
     try {
       const gallery = [];
-      for (const file of images) {
+      for (let i = 0; i < images.length; i++) {
+        const file = images[i];
         const formDataImg = new FormData();
         formDataImg.append('file', file);
         formDataImg.append('slug', formData.slug);
@@ -147,6 +150,9 @@ export default function NewPropertyPage() {
         const data = await res.json();
         if (data.url) {
           gallery.push(data.url);
+          if (i === bannerImageIndex) {
+            setFormData(prev => ({ ...prev, bannerImageUrl: data.url }));
+          }
         } else {
           throw new Error('Upload succeeded but no URL was returned');
         }
@@ -370,14 +376,31 @@ export default function NewPropertyPage() {
 
             <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
               {images.map((file, i) => (
-                <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-zinc-800 group">
+                <div
+                  key={i}
+                  onClick={() => setBannerImageIndex(i)}
+                  className={cn(
+                    "relative aspect-square rounded-xl overflow-hidden border transition-all cursor-pointer group",
+                    bannerImageIndex === i ? "border-gold-500 ring-2 ring-gold-500/20" : "border-white/10 bg-zinc-800"
+                  )}
+                >
                   <img
                     src={URL.createObjectURL(file)}
                     className="w-full h-full object-cover"
                     alt="Preview"
                   />
+                  {bannerImageIndex === i && (
+                    <div className="absolute bottom-2 left-2 bg-gold-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                      Banner
+                    </div>
+                  )}
                   <button
-                    onClick={(e) => { e.stopPropagation(); removeImage(i); }}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeImage(i);
+                      if (bannerImageIndex === i) setBannerImageIndex(null);
+                    }}
                     className="absolute top-2 right-2 p-1 rounded-full bg-black/60 text-white hover:bg-red-500 transition-all"
                   >
                     <X className="w-3 h-3" />

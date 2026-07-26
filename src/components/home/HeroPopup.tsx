@@ -17,6 +17,7 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
     name: "",
     email: "",
     phone: "",
+    budget: "",
     query: "",
   });
 
@@ -32,6 +33,7 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
+          budget: formData.budget,
           message: formData.query,
         }),
       });
@@ -127,16 +129,28 @@ export default function HeroPopup({ isOpen, onClose }: HeroPopupProps) {
                         onChange={e => setFormData({...formData, email: e.target.value})}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Phone Number</label>
-                      <input
-                        required
-                        type="tel"
-                        placeholder="+968 00000000"
-                        className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black"
-                        value={formData.phone}
-                        onChange={e => setFormData({...formData, phone: e.target.value})}
-                      />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Phone Number</label>
+                        <input
+                          required
+                          type="tel"
+                          placeholder="+968 00000000"
+                          className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black"
+                          value={formData.phone}
+                          onChange={e => setFormData({...formData, phone: e.target.value})}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Budget Range</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. OMR 100K+"
+                          className="w-full bg-transparent border-b border-champagne p-3 text-sm outline-none focus:border-gold transition-all text-matte-black"
+                          value={formData.budget}
+                          onChange={e => setFormData({...formData, budget: e.target.value})}
+                        />
+                      </div>
                     </div>
                     <div className="space-y-2">
                       <label className="text-[10px] uppercase tracking-widest text-matte-black/40 font-bold">Query</label>
